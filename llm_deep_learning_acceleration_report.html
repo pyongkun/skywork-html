@@ -1,0 +1,1640 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>llm_deep_learning_acceleration_report</title><style data-sk-tag-style-id="gen_doc_md">
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-ExtraBold.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Bold.ttf")
+    format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Black.ttf")
+    format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-SemiBold.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Light.ttf")
+    format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Medium.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-ExtraLight.ttf")
+    format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Light.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Thin.ttf")
+    format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+.sk-source-tag {
+  display: inline-block;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 0 !important;
+  text-indent: 0px !important;
+  width: auto !important;
+  min-width: 20px;
+  max-width: 76px !important;
+  height: 16px !important;
+  box-sizing: border-box;
+  padding: 2.5px 8px;
+  margin: 2px 4px;
+  background: var(--fill-fill-3-hover, #f4f5f7);
+  border-radius: 100px;
+  background-clip: padding-box;
+  color: var(--text-icon-text-3, #485568);
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.sk-source-tag::before {
+  content: var(--sk-source-display-name, attr(data-sk-source-website-name));
+  cursor: pointer;
+  display: inline-block;
+  font-family: Outfit;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 9px;
+  line-height: 11px;
+  letter-spacing: 0px;
+  color: var(--text-icon-text-3, #485568);
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-word;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.sk-source-tag:hover {
+  background: var(---black, #000818);
+}
+.sk-source-tag:hover::before {
+  color: var(--text-icon-text-6, #ffffff);
+}
+.sk-source-tag.active {
+  background: var(---black, #000818);
+}
+.sk-source-tag.active::before {
+  color: var(--text-icon-text-6, #ffffff);
+}
+.sk-source-tag[data-sk-source-type="pro_data"] {
+  font-size: 0 !important;
+  width: auto !important;
+  text-indent: 0px !important;
+  min-width: 20px;
+  max-width: 76px !important;
+  height: 16px !important;
+  box-sizing: border-box;
+  padding: 2.5px 8px;
+  margin: 2px 4px;
+  background: var(--fill-fill-3-hover, #f4f5f7);
+  border-radius: 100px;
+  color: var(--text-icon-text-3, #485568);
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  user-select: none;
+  display: inline-block;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.sk-source-tag[data-sk-source-type="pro_data"]::before {
+  content: var(--sk-source-display-name, attr(data-sk-source-website-name));
+  cursor: pointer;
+  display: inline-block;
+  font-family: Outfit;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 9px;
+  line-height: 11px;
+  letter-spacing: 0px;
+  color: var(--text-icon-text-3, #485568);
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.sk-source-tag[data-sk-source-type="pro_data"]:hover {
+  background: var(---black, #000818);
+}
+.sk-source-tag[data-sk-source-type="pro_data"]:hover::before {
+  color: var(--text-icon-text-6, #ffffff);
+}
+.sk-source-text-check {
+  background: var(--other-doc-check, rgba(77, 94, 255, 0.2));
+}
+.sk-hide-tag .sk-source-tag {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar-track {
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.sk-edit-loading {
+  position: relative;
+  overflow: hidden;
+  filter: brightness(0.5);
+}
+body > .container {
+  width: 100%;
+  box-sizing: border-box;
+}
+*[contenteditable="true"] {
+  outline: none;
+}
+.doc-placeholder-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+.doc-placeholder__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 188px;
+  justify-content: center;
+  align-items: center;
+  color: #979fab;
+  border-radius: 16px;
+  border: 1.25px solid #f4f5f7;
+  background: #f9fafc;
+}
+.doc-placeholder__icon svg {
+  width: 28px;
+  height: 28px;
+}
+.doc-image-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.doc-image-loading__card {
+  width: 250px;
+  height: 188px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+}
+.doc-image-loading__card::before {
+  content: "";
+  position: absolute;
+  inset: -65%;
+  background: radial-gradient(
+      closest-side at 18% 22%,
+      rgba(75, 201, 255, 0.4),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at 82% 28%,
+      rgba(119, 77, 255, 0.3),
+      transparent 58%
+    ),
+    radial-gradient(
+      closest-side at 36% 84%,
+      rgba(255, 75, 195, 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      closest-side at 88% 78%,
+      rgba(75, 201, 255, 0.4),
+      transparent 64%
+    ),
+    radial-gradient(
+      closest-side at 55% 55%,
+      rgba(119, 77, 255, 0.3),
+      transparent 68%
+    );
+  filter: blur(16px) saturate(1.14);
+  transform-origin: 50% 50%;
+  will-change: transform, filter;
+  animation: doc-loading-spinA 18s linear infinite,
+    doc-loading-driftA 11.5s ease-in-out infinite,
+    doc-loading-breatheA 6.8s ease-in-out infinite;
+}
+.doc-image-loading__card::after {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  background: radial-gradient(
+      closest-side at 12% 72%,
+      rgba(119, 77, 255, 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at 70% 16%,
+      rgba(75, 201, 255, 0.4),
+      transparent 58%
+    ),
+    radial-gradient(
+      closest-side at 92% 55%,
+      rgba(255, 75, 195, 0.16),
+      transparent 64%
+    );
+  filter: blur(18px) saturate(1.1);
+  opacity: 0.98;
+  transform-origin: 50% 50%;
+  mix-blend-mode: normal;
+  will-change: transform, filter, opacity;
+  animation: doc-loading-spinB 25s linear infinite reverse,
+    doc-loading-driftB 15.8s ease-in-out infinite,
+    doc-loading-breatheB 8.4s ease-in-out infinite;
+}
+.doc-image-loading__flow3 {
+  position: absolute;
+  inset: -75%;
+  background: radial-gradient(
+      closest-side at 28% 48%,
+      rgba(255, 75, 195, 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      closest-side at 62% 70%,
+      rgba(75, 201, 255, 0.4),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at 78% 40%,
+      rgba(119, 77, 255, 0.3),
+      transparent 58%
+    );
+  filter: blur(14px) saturate(1.1);
+  opacity: 0.78;
+  transform-origin: 50% 50%;
+  will-change: transform, filter, opacity;
+  animation: doc-loading-driftC 9.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite,
+    doc-loading-spinC 31s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.doc-image-loading__glass {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      140% 120% at 20% 0%,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0) 55%
+    ),
+    radial-gradient(
+      120% 140% at 100% 35%,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0) 60%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.06)
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+.doc-image-loading__grain {
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  opacity: 0.13;
+  background-image: repeating-radial-gradient(
+      circle at 20% 30%,
+      rgba(0, 0, 0, 0.14) 0 1px,
+      transparent 1px 3px
+    ),
+    repeating-radial-gradient(
+      circle at 80% 70%,
+      rgba(0, 0, 0, 0.1) 0 1px,
+      transparent 1px 4px
+    );
+  filter: blur(0.15px);
+  transform: rotate(12deg);
+  animation: doc-loading-grainMove 8s steps(10) infinite;
+  mix-blend-mode: soft-light;
+  z-index: 3;
+}
+.doc-image-loading__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+  pointer-events: none;
+}
+.doc-image-loading__icon {
+  width: 28px;
+  height: 28px;
+  color: #4d5eff;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 4px rgba(77, 94, 255, 0.2));
+}
+.doc-image-loading__text {
+  color: #4d5eff;
+  font-family: Outfit;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: center;
+  text-shadow: 0 1px 2px hsla(0, 0%, 100%, 0.8);
+}
+@keyframes doc-loading-spinA {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes doc-loading-spinB {
+  from {
+    transform: rotate(0deg) scale(1.03);
+  }
+  to {
+    transform: rotate(360deg) scale(1.03);
+  }
+}
+@keyframes doc-loading-spinC {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes doc-loading-driftA {
+  0% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.02);
+  }
+  10% {
+    transform: translate(12%, -7%) rotate(10deg) scale(1.06);
+  }
+  24% {
+    transform: translate(-9%, 13%) rotate(3deg) scale(1.01);
+  }
+  38% {
+    transform: translate(15%, 4%) rotate(16deg) scale(1.07);
+  }
+  54% {
+    transform: translate(-14%, -2%) rotate(6deg) scale(0.99);
+  }
+  70% {
+    transform: translate(6%, -15%) rotate(20deg) scale(1.05);
+  }
+  86% {
+    transform: translate(-4%, 10%) rotate(12deg) scale(1.03);
+  }
+  100% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.02);
+  }
+}
+@keyframes doc-loading-driftB {
+  0% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.03);
+  }
+  9% {
+    transform: translate(-12%, 9%) rotate(-7deg) scale(1.06);
+  }
+  22% {
+    transform: translate(14%, 4%) rotate(-14deg) scale(1.01);
+  }
+  41% {
+    transform: translate(-6%, -14%) rotate(-4deg) scale(1.08);
+  }
+  58% {
+    transform: translate(13%, -7%) rotate(-16deg) scale(1.03);
+  }
+  74% {
+    transform: translate(-15%, 3%) rotate(-9deg) scale(1.06);
+  }
+  89% {
+    transform: translate(4%, 14%) rotate(-18deg) scale(1);
+  }
+  100% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.03);
+  }
+}
+@keyframes doc-loading-driftC {
+  0% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 0.74;
+  }
+  18% {
+    transform: translate(16%, 6%) scale(1.08);
+    opacity: 0.8;
+  }
+  36% {
+    transform: translate(3%, -16%) scale(0.98);
+    opacity: 0.72;
+  }
+  55% {
+    transform: translate(-17%, -4%) scale(1.07);
+    opacity: 0.78;
+  }
+  73% {
+    transform: translate(-6%, 15%) scale(1);
+    opacity: 0.76;
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 0.74;
+  }
+}
+@keyframes doc-loading-breatheA {
+  0%,
+  100% {
+    filter: blur(16px) saturate(1.14);
+  }
+  45% {
+    filter: blur(20px) saturate(1.2);
+  }
+  78% {
+    filter: blur(15px) saturate(1.1);
+  }
+}
+@keyframes doc-loading-breatheB {
+  0%,
+  100% {
+    filter: blur(18px) saturate(1.1);
+    opacity: 0.98;
+  }
+  40% {
+    filter: blur(22px) saturate(1.18);
+    opacity: 0.9;
+  }
+  72% {
+    filter: blur(17px) saturate(1.06);
+    opacity: 1;
+  }
+}
+@keyframes doc-loading-grainMove {
+  0% {
+    transform: translate(0, 0) rotate(12deg);
+  }
+  25% {
+    transform: translate(-2%, 1%) rotate(10deg);
+  }
+  50% {
+    transform: translate(1%, -2%) rotate(14deg);
+  }
+  75% {
+    transform: translate(2%, 2%) rotate(11deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(12deg);
+  }
+}
+@media (forced-colors: active) {
+  .doc-image-loading__card::before,
+  .doc-image-loading__card::after,
+  .doc-image-loading__flow3,
+  .doc-image-loading__grain {
+    display: none;
+  }
+  .doc-image-loading__glass {
+    background: linear-gradient(180deg, Canvas, Canvas);
+    outline: 1px solid CanvasText;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doc-image-loading__card::before,
+  .doc-image-loading__card::after,
+  .doc-image-loading__flow3,
+  .doc-image-loading__grain {
+    animation: none !important;
+  }
+}
+.doc-region-loading {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.doc-region-loading__bar {
+  height: 16px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgb(242, 246, 255) 0%,
+    rgb(232, 238, 255) 35%,
+    rgb(224, 234, 255) 50%,
+    rgb(232, 238, 255) 65%,
+    rgb(242, 246, 255) 100%
+  );
+  background-size: 220% 100%;
+  animation: doc-region-loading-flow 1.8s ease-in-out infinite;
+}
+.doc-region-loading__bar--long {
+  width: 100%;
+}
+.doc-region-loading__bar--short {
+  width: 62%;
+}
+@keyframes doc-region-loading-flow {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.95;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.95;
+  }
+}
+@keyframes doc-image-node-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doc-region-loading__bar {
+    animation: none;
+  }
+}
+.editor-image-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1em 0;
+  position: relative;
+  caret-color: rgba(0, 0, 0, 0);
+}
+.editor-image-node img {
+  margin: 0;
+  max-width: 500px;
+  cursor: pointer;
+}
+.editor-image-node.editor-image-node-is-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: hsla(0, 0%, 100%, 0.5);
+  z-index: 99;
+}
+.editor-image-node.editor-image-node-is-loading::after {
+  z-index: 100;
+  content: "";
+  position: absolute;
+  top: calc(50% - 14px);
+  right: calc(50% - 14px);
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: 3px solid #e8ecf2;
+  border-top: 3px solid #4d5eff;
+  border-radius: 50%;
+  animation: doc-image-node-loading-spin 1s linear infinite;
+}
+.editor-image-node-caption {
+  color: var(--text-icon-text-4, #7f8896);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Outfit;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  caret-color: auto;
+  margin-top: 8px;
+  min-height: 20px;
+  max-width: 100%;
+  min-width: 160px;
+  display: inline-block;
+  position: relative;
+}
+.editor-image-node-caption:focus {
+  outline: none;
+}
+.editor-image-node-caption:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-icon-text-4, #7f8896);
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+.editor-image-node-placeholder {
+  border-radius: 16px;
+  border: 1.25px solid var(--line-line-4, #f4f5f7);
+  background: var(--fill-fill-4, #f9fafc);
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 188px;
+  max-width: 500px;
+  max-height: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.editor-image-node-placeholder.placeholder-loading > svg {
+  animation: doc-image-node-loading-spin 1s linear infinite;
+}
+a {
+  cursor: pointer !important;
+}
+a[href] {
+  cursor: pointer !important;
+}
+[contenteditable] a,
+[contenteditable="true"] a,
+[contenteditable="false"] a {
+  cursor: pointer !important;
+}
+b {
+  font-weight: bold;
+}
+.container b,
+.container strong,
+.page b,
+.page strong {
+  font-weight: 900;
+}
+body > .page {
+  overflow-x: hidden;
+}
+body > .container {
+  overflow-x: hidden;
+}
+.timeline-item {
+  overflow-y: hidden;
+}
+.item-date {
+  white-space: normal;
+}
+body {
+  max-width: 800px;
+  padding-top: 32px;
+  margin: 0 auto;
+  background: #fff;
+}
+body img {
+  object-fit: contain;
+}
+body.use-template {
+  background: #f9fafc;
+  margin: 0 auto;
+}
+body.use-template .page {
+  box-shadow: 0 2px 10px 0 rgba(0, 8, 24, 0.08);
+}
+body > .container {
+  box-shadow: unset;
+}
+body > .page {
+  height: auto;
+}
+body > .page .right-column,
+body > .page .left-column {
+  overflow-y: auto;
+}
+body > .page img {
+  max-width: 100%;
+}
+body > .page .profile-pic-container img {
+  object-fit: contain;
+}
+:root {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --primary: rgba(0, 85, 212, 1);
+  --primary-foreground: rgba(255, 255, 255, 1);
+  --sidebar-primary: rgba(0, 85, 212, 1);
+  --sidebar-primary-foreground: rgba(255, 255, 255, 1);
+  --chart-1: rgba(0, 85, 212, 1);
+  --chart-2: rgba(82, 143, 235, 1);
+  --chart-3: rgba(139, 177, 242, 1);
+  --chart-4: rgba(185, 206, 247, 1);
+  --chart-5: rgba(223, 230, 250, 1);
+  --radius: 0rem;
+  --background: rgba(252, 252, 252, 1);
+  --foreground: rgba(38, 38, 38, 1);
+  --card: rgba(255, 255, 255, 1);
+  --card-foreground: rgba(38, 38, 38, 1);
+  --popover: rgba(255, 255, 255, 1);
+  --popover-foreground: rgba(38, 38, 38, 1);
+  --secondary: rgba(245, 245, 245, 1);
+  --secondary-foreground: rgba(38, 38, 38, 1);
+  --muted: rgba(245, 245, 245, 1);
+  --muted-foreground: rgba(34, 35, 37, 1);
+  --accent: rgba(239, 239, 239, 1);
+  --accent-foreground: rgba(38, 38, 38, 1);
+  --destructive: rgba(192, 57, 43, 1);
+  --destructive-foreground: rgba(255, 255, 255, 1);
+  --border: rgba(230, 230, 230, 1);
+  --input: rgba(230, 230, 230, 1);
+  --ring: rgba(0, 85, 212, 1);
+  --sidebar: rgba(250, 250, 250, 1);
+  --sidebar-foreground: rgba(38, 38, 38, 1);
+  --sidebar-accent: rgba(239, 239, 239, 1);
+  --sidebar-accent-foreground: rgba(38, 38, 38, 1);
+  --sidebar-border: rgba(230, 230, 230, 1);
+  --sidebar-ring: rgba(0, 85, 212, 1);
+}
+* {
+  border-color: var(--border);
+  outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+}
+body {
+  font-size: 16px;
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+}
+menu,
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+}
+h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+p {
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[type="button"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="reset"]:not(:disabled),
+a[href],
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 820px;
+}
+.flex {
+  min-height: 0;
+  min-width: 0;
+}
+.editor-container {
+  max-width: 800px;
+  padding: 24px 10%;
+  font-size: 16px;
+}
+.editor-container hr {
+  border: none;
+  height: 1px;
+  margin-top: 3em;
+  margin-bottom: 3em;
+  background-color: rgba(37, 39, 45, 0.1);
+}
+.editor-container li {
+  margin: 0.5rem 0;
+}
+.editor-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.editor-container h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.editor-container h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.editor-container h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.editor-container h5 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.editor-container h6 {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.editor-container a {
+  color: #3385ff;
+  text-decoration: none;
+}
+.editor-container a:hover {
+  text-decoration: underline;
+}
+.editor-container sup > a {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.editor-container [data-footnote-backref] {
+  color: #4c90ff;
+}
+.editor-container [data-footnote-backref]:hover {
+  color: #1f6fe5;
+}
+.editor-container .editor-image-node {
+  max-width: 100%;
+}
+.editor-container .editor-image-node .editor-image-node-placeholder {
+  max-width: 100%;
+}
+.editor-container .editor-image-node img {
+  max-width: 100%;
+}
+.editor-container h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.editor-container h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+}
+.editor-container p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.75rem;
+}
+.editor-container blockquote {
+  border-left: 4px solid #222325;
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted-foreground);
+  margin: 1rem 0;
+}
+.editor-container code {
+  background-color: #f4f5f7;
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+.editor-container pre {
+  background-color: var(--muted);
+  padding: 1rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container pre code {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+  color: var(--foreground);
+}
+.editor-container ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container blockquote ul,
+.editor-container blockquote ol {
+  margin-left: 1rem;
+  padding-left: 1rem;
+}
+.editor-container table {
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container th,
+.editor-container td {
+  border: 1px solid var(--border);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: left;
+}
+.editor-container th {
+  background-color: var(--muted);
+  font-weight: 700;
+}
+.editor-container img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.ai-processing {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-left: 2px solid var(--primary);
+  padding-left: 0.75rem;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.typing-cursor::after {
+  content: "|";
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  color: var(--primary);
+  font-weight: 700;
+  margin-left: 0.125rem;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+</style>
+</head><body class="editor-container"><h1>LLM·딥러닝 처리 속도 가속 기술 종합 조사 보고서</h1>
+<p><b>작성 기준일:</b> 2026-06-22<br><b>목적:</b> Cerebras의 wafer-scale AI processor와 실리콘 포토닉스 외에도 LLM·딥러닝 처리 속도, 전력 효율, 메모리/통신 병목을 개선하려는 주요 기술을 기술 원리·상용화 주체·연구 주체·상장기업 투자 관점에서 종합 정리한다.<br><b>주의:</b> 본 문서의 주가 전망과 목표가는 투자 조언이 아니라 공개 자료 기반의 시나리오 분석이다. 실제 투자 판단에는 최신 주가, 실적 발표, 밸류에이션, 환율, 세금, 개인의 위험 선호를 별도로 확인해야 한다.</p>
+<h2>1. 핵심 요약</h2>
+<p>LLM과 현대 딥러닝의 속도 병목은 단순히 “연산 장치가 더 빠르면 해결되는 문제”가 아니다. 실제 병목은 크게 <b>연산량</b>, <b>메모리 대역폭·용량</b>, <b>칩 간 통신</b>, <b>전력·냉각</b>, <b>소프트웨어 스케줄링</b>으로 나뉜다. NVIDIA GPU처럼 범용성이 높은 가속기는 여전히 중심축이지만, Cerebras의 wafer-scale, 실리콘 포토닉스/CPO, TPU·Trainium 같은 AI ASIC, HBM·첨단 패키징, PIM/CXL, 아날로그 compute-in-memory, 뉴로모픽, 엣지 NPU, 그리고 FlashAttention·양자화·투기적 디코딩 같은 소프트웨어 최적화가 서로 다른 병목을 겨냥하며 병렬적으로 발전하고 있다.</p>
+<p>가장 즉시성이 높은 투자 축은 <b>GPU+HBM+첨단 패키징</b>, <b>AI 네트워킹</b>, <b>커스텀 AI ASIC</b>, <b>실리콘 포토닉스/CPO</b>다. 이는 이미 대규모 데이터센터 CAPEX와 연결되어 있고 NVIDIA, TSMC, Broadcom, Marvell, SK hynix, Micron, AMD, Arista, Astera Labs 같은 상장기업의 매출로 전환되고 있다. 중장기적으로는 <b>Cerebras식 wafer-scale</b>, <b>PIM/CXL</b>, <b>아날로그 in-memory</b>, <b>뉴로모픽·비정형 컴퓨팅</b>이 성능/전력 한계 돌파 후보지만, 일부는 아직 상용성·소프트웨어 생태계·수율 리스크가 크다.</p>
+<p>개인적 판단으로 “주식시장 관점에서 가장 유망한 회사”를 하나만 꼽는다면 <b>NVIDIA(NVDA)</b>가 여전히 1순위다. 이유는 단일 칩 회사가 아니라 GPU, NVLink/InfiniBand/Ethernet, BlueField DPU, CUDA/TensorRT-LLM, Blackwell/Rubin 로드맵, AI Factory 레퍼런스 아키텍처를 모두 묶는 <b>시스템·소프트웨어 플랫폼 기업</b>이기 때문이다. 다만 밸류에이션 부담과 하이퍼스케일러 자체 칩 확산 리스크를 고려하면, 2순위군으로는 <b>TSMC(TSM)</b>, <b>Broadcom(AVGO)</b>, <b>Marvell(MRVL)</b>, <b>SK hynix(000660.KS)</b>, <b>Astera Labs(ALAB)</b>가 매력적이다.</p>
+<h2>2. 기술 지형도: 무엇을 빠르게 하는가?</h2>
+<table>
+<thead>
+<tr>
+<th>병목</th>
+<th>대표 기술</th>
+<th>핵심 아이디어</th>
+<th>성숙도</th>
+<th>투자 관점</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>연산량</td>
+<td>GPU, TPU/ASIC, systolic array, dataflow</td>
+<td>행렬곱·attention·MoE를 전용 병렬 유닛으로 처리</td>
+<td>매우 높음</td>
+<td>NVIDIA, AMD, Broadcom, Google/Alphabet, Marvell</td>
+</tr>
+<tr>
+<td>메모리 대역폭</td>
+<td>HBM, HBM4, SRAM, PIM, CXL</td>
+<td>모델 가중치·KV cache 이동량 감소 또는 메모리 근처에서 연산</td>
+<td>높음~중간</td>
+<td>SK hynix, Micron, Samsung, TSMC, Astera, Rambus</td>
+</tr>
+<tr>
+<td>통신</td>
+<td>NVLink, InfiniBand, UEC, CPO, SiPh</td>
+<td>GPU/ASIC 수천~수만 개를 저지연·고대역으로 연결</td>
+<td>높음~중간</td>
+<td>NVIDIA, Broadcom, Marvell, Arista, Cisco</td>
+</tr>
+<tr>
+<td>전력·냉각</td>
+<td>wafer-scale, optical I/O, analog IMC, neuromorphic</td>
+<td>데이터 이동과 디지털 스위칭을 줄임</td>
+<td>중간~초기</td>
+<td>Cerebras, IBM, Intel, BrainChip, 비상장 스타트업</td>
+</tr>
+<tr>
+<td>소프트웨어</td>
+<td>quantization, FlashAttention, speculative decoding, vLLM</td>
+<td>같은 하드웨어에서 더 적은 비트·메모리·토큰 검증으로 처리</td>
+<td>매우 높음</td>
+<td>NVIDIA, AMD, Microsoft, Google, Meta, 오픈소스 생태계</td>
+</tr>
+</tbody></table>
+<h2>3. 주요 기술별 상세 분석</h2>
+<h3>3.1 Wafer-scale AI processor: Cerebras식 접근</h3>
+<h4>개요와 원리</h4>
+<p>Wafer-scale processor는 일반 칩처럼 웨이퍼를 작은 다이로 잘라 쓰지 않고, <b>웨이퍼 전체를 하나의 거대한 프로세서</b>처럼 사용하는 방식이다. Cerebras의 WSE-3는 회사 발표 기준으로 5nm 공정, 4조 개 트랜지스터, 900,000개 AI 최적화 코어, 44GB 온칩 SRAM, 125 PFLOPS 피크 AI 성능을 갖는다고 발표되었다<a href="#ref1">1</a>. Cerebras는 2026년 5월 IPO 가격을 주당 185달러로 정하고 Nasdaq Global Select Market에서 <code>CBRS</code> 티커로 거래를 시작한다고 공식 발표했으며, 본 보고서 기준일에는 상장기업(<code>CBRS</code>)으로 분류한다<a href="#ref2">2</a>.</p>
+<p>핵심 원리는 <b>칩 간 통신을 칩 내부 통신으로 바꾸는 것</b>이다. 기존 GPU 클러스터는 GPU-HBM-네트워크-다른 GPU를 오가며 모델 병렬화·데이터 병렬화·All-Reduce 통신을 수행한다. Cerebras는 매우 큰 온칩 네트워크와 SRAM을 사용해 데이터 이동 거리를 줄이고, 대형 모델을 더 단순한 프로그래밍 모델로 실행하는 것을 목표로 한다. 회사는 WSE-3가 주요 GPU 칩보다 58배 크고, 주요 오픈소스 모델 벤치마크에서 GPU 기반 솔루션 대비 최대 15배 빠른 추론을 제공한다고 설명한다<a href="#ref2">2</a>.</p>
+<h4>장점</h4>
+<ul>
+<li><b>초저지연 추론:</b> 수천 개 GPU를 묶는 대신 단일 wafer-scale 장치 내부에서 많은 연산을 처리하므로 통신 레이어가 단순해질 수 있다.</li>
+<li><b>프로그래밍 단순화:</b> 모델 분할과 병렬화 복잡도를 줄이는 방향이다.</li>
+<li><b>Cerebras Cloud/온프레미스 양면 전략:</b> 대규모 기관·기업에 시스템을 직접 공급하거나 클라우드 형태로 제공할 수 있다.</li>
+</ul>
+<h4>한계와 리스크</h4>
+<ul>
+<li><b>수율과 제조 리스크:</b> 웨이퍼 전체를 쓰는 구조는 결함 허용 설계가 필수다. 제조·테스트·패키징 난도가 높다.</li>
+<li><b>생태계 리스크:</b> CUDA, TensorRT-LLM, PyTorch 최적화 생태계를 가진 NVIDIA와 경쟁해야 한다.</li>
+<li><b>총소유비용:</b> 단일 시스템 전력·냉각·랙 통합 비용이 높을 수 있다.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>기업:</b> Cerebras Systems(CBRS), Tesla(TSLA)의 Dojo 계열 wafer/system-on-wafer 접근, TSMC(TSM)의 advanced packaging·system-on-wafer 관련 제조 역량.</li>
+<li><b>대학·연구소:</b> UC Riverside, University of Edinburgh, Stanford/UC Berkeley 계열 AI hardware hub 등에서 wafer-scale accelerator와 소프트웨어 연구가 진행된다.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>Cerebras(CBRS):</b> 고성장·고위험 종목이다. 3~5년 Bull 시나리오에서는 추론 특화 클라우드와 대형 기관 수요가 확대되어 \*\*$450~$600 <b>범위를 상상할 수 있다. Base 시나리오는 매출 성장에도 불구하고 NVIDIA 생태계와 가격 경쟁이 심화되어</b> $250~$350\*\* 수준, Bear 시나리오는 대형 고객 확보 지연·수율/마진 문제로 \*\*$120~$180** 수준이다. 이는 공식 컨센서스가 아니라 본 보고서의 가정 기반 추정이다.</li>
+<li><b>TSMC(TSM):</b> wafer-scale 자체보다 advanced packaging, CoWoS/InFO 계열 수혜가 더 안정적이다. 3~5년 Base 목표가는 \*\*$280~$360<b>, Bull은</b> $420+**로 본다.</li>
+</ul>
+<h3>3.2 실리콘 포토닉스, CPO, optical interconnect, optical compute</h3>
+<h4>개요와 원리</h4>
+<p>실리콘 포토닉스는 실리콘 기판 위에 waveguide, modulator, photodetector 등을 만들어 <b>전기 신호 대신 빛으로 데이터를 전송</b>하는 기술이다. CPO(Co-Packaged Optics)는 광학 엔진을 스위치 ASIC이나 프로세서 패키지에 가깝게 배치해 전기적 SerDes 구간을 줄이는 방식이다. Lam Research는 실리콘 포토닉스가 기존 전기적 interconnect보다 속도와 효율을 크게 개선할 잠재력이 있다고 설명한다<a href="#ref3">3</a>. Marvell은 2026년 Celestial AI 인수를 완료했으며, Celestial AI의 Photonic Fabric 기술이 대규모 AI 배치에서 고대역폭·저지연 scale-up 연결을 지원한다고 밝혔다<a href="#ref4">4</a>. NVIDIA는 Marvell과 NVLink Fusion 협력 및 20억 달러 투자 사실을 발표했다<a href="#ref5">5</a>.</p>
+<h4>왜 LLM에 중요한가?</h4>
+<p>GPU 한 개의 성능보다 수천~수만 개 GPU를 묶는 능력이 중요해지면서 <b>I/O wall</b>이 핵심 병목이 되었다. 특히 MoE, long-context, multi-modal 모델은 GPU 간 activation, expert routing, KV cache 이동이 많아진다. 광학 I/O는 거리 증가에 따른 전력 증가가 구리 배선보다 완만하고, 고대역폭 전송에서 유리하다.</p>
+<h4>형태별 구분</h4>
+<ol>
+<li><b>Optical transceiver/optical DSP:</b> 기존 플러거블 모듈과 DSP 중심. Marvell, Broadcom, Coherent, Lumentum 등이 관련된다.</li>
+<li><b>CPO:</b> 스위치 ASIC 옆 또는 패키지 내부에 광학 엔진을 배치한다. Broadcom Tomahawk 계열, Marvell, NVIDIA Spectrum-X Photonics 방향과 연결된다.</li>
+<li><b>Optical compute:</b> MZI, microring 등을 이용해 행렬곱 자체를 빛으로 수행한다. Lightmatter, Lightelligence, 대학 연구가 대표적이나 대규모 범용 LLM 상용화는 아직 초기다.</li>
+<li><b>Photonic memory fabric:</b> Celestial AI처럼 메모리·가속기 간 scale-up interconnect를 광학화하려는 접근이다.</li>
+</ol>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장기업:</b> NVIDIA(NVDA), Marvell(MRVL), Broadcom(AVGO), Intel(INTC), Cisco(CSCO), GlobalFoundries(GFS), Coherent(COHR), Lumentum(LITE).</li>
+<li><b>비상장/인수 완료:</b> Lightmatter, Ayar Labs, Ranovus, NewPhotonics는 비상장이고, Celestial AI는 2026년 Marvell 인수 완료 후 Marvell 산하 기술 자산으로 분류한다.</li>
+<li><b>대학·연구소:</b> MIT, UC Berkeley, University of Rochester, IMEC, CEA-Leti 등.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>Marvell(MRVL):</b> Celestial AI 인수 이후 광학 scale-up interconnect의 직접 수혜 가능성이 커졌다. Marvell은 Celestial AI 매출이 fiscal 2028 하반기부터 기여하고 fiscal 2029 4분기에는 10억 달러 annualized run-rate까지 확대될 수 있다고 설명했다<a href="#ref4">4</a>. 3~5년 Bull 목표가는 \*\*$140~$170<b>, Base는</b> $95~$125\*\*, Bear는 \*\*$55~$75**로 본다.</li>
+<li><b>Broadcom(AVGO):</b> CPO, switch ASIC, custom AI ASIC을 모두 보유한 포트폴리오형 강자다. 3~5년 Bull 목표가는 분할 후 기준을 명확히 해야 하며, 본 보고서에서는 \*\*현재 주식 분할 구조 기준 $350~$450 <b>범위를 Bull로 본다. Base는</b> $250~$330\*\*, Bear는 \*\*$160~$220**이다.</li>
+<li><b>Coherent/Lumentum:</b> 광부품 수혜는 크지만 주기성과 고객 집중도가 높다. 고위험·고탄력 보조 투자 후보로 본다.</li>
+</ul>
+<h3>3.3 GPU, HBM, 첨단 패키징, chiplet 기반 AI 시스템</h3>
+<h4>개요와 원리</h4>
+<p>현재 가장 성숙한 AI 가속 경로는 GPU, HBM, advanced packaging, high-speed interconnect의 결합이다. NVIDIA Blackwell 플랫폼은 GPU뿐 아니라 NVLink, GB200 NVL72 같은 rack-scale 시스템, CUDA/TensorRT-LLM 소프트웨어를 함께 제공한다<a href="#ref6">6</a>. HBM은 수천 비트 폭의 인터페이스와 3D 적층으로 GPU 가까이에 메모리를 배치해 LLM의 weight/KV cache 이동 병목을 줄인다.</p>
+<h4>왜 빠른가?</h4>
+<ul>
+<li><b>Tensor core/Transformer engine:</b> FP8, FP4 같은 저정밀 연산으로 throughput을 높인다.</li>
+<li><b>HBM:</b> DRAM보다 훨씬 높은 대역폭을 제공해 메모리 bound decode 단계에 유리하다.</li>
+<li><b>CoWoS/advanced packaging:</b> GPU die, HBM stack, interposer를 하나의 패키지로 통합해 신호 거리와 전력 소모를 줄인다.</li>
+<li><b>NVLink/NVSwitch:</b> GPU 간 scale-up 통신을 고속화한다.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>GPU/가속기:</b> NVIDIA, AMD, Intel.</li>
+<li><b>HBM:</b> SK hynix, Samsung Electronics, Micron.</li>
+<li><b>파운드리/패키징:</b> TSMC, Samsung Foundry, Intel Foundry, ASE, Amkor.</li>
+<li><b>IP/장비:</b> ASML, Applied Materials, Lam Research, KLA, Cadence, Synopsys.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>NVIDIA(NVDA):</b> 3~5년 Base 목표가 \*\*$220~$280<b>, Bull</b> $330~$400\*\*, Bear \*\*$120~$160**. 전제는 Blackwell/Rubin 전환, AI inference 수요 확대, 네트워킹·소프트웨어 매출 유지다.</li>
+<li><b>AMD(AMD):</b> MI300/MI350/MI400 계열과 ROCm 생태계가 성장 축이다. Base <b>$180~$240</b>, Bull <b>$300~$380</b>, Bear <b>$90~$130</b>.</li>
+<li><b>SK hynix(000660.KS):</b> HBM 리더십이 유지되면 Base <b>₩300,000~₩380,000</b>, Bull <b>₩450,000+</b>, Bear <b>₩180,000~₩230,000</b>.</li>
+<li><b>Micron(MU):</b> HBM 점유율 확대와 DRAM 업사이클을 반영해 Base <b>$160~$220</b>, Bull <b>$260+</b>, Bear <b>$90~$120</b>.</li>
+<li><b>TSMC(TSM):</b> AI GPU·ASIC 파운드리와 CoWoS 병목의 핵심. Base <b>$280~$360</b>, Bull <b>$420+</b>, Bear <b>$170~$220</b>.</li>
+</ul>
+<h3>3.4 Cloud TPU, AI ASIC, custom datacenter accelerator</h3>
+<h4>개요와 원리</h4>
+<p>AI ASIC은 범용 GPU보다 특정 workload에 맞게 회로를 최적화한다. Google TPU는 systolic array 기반 MXU(Matrix Multiply Unit)를 중심으로 발전해 왔고, Google은 6세대 TPU Trillium이 TPU v5e 대비 칩당 피크 연산 성능 4.7배, HBM 용량·대역폭 2배, ICI 대역폭 2배를 제공한다고 발표했다<a href="#ref7">7</a>. AWS Trainium/Inferentia, Meta MTIA, Microsoft Maia도 자체 클라우드 서비스 비용 절감과 공급망 통제를 목표로 한다.</p>
+<h4>장점</h4>
+<ul>
+<li><b>TCO 절감:</b> hyperscaler가 반복 실행하는 모델·서비스에 맞추면 GPU보다 비용/전력 효율이 높을 수 있다.</li>
+<li><b>공급망 독립성:</b> NVIDIA 공급 제약과 가격 협상력을 완화한다.</li>
+<li><b>서비스 최적화:</b> 검색, 추천, 광고, LLM inference 등 특정 workload에 맞춘 최적화가 가능하다.</li>
+</ul>
+<h4>한계</h4>
+<ul>
+<li><b>유연성 부족:</b> 모델 구조가 급변하면 고정 ASIC은 GPU보다 불리할 수 있다.</li>
+<li><b>소프트웨어 파편화:</b> XLA, Neuron, 자체 compiler stack 학습 비용이 있다.</li>
+<li><b>외부 투자 접근성:</b> Google, Amazon, Meta, Microsoft 내부 칩은 해당 빅테크 전체 주식에 희석되어 반영된다.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>Hyperscaler:</b> Alphabet/Google(GOOGL), Amazon(AMZN), Meta(META), Microsoft(MSFT).</li>
+<li><b>ASIC 파트너:</b> Broadcom(AVGO), Marvell(MRVL).</li>
+<li><b>비상장:</b> Groq, Tenstorrent, SambaNova, MatX.</li>
+<li><b>대학:</b> MIT Eyeriss 계열, Stanford, Berkeley, Harvard/Princeton accelerator 연구.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>Broadcom(AVGO):</b> hyperscaler custom ASIC과 AI networking을 동시에 보유한 핵심 수혜주. Base <b>$250~$330</b>, Bull <b>$350~$450</b>, Bear <b>$160~$220</b>.</li>
+<li><b>Marvell(MRVL):</b> custom silicon + optical/DSP 조합. Base <b>$95~$125</b>, Bull <b>$140~$170</b>, Bear <b>$55~$75</b>.</li>
+<li><b>Alphabet(GOOGL):</b> TPU는 Google Cloud와 Gemini inference 원가 경쟁력의 핵심이다. Base <b>$220~$280</b>, Bull <b>$320+</b>, Bear <b>$140~$170</b>.</li>
+<li><b>Amazon(AMZN):</b> Trainium/Inferentia는 AWS margin 방어에 중요하다. Base <b>$260~$330</b>, Bull <b>$400+</b>, Bear <b>$170~$210</b>.</li>
+</ul>
+<h3>3.5 PIM, HBM-PIM, CXL, memory-centric AI acceleration</h3>
+<h4>개요와 원리</h4>
+<p>LLM 추론, 특히 decode 단계는 계산보다 weight와 KV cache를 읽는 시간이 더 큰 <b>memory-bound</b> 성격이 강하다. PIM(Processing-in-Memory)은 메모리 내부 또는 가까운 곳에 연산 유닛을 넣어 데이터 이동을 줄인다. Samsung은 HBM-PIM이 기존 HBM 대비 성능을 약 2배 높이고 에너지 소비를 70% 이상 줄일 수 있다고 설명한 바 있다<a href="#ref8">8</a>. CXL은 CPU/GPU/가속기와 메모리 장치를 coherent하게 연결해 메모리 확장·pooling을 가능하게 하는 인터커넥트 표준이며, CXL 3.1은 PCIe 6.0 기반 64GT/s 링크와 fabric 기능을 제공한다고 Rambus가 설명한다<a href="#ref9">9</a>.</p>
+<h4>LLM 적용 포인트</h4>
+<ul>
+<li><b>KV cache offload/확장:</b> 긴 context와 다중 세션 inference에서 GPU HBM이 부족할 때 CXL memory tier를 활용할 수 있다.</li>
+<li><b>GEMV/attention 일부 PIM:</b> 행렬-벡터 연산, embedding lookup, reduction 등을 메모리 근처에서 처리한다.</li>
+<li><b>메모리 pooling:</b> 여러 서버가 memory resource를 공유해 utilization을 높인다.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>메모리:</b> Samsung, SK hynix, Micron.</li>
+<li><b>CXL/연결성:</b> Astera Labs(ALAB), Rambus(RMBS), Marvell(MRVL), Montage, Microchip.</li>
+<li><b>연구:</b> ETH Zurich Onur Mutlu 그룹, KAIST, University of Illinois, Stanford.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>Astera Labs(ALAB):</b> AI 서버 연결성·retimer·CXL controller 수혜. 고성장이나 밸류에이션 부담이 크다. Base <b>$170~$230</b>, Bull <b>$300~$380</b>, Bear <b>$80~$120</b>.</li>
+<li><b>Rambus(RMBS):</b> HBM/CXL IP와 controller로 안정적 레버리지. Base <b>$75~$100</b>, Bull <b>$120+</b>, Bear <b>$45~$60</b>.</li>
+<li><b>Samsung/SK hynix/Micron:</b> PIM 자체보다 HBM 매출이 단기 실적을 좌우한다.</li>
+</ul>
+<h3>3.6 Analog in-memory computing, memristor/RRAM/SRAM compute-in-memory</h3>
+<h4>개요와 원리</h4>
+<p>Analog in-memory computing은 메모리 셀의 conductance를 가중치로 보고, 입력 전압을 걸어 출력 전류를 합산함으로써 <b>Ohm의 법칙과 Kirchhoff의 법칙으로 행렬-벡터 곱을 물리적으로 수행</b>한다. IBM은 analog in-memory computing이 Transformer 모델의 attention/MoE를 효율화할 수 있는 방향을 연구하고 있다고 설명한다<a href="#ref10">10</a>.</p>
+<h4>장점</h4>
+<ul>
+<li><b>초저전력:</b> 데이터 이동과 디지털 MAC 연산을 줄인다.</li>
+<li><b>대규모 병렬 VMM:</b> 메모리 crossbar에서 동시에 많은 곱셈·누산이 발생한다.</li>
+<li><b>Edge AI 적합성:</b> 배터리/저전력 장치에서 강점이 크다.</li>
+</ul>
+<h4>한계</h4>
+<ul>
+<li><b>정밀도와 noise:</b> 아날로그 소자의 변동성, ADC/DAC 오버헤드가 성능을 제한한다.</li>
+<li><b>학습보다 추론 중심:</b> 대규모 LLM 학습에는 아직 검증 부족.</li>
+<li><b>양산성:</b> RRAM/PCM/MRAM 소자 균일성과 공정 통합 난도가 높다.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장:</b> IBM(IBM), Samsung Electronics, SK hynix, TSMC, GlobalFoundries.</li>
+<li><b>비상장:</b> EnCharge AI, TetraMem, Mythic, Syntiant, Rain AI.</li>
+<li><b>대학·연구소:</b> IBM Research, KAIST, Tsinghua, Stanford, MIT, ETH Zurich.</li>
+</ul>
+<h4>투자 관점</h4>
+<p>직접 투자 가능한 pure-play가 많지 않아, 상장주 투자에서는 IBM·Samsung·TSMC 같은 대형주의 옵션 가치로 보는 것이 현실적이다. 단기 수익보다는 5~10년 기술 선택권에 가깝다.</p>
+<h3>3.7 Neuromorphic computing과 spiking neural network accelerator</h3>
+<h4>개요와 원리</h4>
+<p>Neuromorphic computing은 뇌처럼 event-driven spike를 사용하고, memory와 compute를 가까이 배치해 에너지 효율을 높이는 접근이다. Intel은 Loihi 계열 neuromorphic research platform을 공개해 왔고, neuromorphic computing이 비동기·event-driven 방식으로 전력 효율을 개선할 수 있다고 설명한다<a href="#ref11">11</a>. BrainChip은 Akida 계열 상용 neuromorphic AI IP/SoC를 제공한다<a href="#ref12">12</a>.</p>
+<h4>LLM과의 관계</h4>
+<p>현재 LLM의 주류 Transformer를 그대로 neuromorphic chip에 올리는 것은 쉽지 않다. 다만 Spiking Transformer, event-based perception, robotics, always-on sensor inference에서는 장점이 있다. 장기적으로는 low-power agent, edge multimodal AI, autonomous sensor network에 적합하다.</p>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장:</b> Intel(INTC), IBM(IBM), BrainChip(BRN.AX).</li>
+<li><b>비상장:</b> SynSense, Innatera, Rain AI.</li>
+<li><b>대학·연구소:</b> University of Manchester SpiNNaker, Heidelberg BrainScaleS, ETH Zurich/INI.</li>
+</ul>
+<h4>투자 관점</h4>
+<p>Neuromorphic은 “대형 LLM 데이터센터 속도”보다 “초저전력 edge intelligence”에 가깝다. 상장 pure-play인 BrainChip은 변동성이 매우 크며, Intel/IBM은 대형 포트폴리오 속 연구 옵션이다. 투자 매력은 기술적으로는 높지만, 주식 수익화 가시성은 GPU/HBM/CPO보다 낮다.</p>
+<h3>3.8 Systolic array, dataflow architecture, sparse/MoE acceleration, compiler/runtime co-design</h3>
+<h4>개요와 원리</h4>
+<p>Systolic array는 처리 요소(PE) 사이로 데이터가 리듬처럼 흐르며 행렬곱을 수행하는 구조다. Google TPU의 핵심이 이 방식이다. Dataflow architecture는 명령어 중심이 아니라 데이터 이동과 availability에 맞춰 실행을 배치해 온칩 SRAM 활용과 latency를 개선한다. NVIDIA Blackwell은 Transformer Engine과 저정밀 연산을 활용해 AI 모델 처리 효율을 높이는 방향으로 설계되었다<a href="#ref13">13</a>.</p>
+<p>Sparse/MoE 가속은 모델 전체를 매번 계산하지 않고 일부 expert만 활성화하는 구조를 이용해 연산량을 줄인다. 단, expert routing과 통신이 병목이 될 수 있어 네트워킹·메모리와 함께 설계해야 한다.</p>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장:</b> NVIDIA, Alphabet/Google, Broadcom, Marvell, AMD.</li>
+<li><b>비상장:</b> Groq, Tenstorrent, MatX, SambaNova, Cerebras.</li>
+<li><b>소프트웨어:</b> MLIR, TVM, Triton, XLA, CUDA, ROCm, Modular MAX/Mojo.</li>
+</ul>
+<h4>투자 관점</h4>
+<p>이 영역은 특정 pure-play보다 <b>플랫폼화 능력</b>이 중요하다. NVIDIA는 하드웨어와 compiler/runtime을 수직 통합했고, Google은 TPU+XLA+Gemini/Cloud 내부 workload를 통합했다. Broadcom/Marvell은 hyperscaler ASIC의 후방 수혜를 받는다.</p>
+<h3>3.9 AI networking: InfiniBand, Ethernet, SmartNIC/DPU, scale-up fabric</h3>
+<h4>개요와 원리</h4>
+<p>AI 네트워킹은 GPU/ASIC 수천~수만 개를 하나의 거대한 컴퓨터처럼 작동하게 하는 기반이다. NVIDIA는 GB200 NVL72 같은 rack-scale system을 통해 GPU, NVLink, NVSwitch, networking을 통합한다<a href="#ref6">6</a>. Ultra Ethernet Consortium은 AI/HPC workload를 위해 Ethernet을 개선하는 규격을 추진하며, UEC specification은 scale-up과 scale-out 구성을 목표로 한다<a href="#ref14">14</a>.</p>
+<h4>핵심 기술</h4>
+<ul>
+<li><b>InfiniBand/RDMA:</b> CPU 개입 없이 memory-to-memory 전송.</li>
+<li><b>RoCE/Ultra Ethernet:</b> Ethernet 생태계의 비용·개방성 장점과 AI용 congestion control 결합.</li>
+<li><b>DPU/SmartNIC:</b> networking, security, storage virtualization을 CPU에서 offload.</li>
+<li><b>Scale-up fabric:</b> NVLink, UALink 등으로 rack 내부 GPU/accelerator를 고대역 연결.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장:</b> NVIDIA, Broadcom, Marvell, Arista Networks, Cisco, Astera Labs.</li>
+<li><b>비상장:</b> Ayar Labs, DriveNets.</li>
+<li><b>대학:</b> UC Berkeley, Stanford, MIT 계열 distributed systems/networking 연구.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>NVIDIA:</b> InfiniBand+NVLink+Spectrum-X로 AI networking도 매출 축이다. NVDA 투자 논리의 핵심이다.</li>
+<li><b>Arista(ANET):</b> Ethernet AI fabric 확산 수혜. Base <b>$120~$160</b>, Bull <b>$200+</b>, Bear <b>$75~$95</b>.</li>
+<li><b>Broadcom/Marvell:</b> switch silicon, DSP, optical, custom ASIC의 결합 수혜.</li>
+</ul>
+<h3>3.10 Edge AI NPU와 on-device LLM acceleration</h3>
+<h4>개요와 원리</h4>
+<p>Edge NPU는 스마트폰, PC, 자동차, IoT에서 AI 연산을 처리하는 전용 유닛이다. Qualcomm은 Snapdragon 계열에서 Hexagon NPU를 통해 on-device AI 처리 성능을 강조하고 있으며, Google은 Qualcomm NPU에서 LiteRT 기반 최적화를 소개했다<a href="#ref15">15</a>. Arm은 Ethos-U85 NPU가 transformer network 지원을 포함한 edge AI workload를 겨냥한다고 설명한다<a href="#ref16">16</a>.</p>
+<h4>LLM 적용 방식</h4>
+<ul>
+<li><b>INT4/INT8 quantization:</b> 모델 크기와 메모리 bandwidth를 줄인다.</li>
+<li><b>NPU offload:</b> attention, MLP, convolution, embedding 일부를 NPU에 배치한다.</li>
+<li><b>Hybrid inference:</b> 민감 데이터와 빠른 응답은 on-device, 대형 reasoning은 cloud.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장:</b> Qualcomm(QCOM), Apple(AAPL), Arm(ARM), MediaTek(2454.TW), Intel(INTC), AMD(AMD), Microsoft(MSFT).</li>
+<li><b>비상장/한국:</b> DeepX, FuriosaAI, Rebellions 등 NPU/AI 반도체 스타트업.</li>
+<li><b>대학:</b> 서울대, KAIST, MIT, Stanford edge AI 연구.</li>
+</ul>
+<h4>투자 관점</h4>
+<ul>
+<li><b>Qualcomm(QCOM):</b> on-device AI와 AI PC 수혜. Base <b>$190~$240</b>, Bull <b>$300+</b>, Bear <b>$120~$150</b>.</li>
+<li><b>Apple(AAPL):</b> Neural Engine은 제품 차별화 요소이나 AI 가속이 매출로 직접 분리되지는 않는다. Base <b>$230~$300</b>, Bull <b>$350+</b>, Bear <b>$160~$190</b>.</li>
+<li><b>Arm(ARM):</b> CPU/NPU IP 로열티 상승 잠재력은 크나 밸류에이션 부담이 높다. Base <b>$140~$190</b>, Bull <b>$250+</b>, Bear <b>$80~$110</b>.</li>
+</ul>
+<h3>3.11 Quantum-inspired, probabilistic, reversible, thermodynamic accelerator</h3>
+<h4>개요와 원리</h4>
+<p>이 영역은 기존 디지털 deterministic MAC을 넘어 물리 현상을 계산에 활용하려는 접근이다. Toshiba의 Simulated Bifurcation Machine은 조합최적화 문제를 빠르게 푸는 quantum-inspired 방식으로 소개된다<a href="#ref17">17</a>. Extropic은 thermodynamic computing을 통해 확률적 샘플링을 물리 시스템 자체로 수행하려는 접근을 설명한다<a href="#ref18">18</a>. Quanta Magazine은 reversible computing이 정보 삭제에 따른 에너지 비용을 줄여 AI 에너지 문제를 완화할 수 있다는 연구 흐름을 다루었다<a href="#ref19">19</a>.</p>
+<h4>LLM 적용 가능성</h4>
+<ul>
+<li><b>최적화:</b> routing, scheduling, sparsity pattern search, hyperparameter search.</li>
+<li><b>Sampling:</b> generative model의 확률 샘플링을 물리적으로 가속.</li>
+<li><b>저전력 logic:</b> 장기적으로 MAC energy를 줄이는 방향.</li>
+</ul>
+<h4>주요 주체</h4>
+<ul>
+<li><b>상장:</b> D-Wave(QBTS), Fujitsu(6702.T), Toshiba(6502.T), NEC(6701.T), IBM.</li>
+<li><b>비상장:</b> Extropic, Normal Computing, Vaire Computing.</li>
+<li><b>연구:</b> DARPA, University of Toronto, MIT, Caltech 등.</li>
+</ul>
+<h4>투자 관점</h4>
+<p>상용화 가시성은 아직 낮다. D-Wave(QBTS)는 pure-play 성격이 있으나 매우 고위험이다. 3~5년 Bull \*\*$10~$15<b>, Base</b> $4~$8<b>, Bear</b> $1 미만** 시나리오로 본다. 이 영역은 포트폴리오의 핵심보다 “옵션성”에 가깝다.</p>
+<h3>3.12 소프트웨어 레벨 LLM 가속: quantization, pruning, distillation, speculative decoding, KV-cache, FlashAttention, inference engine</h3>
+<h4>개요와 원리</h4>
+<p>소프트웨어 최적화는 하드웨어 교체 없이 즉시 효과가 큰 영역이다. vLLM은 PagedAttention을 통해 KV cache memory를 page 단위로 관리해 serving throughput을 크게 개선한 연구·오픈소스 시스템으로 알려져 있다<a href="#ref20">20</a>. FlashAttention은 attention 계산에서 HBM 접근을 줄이는 IO-aware 알고리즘이며, FlashAttention 논문은 attention을 더 빠르고 memory-efficient하게 계산하는 방법을 제시했다<a href="#ref21">21</a>. NVIDIA TensorRT-LLM은 NVIDIA GPU에서 LLM inference를 최적화하는 open-source library로 제공된다<a href="#ref22">22</a>.</p>
+<h4>핵심 기술</h4>
+<ul>
+<li><b>Quantization:</b> FP16/BF16을 FP8/INT8/INT4/NVFP4 등으로 낮춰 메모리와 연산량 감소.</li>
+<li><b>Pruning:</b> 중요도가 낮은 weight/channel/token을 제거.</li>
+<li><b>Distillation:</b> 작은 모델이 큰 모델의 기능을 모방.</li>
+<li><b>Speculative decoding:</b> 작은 draft model이 여러 token을 제안하고 큰 model이 검증.</li>
+<li><b>KV-cache optimization:</b> 긴 대화·multi-session에서 cache 관리 효율화.</li>
+<li><b>Inference engine:</b> vLLM, TensorRT-LLM, SGLang, TGI, llama.cpp 등.</li>
+</ul>
+<h4>투자 관점</h4>
+<p>소프트웨어 가속은 오픈소스 비중이 높아 직접 투자 대상은 제한적이지만, <b>NVIDIA의 CUDA/TensorRT-LLM 해자</b>, <b>AMD ROCm 개선</b>, <b>클라우드 사업자의 inference margin 개선</b>으로 연결된다. 즉, 소프트웨어 최적화는 특정 소프트웨어 회사보다 하드웨어 플랫폼 기업의 lock-in과 TCO 경쟁력을 강화한다.</p>
+<h2>4. 상장기업 종합 분석</h2>
+<table>
+<thead>
+<tr>
+<th>기업</th>
+<th align="right">티커</th>
+<th>연결 기술</th>
+<th>강점</th>
+<th>핵심 리스크</th>
+<th align="right">3~5년 Base 목표가</th>
+<th align="right">Bull 목표가</th>
+<th>투자 매력</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NVIDIA</td>
+<td align="right">NVDA</td>
+<td>GPU, NVLink, networking, CUDA, TensorRT-LLM</td>
+<td>전체 AI factory 플랫폼</td>
+<td>밸류에이션, 자체 ASIC, 규제</td>
+<td align="right">$220~$280</td>
+<td align="right">$330~$400</td>
+<td>최상</td>
+</tr>
+<tr>
+<td>TSMC</td>
+<td align="right">TSM</td>
+<td>선단공정, CoWoS, advanced packaging</td>
+<td>AI 반도체 제조 병목</td>
+<td>지정학, capex 사이클</td>
+<td align="right">$280~$360</td>
+<td align="right">$420+</td>
+<td>최상</td>
+</tr>
+<tr>
+<td>Broadcom</td>
+<td align="right">AVGO</td>
+<td>custom ASIC, switch ASIC, CPO</td>
+<td>hyperscaler ASIC·Ethernet 수혜</td>
+<td>고객 집중, 규제, valuation</td>
+<td align="right">$250~$330</td>
+<td align="right">$350~$450</td>
+<td>매우 높음</td>
+</tr>
+<tr>
+<td>Marvell</td>
+<td align="right">MRVL</td>
+<td>optical DSP, Celestial AI, custom silicon</td>
+<td>CPO/scale-up optical 옵션</td>
+<td>통합 리스크, 경쟁</td>
+<td align="right">$95~$125</td>
+<td align="right">$140~$170</td>
+<td>매우 높음</td>
+</tr>
+<tr>
+<td>SK hynix</td>
+<td align="right">000660.KS</td>
+<td>HBM</td>
+<td>HBM 선도</td>
+<td>메모리 사이클, 고객 집중</td>
+<td align="right">₩300k~₩380k</td>
+<td align="right">₩450k+</td>
+<td>매우 높음</td>
+</tr>
+<tr>
+<td>Micron</td>
+<td align="right">MU</td>
+<td>HBM, DRAM</td>
+<td>미국 메모리 공급망</td>
+<td>사이클, 경쟁</td>
+<td align="right">$160~$220</td>
+<td align="right">$260+</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td align="right">AMD</td>
+<td>GPU, ROCm, AI PC</td>
+<td>NVIDIA 대체 수요</td>
+<td>CUDA 격차, margin</td>
+<td align="right">$180~$240</td>
+<td align="right">$300~$380</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>Astera Labs</td>
+<td align="right">ALAB</td>
+<td>CXL, retimer, connectivity</td>
+<td>AI 서버 연결성 pure-play</td>
+<td>valuation, 경쟁</td>
+<td align="right">$170~$230</td>
+<td align="right">$300~$380</td>
+<td>높음/고위험</td>
+</tr>
+<tr>
+<td>Arista</td>
+<td align="right">ANET</td>
+<td>AI Ethernet fabric</td>
+<td>클라우드 네트워킹 강자</td>
+<td>Cisco/Broadcom 경쟁</td>
+<td align="right">$120~$160</td>
+<td align="right">$200+</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>Cerebras</td>
+<td align="right">CBRS</td>
+<td>wafer-scale AI</td>
+<td>차별적 추론 성능</td>
+<td>수율, 생태계, 고평가</td>
+<td align="right">$250~$350</td>
+<td align="right">$450~$600</td>
+<td>고위험·고수익</td>
+</tr>
+<tr>
+<td>Qualcomm</td>
+<td align="right">QCOM</td>
+<td>Edge NPU, AI PC</td>
+<td>on-device AI</td>
+<td>Apple 모뎀, 모바일 포화</td>
+<td align="right">$190~$240</td>
+<td align="right">$300+</td>
+<td>중상</td>
+</tr>
+<tr>
+<td>Arm</td>
+<td align="right">ARM</td>
+<td>CPU/NPU IP</td>
+<td>로열티 레버리지</td>
+<td>높은 valuation, RISC-V</td>
+<td align="right">$140~$190</td>
+<td align="right">$250+</td>
+<td>중상/고평가</td>
+</tr>
+<tr>
+<td>IBM</td>
+<td align="right">IBM</td>
+<td>analog IMC, enterprise AI</td>
+<td>연구력·기업 AI</td>
+<td>하드웨어 상용화 불확실</td>
+<td align="right">$220~$280</td>
+<td align="right">$320+</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td align="right">INTC</td>
+<td>foundry, Gaudi, neuromorphic</td>
+<td>제조·PC 기반</td>
+<td>실행 리스크</td>
+<td align="right">$25~$40</td>
+<td align="right">$55+</td>
+<td>턴어라운드형</td>
+</tr>
+<tr>
+<td>D-Wave</td>
+<td align="right">QBTS</td>
+<td>quantum annealing</td>
+<td>pure-play 옵션</td>
+<td>손실·상용화 불확실</td>
+<td align="right">$4~$8</td>
+<td align="right">$10~$15</td>
+<td>투기적</td>
+</tr>
+</tbody></table>
+<h2>5. 투자 유망도 순위</h2>
+<h3>1위: NVIDIA(NVDA)</h3>
+<p>가장 유망한 이유는 <b>단일 기술이 아니라 전체 병목을 동시에 해결하는 플랫폼</b>이기 때문이다. NVIDIA는 GPU 연산, HBM 패키지 통합, NVLink scale-up, InfiniBand/Ethernet scale-out, BlueField DPU, CUDA/TensorRT-LLM 소프트웨어, DGX/GB200 같은 reference system을 모두 제공한다. 경쟁 기술들이 하나의 병목을 해결할 때 NVIDIA는 병목 전체를 시스템 수준에서 최적화한다.</p>
+<h3>2위: TSMC(TSM)</h3>
+<p>AI 가속 기술이 GPU든 ASIC이든 wafer-scale이든 대부분 선단공정과 advanced packaging을 필요로 한다. TSMC는 특정 AI 칩 승자 하나에 베팅하기보다 <b>AI 반도체 제조 병목 전체에 베팅</b>하는 성격이다.</p>
+<h3>3위: Broadcom(AVGO)</h3>
+<p>Hyperscaler custom ASIC과 AI Ethernet/CPO switch silicon의 동시 수혜가 가능하다. NVIDIA 독점 완화의 가장 큰 후방 수혜주 중 하나다.</p>
+<h3>4위: Marvell(MRVL)</h3>
+<p>Celestial AI 인수와 NVIDIA 생태계와의 NVLink Fusion 관련 협력 발표로 optical scale-up interconnect 옵션이 커졌다. Broadcom보다 리스크는 높지만 upside도 크다.</p>
+<h3>5위: SK hynix(000660.KS)</h3>
+<p>HBM은 현재 AI 가속 시스템에서 가장 명확한 병목 중 하나이며, SK hynix는 이 병목의 핵심 공급자다. 다만 메모리 업황 사이클과 가격 변동성이 리스크다.</p>
+<h2>6. 기술별 성숙도와 시간축</h2>
+<table>
+<thead>
+<tr>
+<th>시간축</th>
+<th>유망 기술</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0~2년</td>
+<td>GPU+HBM, software inference engine, AI networking</td>
+<td>이미 매출화. 클라우드 CAPEX와 직접 연결</td>
+</tr>
+<tr>
+<td>2~5년</td>
+<td>CPO/SiPh, custom ASIC, CXL memory, Cerebras wafer-scale</td>
+<td>대규모 inference와 scale-up 병목이 커질수록 채택 확대</td>
+</tr>
+<tr>
+<td>5~10년</td>
+<td>PIM/HBM-PIM, analog IMC, neuromorphic, thermodynamic/reversible</td>
+<td>전력 한계 돌파 후보지만 표준·생태계·양산성 검증 필요</td>
+</tr>
+</tbody></table>
+<h2>7. 결론</h2>
+<p>LLM 가속의 미래는 “GPU vs 비GPU”의 단순 구도가 아니다. 실제 시장은 다음과 같이 분화될 가능성이 높다.</p>
+<ol>
+<li><b>대규모 학습·범용 추론:</b> NVIDIA GPU 플랫폼과 AMD GPU가 주도.</li>
+<li><b>초대형 hyperscaler 내부 workload:</b> Google TPU, AWS Trainium, Meta MTIA, Microsoft Maia 등 custom ASIC 확대.</li>
+<li><b>AI cluster 확장:</b> 실리콘 포토닉스, CPO, NVLink/UALink/Ultra Ethernet, DPU/SmartNIC 중요도 상승.</li>
+<li><b>메모리 병목:</b> HBM4, CXL, PIM, KV-cache software optimization이 핵심.</li>
+<li><b>초저전력·edge:</b> Qualcomm/Apple/Arm/MediaTek NPU와 analog/neuromorphic 기술이 성장.</li>
+<li><b>장기 혁신:</b> wafer-scale, thermodynamic, reversible, quantum-inspired computing이 전력·통신 한계를 흔들 수 있음.</li>
+</ol>
+<p>투자 관점에서는 <b>NVIDIA를 핵심 축으로 두되, TSMC·Broadcom·Marvell·SK hynix를 병목별 보완 축으로 분산</b>하는 전략이 가장 합리적이다. 고위험 성장 옵션으로는 Cerebras(CBRS), Astera Labs(ALAB), D-Wave(QBTS) 등을 별도 위성 포지션으로 볼 수 있다. 단, 본 보고서의 목표가는 2026-06-22 기준 공개 자료와 기술 전망을 바탕으로 한 시나리오 추정이며, 실제 매수·매도 권고가 아니다.</p>
+<h2>References</h2>
+<p id="ref1" class="ref_item" data-cid="yu_6cC">[1] Cerebras Systems, “Cerebras Announces Third Generation Wafer Scale Engine” <a target="_blank" rel="noreferrer" href="https://www.cerebras.ai/press-release/cerebras-announces-third-generation-wafer-scale-engine" data-cid="Tl9YBW">https://www.cerebras.ai/press-release/cerebras-announces-third-generation-wafer-scale-engine</a></p>
+
+<p id="ref2" class="ref_item" data-cid="YnHp3L">[2] Cerebras Systems, “Cerebras Systems Announces Pricing of Initial Public Offering” <a target="_blank" rel="noreferrer" href="https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering" data-cid="iobHtq">https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering</a></p>
+
+<p id="ref3" class="ref_item" data-cid="JWp1Ka">[3] Lam Research, “Silicon Photonics and AI Energy Efficiency” <a target="_blank" rel="noreferrer" href="https://newsroom.lamresearch.com/silicon-photonics-ai-energy-efficiency?blog=true" data-cid="Kae14B">https://newsroom.lamresearch.com/silicon-photonics-ai-energy-efficiency?blog=true</a></p>
+
+<p id="ref4" class="ref_item" data-cid="yjWfEU">[4] Marvell, “Marvell Completes Acquisition of Celestial AI” <a target="_blank" rel="noreferrer" href="https://investor.marvell.com/news-events/press-releases/detail/1005/marvell-completes-acquisition-of-celestial-ai" data-cid="896uGM">https://investor.marvell.com/news-events/press-releases/detail/1005/marvell-completes-acquisition-of-celestial-ai</a></p>
+
+<p id="ref5" class="ref_item" data-cid="pktmJ-">[5] NVIDIA, “NVIDIA AI Ecosystem Expands as Marvell Joins Forces Through NVLink Fusion” <a target="_blank" rel="noreferrer" href="https://nvidianews.nvidia.com/news/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion" data-cid="xGAjOM">https://nvidianews.nvidia.com/news/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion</a></p>
+
+<p id="ref6" class="ref_item" data-cid="r12ple">[6] NVIDIA, “NVIDIA GB200 NVL72” <a target="_blank" rel="noreferrer" href="https://www.nvidia.com/en-us/data-center/gb200-nvl72/" data-cid="W75trM">https://www.nvidia.com/en-us/data-center/gb200-nvl72/</a></p>
+
+<p id="ref7" class="ref_item" data-cid="ryaNJi">[7] Google Cloud, “Introducing Trillium, 6th Gen TPUs” <a target="_blank" rel="noreferrer" href="https://cloud.google.com/blog/products/compute/introducing-trillium-6th-gen-tpus" data-cid="izmDvy">https://cloud.google.com/blog/products/compute/introducing-trillium-6th-gen-tpus</a></p>
+
+<p id="ref8" class="ref_item" data-cid="dzGmmG">[8] Samsung Semiconductor, “The industry’s first HBM-PIM” <a target="_blank" rel="noreferrer" href="https://semiconductor.samsung.com/news-events/tech-blog/the-industrys-first-hbm-pim/"
