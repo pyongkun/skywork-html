@@ -1,0 +1,1501 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="macOS Ghostty에서 SSH로 Linux GPU 서버에 접속해 Python과 딥러닝 학습을 안전하게 수행하는 장문 기술 교재">
+<title>macOS Ghostty로 시작하는 SSH·Linux·딥러닝 서버 완전 학습서</title>
+<style>
+@page {
+  size: A4;
+  margin: 18mm 16mm 20mm;
+}
+.chapter {
+  break-before: page;
+  page-break-before: always;
+}
+.cover {
+  break-after: page;
+  page-break-after: always;
+}
+.keep-together,
+blockquote,
+table,
+pre,
+.references li {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+h1, h2, h3, h4, h5, h6 {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+thead {
+  display: table-header-group;
+}
+tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+:root {
+  color-scheme: light;
+  --accent: #17365d;
+  --text: #1f2933;
+  --muted: #5d6875;
+  --line: #d9dee5;
+  --soft: #f5f7f9;
+  --code: #f1f3f5;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  background: #ffffff;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.78;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  margin: 0;
+  background: #ffffff;
+}
+article {
+  width: calc(100% - 32px);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 0 64px;
+}
+.cover {
+  padding: 34mm 0 24mm;
+  border-top: 7px solid var(--accent);
+}
+.cover h1 {
+  max-width: 100%;
+  margin: 0 0 24px;
+  color: var(--accent);
+  font-size: clamp(1.9rem, 5.2vw, 2.3rem);
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.cover blockquote {
+  margin-top: 28px;
+}
+.toc {
+  padding: 8mm 0 2mm;
+}
+.toc h2 {
+  margin-top: 0;
+}
+.toc ol {
+  columns: 1;
+  padding-left: 1.6rem;
+}
+.toc li {
+  margin: 0.18rem 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h2 {
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.48rem;
+  border-bottom: 2px solid var(--accent);
+  font-size: 1.75rem;
+  line-height: 1.35;
+}
+h3 {
+  margin: 2.25rem 0 0.85rem;
+  font-size: 1.27rem;
+  line-height: 1.45;
+}
+h4 {
+  margin: 1.75rem 0 0.65rem;
+  font-size: 1.08rem;
+}
+p {
+  margin: 0.72rem 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+ul, ol {
+  margin: 0.75rem 0 1rem;
+  padding-left: 1.65rem;
+}
+li {
+  margin: 0.28rem 0;
+}
+li > ul, li > ol {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+a:hover, a:focus {
+  text-decoration-thickness: 2px;
+}
+.inline_marker {
+  margin-left: 0.08em;
+  font-size: 0.84em;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+}
+strong {
+  color: #17212b;
+  font-weight: 700;
+}
+blockquote {
+  margin: 1.15rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--soft);
+  color: #344050;
+}
+blockquote p:first-child {
+  margin-top: 0;
+}
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+code, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+}
+:not(pre) > code {
+  padding: 0.12em 0.34em;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--code);
+  color: #14273e;
+  overflow-wrap: anywhere;
+}
+pre {
+  margin: 1rem 0 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  background: var(--code);
+  color: #17212b;
+  line-height: 1.52;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.82rem;
+}
+table {
+  width: 100%;
+  margin: 1.15rem 0 1.45rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.91rem;
+}
+th, td {
+  padding: 0.58rem 0.62rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+.task-list-item {
+  list-style: none;
+  margin-left: -1.25rem;
+}
+.task-list-item input[type="checkbox"] {
+  width: 0.95rem;
+  height: 0.95rem;
+  margin: 0 0.48rem 0 0;
+  accent-color: var(--accent);
+  vertical-align: -0.12rem;
+}
+.references {
+  padding-left: 1.65rem;
+}
+.references li {
+  margin: 0.85rem 0;
+  overflow-wrap: anywhere;
+}
+.reference-title {
+  font-weight: 700;
+}
+hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+@media print {
+  html {
+    font-size: 10.5pt;
+  }
+  body, article {
+    background: #ffffff;
+  }
+  article {
+    width: 100%;
+    max-width: 180mm;
+    padding: 0;
+  }
+  a {
+    color: var(--accent);
+  }
+}
+</style>
+
+</head><body>
+<article aria-labelledby="document-title" data-cid="5zsDbH"><header class="cover" data-cid="bLfPUM"><h1 id="document-title" data-cid="bFd4NB">macOS Ghostty로 시작하는 SSH·Linux·딥러닝 서버 완전 학습서</h1>
+<blockquote data-cid="lKluPf">
+<p data-cid="FW6MXJ"><strong data-cid="QaQSyh">대상 독자</strong>: macOS에서 터미널을 처음 쓰거나, SSH로 Linux GPU 서버에 접속해 Python·딥러닝 작업을 안전하게 수행하려는 학습자<br data-cid="dMsHmp">
+<strong data-cid="u6m3KM">기준 시점</strong>: 2026년 7월<br data-cid="Z2GuK0">
+<strong data-cid="-F9njw">중요 표기</strong>: 아래의 <code data-cid="2GdVRA">&lt;USER&gt;</code>, <code data-cid="OdX5Xt">&lt;HOST&gt;</code>, <code data-cid="8Gzg77">&lt;PORT&gt;</code>, <code data-cid="Cro66w">&lt;PROJECT&gt;</code> 등은 <strong data-cid="FE9tNL">반드시 자신의 값으로 바꿀 플레이스홀더</strong>다.</p>
+</blockquote>
+</header><section aria-labelledby="toc-title" class="toc" data-cid="ou5iXi"><h2 id="toc-title" data-cid="zqHjRo">목차</h2><ol data-cid="6tC3gy"><li data-cid="CImoe1"><a href="#chapter-01" data-cid="MF7tX2">이 책을 읽는 법</a></li><li data-cid="-1hw6t"><a href="#chapter-02" data-cid="Gc1lum">1. 전체 구조를 한 번에 이해하기</a></li><li data-cid="2U6Zhz"><a href="#chapter-03" data-cid="uXtX59">2. Ghostty 설치와 첫 실행</a></li><li data-cid="NPlGlL"><a href="#chapter-04" data-cid="CqkKix">3. 터미널과 shell의 기초</a></li><li data-cid="T9Ro4p"><a href="#chapter-05" data-cid="FJ2H9Z">4. Ghostty 기본 조작과 설정</a></li><li data-cid="yG3msC"><a href="#chapter-06" data-cid="jKxRSG">5. SSH를 안전하게 시작하기</a></li><li data-cid="bAvvZQ"><a href="#chapter-07" data-cid="5GE1Ef">6. Ghostty와 SSH의 접점: terminfo</a></li><li data-cid="oOCyY6"><a href="#chapter-08" data-cid="IetQ26">7. 파일 전송: scp, sftp, rsync</a></li><li data-cid="J3nfWj"><a href="#chapter-09" data-cid="xRywFB">8. SSH 포트 포워딩과 Jupyter</a></li><li data-cid="p6EK4M"><a href="#chapter-10" data-cid="ODpQSA">9. Linux 파일과 텍스트 도구</a></li><li data-cid="G1XO6F"><a href="#chapter-11" data-cid="miyypS">10. 권한과 소유권</a></li><li data-cid="P8p3S0"><a href="#chapter-12" data-cid="P0RLy3">11. 프로세스, 신호, 로그, 디스크</a></li><li data-cid="lfCl_e"><a href="#chapter-13" data-cid="SiTTgj">12. tmux: 연결이 끊겨도 작업 유지하기</a></li><li data-cid="_dArGV"><a href="#chapter-14" data-cid="-PWuGE">13. Python venv와 Conda</a></li><li data-cid="hliXWo"><a href="#chapter-15" data-cid="otKg_0">14. CUDA와 GPU 모니터링</a></li><li data-cid="tgCS81"><a href="#chapter-16" data-cid="8ZtnWh">15. 장시간 딥러닝 학습 운영</a></li><li data-cid="SLBApg"><a href="#chapter-17" data-cid="jznkTZ">16. Git으로 코드 관리하기</a></li><li data-cid="MB1fA-"><a href="#chapter-18" data-cid="ArcwDI">17. 안전한 셸 스크립트</a></li><li data-cid="--8n-D"><a href="#chapter-19" data-cid="Zpe12-">18. 보안 수칙</a></li><li data-cid="gc8rbi"><a href="#chapter-20" data-cid="I9udrt">19. 장애 해결 플레이북</a></li><li data-cid="aeSL-p"><a href="#chapter-21" data-cid="vXMvHx">20. 단계별 실습 과정</a></li><li data-cid="nhYPL9"><a href="#chapter-22" data-cid="tcks7j">21. 체크리스트</a></li><li data-cid="PxZy-r"><a href="#chapter-23" data-cid="MqKDns">22. 연습문제</a></li><li data-cid="iUFcqA"><a href="#chapter-24" data-cid="ZHPCu_">23. 정답과 해설</a></li><li data-cid="GccaDo"><a href="#chapter-25" data-cid="waFvjm">24. 치트시트</a></li><li data-cid="3oDwHh"><a href="#chapter-26" data-cid="D-Z63R">25. 용어집</a></li><li data-cid="g0oKIX"><a href="#chapter-27" data-cid="2XelDV">26. 다음 학습 경로</a></li><li data-cid="kF7zhv"><a href="#chapter-28" data-cid="jnxnwf">공식 출처 및 참고 자료</a></li></ol></section><section aria-labelledby="chapter-01" class="chapter" data-cid="39ZIDT"><h2 id="chapter-01" data-cid="tJkGQY">이 책을 읽는 법</h2>
+<p data-cid="45-T9q">이 교재는 다음 세 층을 분리해서 설명한다.</p>
+<ol data-cid="CFgm7O">
+<li data-cid="_fT68y"><strong data-cid="HUGbFN">Ghostty 기능</strong>: 글자를 화면에 그리는 macOS 터미널 앱, 탭·분할·폰트·테마·키 바인딩·셸 통합·<code data-cid="-1epXw">ghostty +ssh</code> 등</li>
+<li data-cid="yc8b3-"><strong data-cid="7kh0z4">SSH·shell 기능</strong>: 원격 접속, 인증, 명령 해석, 환경 변수, 파이프, 리다이렉션, 파일 전송 등</li>
+<li data-cid="G4XG9R"><strong data-cid="K-Q3_x">Linux 서버 기능</strong>: 파일·권한·프로세스·로그·디스크·GPU·Python 환경·tmux·Jupyter·Git 등</li>
+</ol>
+<p data-cid="iwh9zY">Ghostty가 딥러닝을 실행하는 것은 아니다. <strong data-cid="LEBmjE">Ghostty 안의 shell이 <code data-cid="2V1A2e">ssh</code>를 실행하고, SSH로 연결된 Linux 서버가 Python과 GPU 학습을 실행한다.</strong> 이 경계를 이해하면 장애가 어느 층에서 생겼는지 판단하기 쉬워진다.</p>
+<h3 data-cid="Nr-1th">실습용 플레이스홀더</h3>
+<pre data-cid="HzCwK7"><code class="language-text" data-cid="ohlsw5">&lt;USER&gt;        서버 계정명             예: alice
+&lt;HOST&gt;        서버 주소               예: gpu.example.edu
+&lt;PORT&gt;        SSH 포트                예: 22 또는 관리자가 준 값
+&lt;ALIAS&gt;       SSH config 별칭          예: gpu-lab
+&lt;PROJECT&gt;     프로젝트명              예: vision-exp
+&lt;REMOTE_DIR&gt;  서버 프로젝트 경로      예: /home/alice/projects/vision-exp
+&lt;LOCAL_DIR&gt;   Mac의 로컬 경로         예: /Users/alice/projects/vision-exp
+&lt;KEY_PATH&gt;    개인키 경로             예: ~/.ssh/id_ed25519_gpu_lab
+&lt;JUPYTER_PORT&gt;서버 Jupyter 포트        예: 8888
+&lt;LOCAL_PORT&gt;  Mac에서 열 로컬 포트     예: 8888
+</code></pre>
+<blockquote data-cid="w_cGuN">
+<p data-cid="nVrGqW"><strong data-cid="_oU9ZD">안전 원칙</strong>: 예제를 복사하기 전에 <code data-cid="xfDouL">pwd</code>, <code data-cid="x7fxLI">whoami</code>, <code data-cid="Ch3E4Z">hostname</code>으로 <strong data-cid="qJmcdk">어디에서 누구로 실행하는지</strong> 확인한다. 명령 앞에 <code data-cid="Zjiz0A">(Mac)</code> 또는 <code data-cid="cPfhg5">(Server)</code>가 붙으면 그 위치에서 실행한다.</p>
+</blockquote>
+</section><section aria-labelledby="chapter-02" class="chapter" data-cid="adQlCm"><h2 id="chapter-02" data-cid="Agj4Tb">1. 전체 구조를 한 번에 이해하기</h2>
+<pre data-cid="kghQ9u"><code class="language-text" data-cid="knp4RT">Mac 키보드
+   ↓
+Ghostty(터미널 에뮬레이터: 화면·입력·탭·분할)
+   ↓
+zsh/bash(shell: 명령 해석)
+   ↓
+OpenSSH client(암호화 연결)
+   ↓ 인터넷/기관망/VPN
+Linux sshd(서버 측 SSH 서비스)
+   ↓
+원격 shell → tmux → Python/Conda → PyTorch/TensorFlow → CUDA driver → GPU
+</code></pre>
+<ul data-cid="j_YRex">
+<li data-cid="h2c2Sn"><code data-cid="KzxxXO">$</code>는 일반 사용자 프롬프트를 뜻하는 관례다. 직접 입력하지 않는다.</li>
+<li data-cid="6B4ETo"><code data-cid="qr82QM">#</code>는 root 프롬프트일 수 있다. 문서의 주석 <code data-cid="Qoe9eN">#</code>와 혼동하지 않는다.</li>
+<li data-cid="KjraG0"><code data-cid="pS43W-">~</code>는 <strong data-cid="_sCybz">현재 사용자의 홈 디렉터리</strong>다. Mac의 <code data-cid="UXjxwP">~</code>와 서버의 <code data-cid="o9fP8_">~</code>는 서로 다르다.</li>
+<li data-cid="_5oSBs">로컬 탭을 닫으면 일반 SSH 세션의 프로세스는 끊길 수 있다. <code data-cid="sQnpqu">tmux</code>는 원격 세션을 서버에 남겨준다.</li>
+</ul>
+<h3 data-cid="T868jD">첫 진단 명령</h3>
+<pre data-cid="JtJwX7"><code class="language-bash" data-cid="FF2ILA">printf 'user=%s\nhost=%s\nshell=%s\nterm=%s\n' "$USER" "$(hostname)" "$SHELL" "$TERM"
+pwd
+uname -a
+</code></pre>
+</section><section aria-labelledby="chapter-03" class="chapter" data-cid="q2A070"><h2 id="chapter-03" data-cid="9y4U6K">2. Ghostty 설치와 첫 실행</h2>
+<p data-cid="6VKS8p">Ghostty는 macOS 네이티브 UI와 GPU 가속 렌더링을 사용하는 터미널 에뮬레이터다. 공식 macOS 바이너리는 <code data-cid="LHpRTz">.dmg</code>로 제공되며, 설정 없이도 실행할 수 있다.<a aria-label="참고문헌 1" class="inline_marker" href="#ref1" data-cid="NfSh8U">1</a><a aria-label="참고문헌 2" class="inline_marker" href="#ref2" data-cid="C406qX">2</a></p>
+<h3 data-cid="tBPFy6">2.1 공식 DMG 설치</h3>
+<ol data-cid="rFiJ-i">
+<li data-cid="16o4yb">공식 다운로드 페이지에서 macOS <code data-cid="dDaEsM">.dmg</code>를 받는다.</li>
+<li data-cid="v0W8-2">파일을 열고 Ghostty를 Applications로 드래그한다.</li>
+<li data-cid="d3_BYv">Applications에서 Ghostty를 실행한다.</li>
+<li data-cid="adDCAM">macOS가 출처 확인을 요구하면 시스템 설정의 개인정보 보호 및 보안에서 확인한다. 보안 경고를 무조건 우회하지 말고 다운로드 출처를 다시 확인한다.</li>
+</ol>
+<h3 data-cid="PYWNHJ">2.2 Homebrew 설치</h3>
+<pre data-cid="nHfB_2"><code class="language-bash" data-cid="ROZXT1">brew install --cask ghostty
+</code></pre>
+<p data-cid="XfPtn9">Homebrew가 없다면 먼저 공식 설치법을 검토한다. 인터넷에서 출처 불명의 <code data-cid="kqQq9x">curl ... | sh</code> 명령을 그대로 실행하지 않는다.</p>
+<h3 data-cid="IZVx5N">2.3 설치 확인과 버전 의존성 확인</h3>
+<pre data-cid="8OfmEz"><code class="language-bash" data-cid="0GmPea">command -v ghostty
+ghostty --version
+ghostty +help 2&gt;/dev/null || ghostty --help
+</code></pre>
+<p data-cid="iLLg-k">GUI 앱으로 설치하면 shell의 <code data-cid="1Eg5a1">PATH</code>에서 <code data-cid="rBFcwG">ghostty</code> 명령을 바로 찾지 못할 수 있다. 이때 앱 자체가 고장 난 것은 아니다. Ghostty 메뉴·공식 문서에서 CLI 설치 방식을 확인하거나 다음처럼 앱 번들 내 실행 파일 존재 여부를 <strong data-cid="MUO92r">조회만</strong> 한다.</p>
+<pre data-cid="fCiico"><code class="language-bash" data-cid="rv1Pze">ls -l /Applications/Ghostty.app/Contents/MacOS/
+</code></pre>
+<blockquote data-cid="rbJK3U">
+<p data-cid="7aMUcR"><strong data-cid="S5KzEI">버전 주의</strong>: <code data-cid="CLPfXG">ghostty +ssh</code>는 공식 조사 자료상 1.3.x에는 없고 1.4.0이 될 개발 버전에 추가된 기능으로 설명되어 있다. 반면 SSH 관련 shell integration 기능은 1.3.x에 존재한다.<a aria-label="참고문헌 3" class="inline_marker" href="#ref3" data-cid="iL6JMK">3</a> 따라서 이 책의 <code data-cid="m6Jds0">+ssh</code> 예제를 실행하기 전 반드시 <code data-cid="SWweRJ">ghostty +ssh --help</code>로 현재 설치본의 지원 여부를 확인한다.</p>
+</blockquote>
+</section><section aria-labelledby="chapter-04" class="chapter" data-cid="8N_3iO"><h2 id="chapter-04" data-cid="oRT7iT">3. 터미널과 shell의 기초</h2>
+<h3 data-cid="XOyDTM">3.1 터미널과 shell은 다르다</h3>
+<ul data-cid="MARY4M">
+<li data-cid="k7eKQ1"><strong data-cid="0rRAzM">Ghostty</strong>: 키 입력을 shell에 전달하고 결과를 화면에 렌더링한다.</li>
+<li data-cid="eH9Mz8"><strong data-cid="ZEJrMl">shell</strong>: <code data-cid="fvDJuJ">cd</code>, 변수 확장, 파이프, 리다이렉션을 해석한다. macOS 기본 대화형 shell은 흔히 zsh다.</li>
+<li data-cid="cnpYNf"><strong data-cid="Tz-PwE">명령/프로그램</strong>: <code data-cid="ZykEug">ssh</code>, <code data-cid="BbvUtk">python</code>, <code data-cid="0K_yRz">git</code>, <code data-cid="YoO5j6">ls</code>처럼 shell이 실행하는 프로그램이다.</li>
+</ul>
+<pre data-cid="m9sGq6"><code class="language-bash" data-cid="ow1UXY"># 현재 shell로 등록된 경로
+printf '%s\n' "$SHELL"
+
+# 현재 프로세스 계층 일부
+ps -p $$ -o pid,ppid,command=
+
+# 명령의 정체 확인: builtin, alias, function, executable 등
+type cd
+type ssh
+type python
+</code></pre>
+<h3 data-cid="mNJSt_">3.2 경로와 이동</h3>
+<pre data-cid="Z-kkaD"><code class="language-bash" data-cid="Lzo4ct">pwd                     # 현재 위치
+ls                      # 현재 디렉터리 목록
+ls -la                  # 숨김 파일과 상세 정보
+cd /absolute/path       # 절대 경로
+cd relative/path        # 상대 경로
+cd ..                   # 상위 디렉터리
+cd ~                    # 홈
+cd -                    # 직전 디렉터리
+</code></pre>
+<p data-cid="thzKzK">공백이 있는 경로는 반드시 인용한다.</p>
+<pre data-cid="eahbVA"><code class="language-bash" data-cid="dGZIY9">cd "$HOME/My Projects"
+</code></pre>
+<h3 data-cid="mdV6AB">3.3 명령 구조와 도움말</h3>
+<pre data-cid="x3J3i4"><code class="language-text" data-cid="ZFnRJv">명령 [옵션] [인자]
+ls   -lah   ~/projects
+</code></pre>
+<pre data-cid="Ycb-ZA"><code class="language-bash" data-cid="Z_CtBv">man ssh
+ssh -h
+ssh -V
+python --help
+</code></pre>
+<p data-cid="GvydZZ"><code data-cid="47mrJG">man</code>에서는 <code data-cid="U-O1AX">/검색어</code>, <code data-cid="MIx7mz">n</code>(다음), <code data-cid="91LMDC">N</code>(이전), <code data-cid="37broa">q</code>(종료)를 익힌다.</p>
+<h3 data-cid="LSo6ZY">3.4 파이프와 리다이렉션</h3>
+<pre data-cid="8xrZ8B"><code class="language-bash" data-cid="HBXpXF">nvidia-smi | less                 # 출력을 페이지 단위로 보기
+python train.py &gt;train.log 2&gt;&amp;1   # stdout과 stderr를 파일에 기록
+python train.py 2&gt;&amp;1 | tee train.log  # 화면과 파일에 동시에 기록
+</code></pre>
+<ul data-cid="7Ll4FW">
+<li data-cid="ISxclH"><code data-cid="UWOv8l">&gt;</code>: 파일을 새로 덮어쓴다.</li>
+<li data-cid="xoFN_H"><code data-cid="E8XVq2">&gt;&gt;</code>: 끝에 추가한다.</li>
+<li data-cid="idbzoC"><code data-cid="MnDKd0">2&gt;</code>: 오류 출력만 보낸다.</li>
+<li data-cid="chvkxI"><code data-cid="BqbFeY">|</code>: 왼쪽 명령의 stdout을 오른쪽 명령의 stdin으로 보낸다.</li>
+</ul>
+<blockquote data-cid="g0sFaN">
+<p data-cid="aL6kBg"><strong data-cid="Wn87C2">경고</strong>: <code data-cid="a6_jz6">&gt;</code>는 기존 파일을 조용히 덮어쓸 수 있다. 중요한 로그에는 <code data-cid="RZBz4q">&gt;&gt;</code> 또는 새 타임스탬프 파일을 사용한다.</p>
+</blockquote>
+<pre data-cid="Wk2Wh5"><code class="language-bash" data-cid="4NoNEM">log_file="logs/train_$(date +%Y%m%d_%H%M%S).log"
+mkdir -p logs
+python train.py 2&gt;&amp;1 | tee "$log_file"
+</code></pre>
+<h3 data-cid="H_fy69">3.5 따옴표와 변수</h3>
+<pre data-cid="MsVWjn"><code class="language-bash" data-cid="WsI5Yx">name='world'
+printf 'literal: $name\n'       # 작은따옴표: 확장 안 함
+printf "expanded: %s\n" "$name" # 큰따옴표: 변수 확장
+</code></pre>
+<p data-cid="khK90m">변수는 기본적으로 큰따옴표로 감싼다: <code data-cid="tE65Qz">"$file"</code>. 그렇지 않으면 공백·와일드카드 때문에 예상치 못한 여러 인자로 나뉠 수 있다.</p>
+</section><section aria-labelledby="chapter-05" class="chapter" data-cid="iHnIUd"><h2 id="chapter-05" data-cid="fARoVw">4. Ghostty 기본 조작과 설정</h2>
+<p data-cid="gOM_NK">Ghostty는 창·탭·분할을 네이티브 UI 구성 요소로 제공하고, macOS에서는 Metal로 화면을 렌더링한다.<a aria-label="참고문헌 4" class="inline_marker" href="#ref4" data-cid="8KQzpr">4</a></p>
+<h3 data-cid="R1ol17">4.1 먼저 메뉴에서 현재 단축키 확인</h3>
+<p data-cid="cav7TQ">버전, macOS 키보드 배열, 사용자 설정에 따라 단축키가 다를 수 있다. 메뉴 막대의 <strong data-cid="p1TsM_">File, Edit, View, Window</strong> 항목에 표시되는 키를 기준으로 한다. 조사 자료에서 대표 기본값은 다음과 같다.</p>
+<ul data-cid="UebemZ">
+<li data-cid="h_kFXW">새 탭: <code data-cid="DkzDz9">Cmd+T</code></li>
+<li data-cid="gYN0HG">분할: <code data-cid="dhw7ko">Cmd+D</code>, <code data-cid="cps_E_">Cmd+Shift+D</code></li>
+<li data-cid="kMew2s">복사/붙여넣기: 일반적인 macOS 방식인 <code data-cid="EFz1PX">Cmd+C</code>, <code data-cid="v3Gl0n">Cmd+V</code></li>
+</ul>
+<p data-cid="UYQMyj">하지만 터미널에서 <code data-cid="A79hkz">Ctrl+C</code>는 복사가 아니라 실행 중 프로세스에 인터럽트 신호를 보내는 키다.</p>
+<h3 data-cid="YwoRO2">4.2 선택과 프롬프트 이동</h3>
+<p data-cid="IKiQEg">Ghostty shell integration은 프롬프트 재그리기, 이전 작업 디렉터리에서 새 터미널 시작, 프롬프트 단위 이동 같은 기능을 제공한다. macOS에서 <code data-cid="BIAk-S">Command</code>를 누른 채 세 번 클릭하면 한 명령의 출력을 선택할 수 있고, <code data-cid="I_nXn8">Option+click</code>은 프롬프트에서 커서를 클릭 위치로 이동시키는 기능을 제공한다.<a aria-label="참고문헌 5" class="inline_marker" href="#ref5" data-cid="OrCFfI">5</a></p>
+<h3 data-cid="X8F6BZ">4.3 설정 파일 위치</h3>
+<p data-cid="3M2KFW">Ghostty 설정은 텍스트 파일이다. 현재 공식 문서 기준으로 파일명은 <code data-cid="wA57tc">config.ghostty</code>이며, 1.2.3 이전에는 <code data-cid="TUc2Vo">config</code>도 사용했다. macOS에서는 XDG 경로와 Application Support 경로를 지원한다.<a aria-label="참고문헌 6" class="inline_marker" href="#ref6" data-cid="0nyLsn">6</a></p>
+<p data-cid="fIWjwW">권장 경로:</p>
+<pre data-cid="nW3fls"><code class="language-text" data-cid="n11I1E">~/.config/ghostty/config.ghostty
+</code></pre>
+<p data-cid="BFQr46">다른 macOS 경로:</p>
+<pre data-cid="Su2DD8"><code class="language-text" data-cid="IBbNRk">~/Library/Application Support/com.mitchellh.ghostty/config.ghostty
+</code></pre>
+<p data-cid="0c32U8">생성:</p>
+<pre data-cid="SLtfor"><code class="language-bash" data-cid="xlXtH0">mkdir -p "$HOME/.config/ghostty"
+${EDITOR:-nano} "$HOME/.config/ghostty/config.ghostty"
+</code></pre>
+<h3 data-cid="YAjm1l">4.4 옵션을 추측하지 않는 법</h3>
+<p data-cid="s_lG8o">Ghostty 옵션은 버전에 따라 추가·변경될 수 있다.</p>
+<ol data-cid="0_YHo2">
+<li data-cid="NoLG04"><code data-cid="yVYVkU">ghostty --version</code> 기록</li>
+<li data-cid="Ua5NVQ">공식 Option Reference 검색</li>
+<li data-cid="Rjw9Uf">가능하면 CLI 도움말 또는 설정 검사 기능 확인</li>
+<li data-cid="XodLaQ">한 번에 한 옵션만 추가</li>
+<li data-cid="sa-CB2">재로딩 후 로그·화면 확인</li>
+<li data-cid="vtlpjo">문제가 나면 방금 추가한 줄을 주석 처리</li>
+</ol>
+<p data-cid="k8YHxU">폰트 목록은 다음 명령으로 확인한다.<a aria-label="참고문헌 7" class="inline_marker" href="#ref7" data-cid="19rKq6">7</a></p>
+<pre data-cid="cSyiMl"><code class="language-bash" data-cid="HGT4yX">ghostty +list-fonts
+</code></pre>
+<h3 data-cid="oop65q">4.5 보수적인 추천 설정 템플릿</h3>
+<p data-cid="HkCCJB">아래는 <strong data-cid="2FLulO">출발점</strong>이다. 폰트명과 테마명은 설치본에서 확인한다. 키 바인딩은 기본값을 먼저 익힌 뒤 추가한다.</p>
+<pre data-cid="SMYwSy"><code class="language-ini" data-cid="2UksCZ"># ~/.config/ghostty/config.ghostty
+
+# ghostty +list-fonts로 실제 이름을 확인한 뒤 설정
+font-family = "&lt;INSTALLED_MONOSPACE_FONT&gt;"
+font-size = 13
+
+# 공식 레퍼런스와 현재 설치본에서 이름을 확인
+# theme = &lt;THEME_NAME&gt;
+
+# 대화형 ssh를 Ghostty가 보조하도록 하는 기능.
+# 현재 버전에서 지원되는지 공식 문서와 로그를 확인한다.
+shell-integration-features = ssh-env,ssh-terminfo
+</code></pre>
+<blockquote data-cid="NCzAQW">
+<p data-cid="DJ16js"><strong data-cid="VoQAUi">주의</strong>: 조사 요약의 <code data-cid="t1WOfg">theme = dark</code>는 문법 예시이지 모든 버전에서 원하는 테마를 보장하는 추천값이 아니다. 실제 테마명·옵션은 현재 Option Reference에서 확인한다.</p>
+</blockquote>
+<h3 data-cid="QowvAW">4.6 Ghostty shell integration</h3>
+<p data-cid="jS_Bhn">Ghostty는 zsh, bash, fish, elvish, nushell 등의 통합을 자동 주입할 수 있다. 다만 macOS 기본 <code data-cid="eR4SCO">/bin/bash</code>는 자동 통합 대상에서 제한이 있으므로 수동 source 또는 최신 Bash 설치가 필요할 수 있다.<a aria-label="참고문헌 5" class="inline_marker" href="#ref5" data-cid="CTK7eN">5</a></p>
+<p data-cid="GWKzPi">자동 통합을 끄는 예:</p>
+<pre data-cid="FfVaQk"><code class="language-ini" data-cid="exH6tv">shell-integration = none
+</code></pre>
+<p data-cid="r0ABcj">shell을 바꿔 실행하거나 <code data-cid="I1vxG2">nix-shell</code> 등으로 새 shell에 들어가면 처음 주입된 통합이 이어지지 않을 수 있다. 수동 통합 경로와 현재 <code data-cid="r19vD1">GHOSTTY_RESOURCES_DIR</code>을 점검한다.</p>
+<pre data-cid="LjhhvO"><code class="language-bash" data-cid="oFovaK">printf '%s\n' "${GHOSTTY_RESOURCES_DIR:-not-set}"
+</code></pre>
+</section><section aria-labelledby="chapter-06" class="chapter" data-cid="P-Fjnv"><h2 id="chapter-06" data-cid="NDVLTm">5. SSH를 안전하게 시작하기</h2>
+<h3 data-cid="yd-bOO">5.1 접속 전 받아야 할 정보</h3>
+<p data-cid="fAlgjV">관리자에게 다음을 확인한다.</p>
+<ul data-cid="qQMVbU">
+<li data-cid="dWY_t8"><code data-cid="NLC4eW">&lt;HOST&gt;</code>: DNS 이름 또는 IP</li>
+<li data-cid="14ffw4"><code data-cid="qxR79n">&lt;PORT&gt;</code>: 기본 22인지 별도 포트인지</li>
+<li data-cid="2khfgw"><code data-cid="jVdqCJ">&lt;USER&gt;</code>: 계정명</li>
+<li data-cid="vIxRRh">VPN 또는 기관망 필요 여부</li>
+<li data-cid="18kCn3">공개키 등록 절차</li>
+<li data-cid="-zJcAH">bastion/jump host 필요 여부</li>
+<li data-cid="4RSvQK">GPU 사용 정책, 스케줄러(Slurm 등) 여부</li>
+<li data-cid="fQZ6mK">허용된 저장 위치와 quota</li>
+</ul>
+<h3 data-cid="7WijES">5.2 첫 접속</h3>
+<pre data-cid="46z1VE"><code class="language-bash" data-cid="I3n2ar">ssh -p &lt;PORT&gt; &lt;USER&gt;@&lt;HOST&gt;
+</code></pre>
+<p data-cid="I6Ucn3">처음 보이는 host key fingerprint는 서버 신원을 확인하는 장치다. <strong data-cid="TMuV_t">그냥 <code data-cid="sl_vpT">yes</code>를 누르지 말고</strong> 관리자가 별도 채널로 제공한 fingerprint와 비교한다.</p>
+<p data-cid="kZcing">접속 직후:</p>
+<pre data-cid="ZeDuWj"><code class="language-bash" data-cid="LwM1lr">whoami
+hostname
+pwd
+printf '%s\n' "$HOME" "$SHELL" "$TERM"
+</code></pre>
+<p data-cid="ojLLBO">종료:</p>
+<pre data-cid="oiC8xk"><code class="language-bash" data-cid="GD449O">exit
+</code></pre>
+<p data-cid="-06SlN">또는 shell 입력이 정상일 때 <code data-cid="-X0b-n">Ctrl+D</code>를 사용할 수 있다.</p>
+<h3 data-cid="dSzLjF">5.3 SSH 키 생성</h3>
+<p data-cid="DgS7kG">Mac에서 서버별 키를 별도 파일로 만들면 폐기와 회수가 쉽다.</p>
+<pre data-cid="NYSfNu"><code class="language-bash" data-cid="Hoeeqb">ssh-keygen -t ed25519 -a 100 -f "$HOME/.ssh/id_ed25519_gpu_lab" -C "&lt;USER&gt;@&lt;MAC_NAME&gt;-gpu-lab"
+</code></pre>
+<ul data-cid="xjjghM">
+<li data-cid="VeAI7E">강한 passphrase를 설정한다.</li>
+<li data-cid="wSIg0r">개인키 <code data-cid="w_wmKH">&lt;KEY_PATH&gt;</code>는 공유하지 않는다.</li>
+<li data-cid="sd7qy-"><code data-cid="-bDcGG">.pub</code> 공개키만 관리자나 등록 시스템에 제공한다.</li>
+</ul>
+<p data-cid="-fbuJi">권한 확인:</p>
+<pre data-cid="c7i0mK"><code class="language-bash" data-cid="oZQ-O8">chmod 700 "$HOME/.ssh"
+chmod 600 "$HOME/.ssh/id_ed25519_gpu_lab"
+chmod 644 "$HOME/.ssh/id_ed25519_gpu_lab.pub"
+</code></pre>
+<blockquote data-cid="e7hr4L">
+<p data-cid="nV7xbE"><strong data-cid="Fll7aZ">위험</strong>: 개인키 내용을 메신저·이메일·Git 저장소에 붙여 넣지 않는다. <code data-cid="3Rceue">cat ~/.ssh/id_ed25519_gpu_lab</code>도 화면 공유 중에는 하지 않는다.</p>
+</blockquote>
+<h3 data-cid="E-LhxY">5.4 공개키 등록</h3>
+<p data-cid="KpZ8gC">관리자가 <code data-cid="9RfzHs">ssh-copy-id</code>를 허용한 경우:</p>
+<pre data-cid="ohEh4g"><code class="language-bash" data-cid="00tuNR">ssh-copy-id -i "$HOME/.ssh/id_ed25519_gpu_lab.pub" -p &lt;PORT&gt; &lt;USER&gt;@&lt;HOST&gt;
+</code></pre>
+<p data-cid="b5gm91">macOS에 <code data-cid="Vcyjgz">ssh-copy-id</code>가 없다면 공개키 한 줄을 관리자의 공식 등록 포털로 제출하거나, 관리자가 안내한 방식만 따른다. 암호로 접속 가능한 서버라면 다음 방식도 가능하지만, 원격 명령 인용을 이해한 뒤 사용한다.</p>
+<pre data-cid="q0AzB3"><code class="language-bash" data-cid="GjCwPW">cat "$HOME/.ssh/id_ed25519_gpu_lab.pub" | \
+  ssh -p &lt;PORT&gt; &lt;USER&gt;@&lt;HOST&gt; \
+  'umask 077; mkdir -p ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys'
+</code></pre>
+<h3 data-cid="KQKL4h">5.5 macOS Keychain과 agent</h3>
+<pre data-cid="86APAy"><code class="language-bash" data-cid="5EuskV">ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519_gpu_lab"
+ssh-add -l
+</code></pre>
+<p data-cid="D0mK6X">OpenSSH 빌드에 따라 <code data-cid="NC2K38">--apple-use-keychain</code> 지원이 다를 수 있으므로 실패하면 <code data-cid="7AasgT">ssh-add --help</code> 또는 <code data-cid="rmQtLd">man ssh-add</code>를 확인한다. agent forwarding은 기본적으로 켜지 않는다.</p>
+<h3 data-cid="TWAStw">5.6 <code data-cid="Ad-xcL">~/.ssh/config</code> 작성</h3>
+<pre data-cid="RUcB6t"><code class="language-sshconfig" data-cid="LRNRBb"># ~/.ssh/config
+Host gpu-lab
+    HostName &lt;HOST&gt;
+    User &lt;USER&gt;
+    Port &lt;PORT&gt;
+    IdentityFile ~/.ssh/id_ed25519_gpu_lab
+    IdentitiesOnly yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    AddKeysToAgent yes
+    UseKeychain yes
+</code></pre>
+<pre data-cid="ayzo1b"><code class="language-bash" data-cid="I-BEjr">chmod 600 "$HOME/.ssh/config"
+ssh gpu-lab
+</code></pre>
+<p data-cid="jIikZ5"><code data-cid="J-gwk4">UseKeychain</code>은 macOS OpenSSH 관련 옵션이므로 다른 OS에서 같은 config를 공유하면 호환성을 점검한다. 실제 적용값은 다음으로 확인한다.</p>
+<pre data-cid="5DBjcb"><code class="language-bash" data-cid="HRsZp4">ssh -G gpu-lab | less
+</code></pre>
+<h3 data-cid="LdTQQ-">5.7 jump host</h3>
+<pre data-cid="_G-xlH"><code class="language-sshconfig" data-cid="7XwmYj">Host bastion
+    HostName &lt;BASTION_HOST&gt;
+    User &lt;BASTION_USER&gt;
+    Port &lt;BASTION_PORT&gt;
+    IdentityFile ~/.ssh/id_ed25519_bastion
+
+Host gpu-private
+    HostName &lt;PRIVATE_GPU_HOST&gt;
+    User &lt;USER&gt;
+    Port &lt;PORT&gt;
+    IdentityFile ~/.ssh/id_ed25519_gpu_lab
+    ProxyJump bastion
+</code></pre>
+<p data-cid="5VcXYZ"><code data-cid="3Jfx1S">ProxyJump</code>가 있으면 최종 서버의 host key도 별도로 확인한다.</p>
+<h3 data-cid="ULGXih">5.8 상세 디버깅</h3>
+<pre data-cid="zVYg_4"><code class="language-bash" data-cid="RgqUAC">ssh -v gpu-lab
+ssh -vv gpu-lab
+ssh -vvv gpu-lab
+</code></pre>
+<p data-cid="2Gcn30">로그를 공유하기 전 사용자명, 호스트, IP, 키 경로 등 민감 정보를 가린다. <code data-cid="mG1aF_">-vvv</code>는 진단용이지 상시 옵션이 아니다.</p>
+</section><section aria-labelledby="chapter-07" class="chapter" data-cid="0VDFCi"><h2 id="chapter-07" data-cid="Mg0ZgT">6. Ghostty와 SSH의 접점: terminfo</h2>
+<p data-cid="epuln5">원격 프로그램은 <code data-cid="Ly2y2O">$TERM</code>과 terminfo를 이용해 색상·키·화면 제어 능력을 판단한다. Ghostty는 <code data-cid="woCs1B">xterm-ghostty</code>를 사용할 수 있지만 원격 서버에 해당 terminfo가 없으면 <code data-cid="nfcnHU">Error opening terminal: xterm-ghostty</code> 같은 오류가 날 수 있다.<a aria-label="참고문헌 8" class="inline_marker" href="#ref8" data-cid="hsHuKw">8</a></p>
+<h3 data-cid="eLM0UP">6.1 <code data-cid="LTxkzo">ghostty +ssh</code> 지원 버전</h3>
+<p data-cid="iXOldq">지원 여부부터 확인한다.</p>
+<pre data-cid="cqxUHZ"><code class="language-bash" data-cid="ZGG-sP">ghostty +ssh --help
+</code></pre>
+<p data-cid="T89dU2">지원한다면:</p>
+<pre data-cid="JF5Rt7"><code class="language-bash" data-cid="IEkp-2">ghostty +ssh -- &lt;USER&gt;@&lt;HOST&gt;
+ghostty +ssh -- -p &lt;PORT&gt; &lt;USER&gt;@&lt;HOST&gt;
+ghostty +ssh -- gpu-lab
+</code></pre>
+<p data-cid="sPCELp">공식 문서에 따르면 <code data-cid="Tt8_z_">+ssh</code>는 실제 <code data-cid="bw1mkp">ssh</code> 인자를 전달하면서 원격 terminfo 설치와 일부 환경 전달을 준비한다. terminfo 설치가 실패하면 경고 후 <code data-cid="NY50Hr">TERM=xterm-256color</code>로 fallback할 수 있다.<a aria-label="참고문헌 3" class="inline_marker" href="#ref3" data-cid="YBT5HK">3</a></p>
+<h3 data-cid="K7gbVf">6.2 자동 wrapper</h3>
+<pre data-cid="lkYRzL"><code class="language-ini" data-cid="16Uuv5">shell-integration-features = ssh-env,ssh-terminfo
+</code></pre>
+<p data-cid="rNO4mv">이 설정은 대화형 shell에서 <code data-cid="_DYON0">ssh</code> 함수를 감싸 <code data-cid="woMIVI">+ssh</code> 동작을 사용하도록 할 수 있다. 그러나 shell function은 <code data-cid="g0p5tf">rsync</code>, <code data-cid="_vQGI0">scp</code>, <code data-cid="IqiU4e">sftp</code>, Git, <code data-cid="83uIbS">gcloud</code>, cron, 스크립트 같은 자식 프로세스가 직접 호출하는 <code data-cid="GvTdae">ssh</code>에는 적용되지 않는다.<a aria-label="참고문헌 3" class="inline_marker" href="#ref3" data-cid="g14MOz">3</a></p>
+<p data-cid="n0bCGc">확인:</p>
+<pre data-cid="edIv4U"><code class="language-bash" data-cid="cpMxP9">type ssh
+command -V ssh
+</code></pre>
+<p data-cid="7JfD8I">원래 실행 파일을 명시해야 할 때:</p>
+<pre data-cid="RJ6ZGH"><code class="language-bash" data-cid="7_kKYR">command ssh gpu-lab
+/usr/bin/ssh gpu-lab
+</code></pre>
+<h3 data-cid="ijbQq0">6.3 안전한 fallback</h3>
+<p data-cid="FK8NZO">Ghostty 전용 terminfo가 없고 설치 권한도 없다면 해당 호스트에 한해 <code data-cid="o_LscM">xterm-256color</code>를 사용하도록 SSH 설정을 검토할 수 있다.</p>
+<pre data-cid="msRGDI"><code class="language-sshconfig" data-cid="2umx7b">Host legacy-gpu
+    HostName &lt;HOST&gt;
+    User &lt;USER&gt;
+    SetEnv TERM=xterm-256color
+</code></pre>
+<p data-cid="gA_RhU"><code data-cid="rrU2Sk">SetEnv</code>는 OpenSSH 버전에 따라 지원 여부가 다르며, 원격에 <code data-cid="etKZyv">xterm-ghostty</code>가 이미 있으면 기능을 불필요하게 낮출 수 있다.<a aria-label="참고문헌 3" class="inline_marker" href="#ref3" data-cid="WLgh-0">3</a> 먼저 다음을 확인한다.</p>
+<pre data-cid="zrbm1h"><code class="language-bash" data-cid="VSX4Uz">ssh -V
+ssh legacy-gpu 'infocmp xterm-ghostty &gt;/dev/null 2&gt;&amp;1; echo $?'
+</code></pre>
+</section><section aria-labelledby="chapter-08" class="chapter" data-cid="D-GWa_"><h2 id="chapter-08" data-cid="fSEp6Y">7. 파일 전송: scp, sftp, rsync</h2>
+<h3 data-cid="O6BFiN">7.1 scp</h3>
+<pre data-cid="x-z0kA"><code class="language-bash" data-cid="AbCO8M"># Mac → 서버
+scp -P &lt;PORT&gt; "$HOME/data/sample.csv" &lt;USER&gt;@&lt;HOST&gt;:&lt;REMOTE_DIR&gt;/data/
+
+# 서버 → Mac
+scp -P &lt;PORT&gt; &lt;USER&gt;@&lt;HOST&gt;:&lt;REMOTE_DIR&gt;/logs/train.log "$HOME/Downloads/"
+
+# SSH config 별칭 사용
+scp "$HOME/data/sample.csv" gpu-lab:&lt;REMOTE_DIR&gt;/data/
+</code></pre>
+<p data-cid="IeDo7M"><code data-cid="ek6jih">scp</code>의 포트 옵션은 대문자 <code data-cid="JGukLX">-P</code>다. 대상의 끝에 <code data-cid="89UOYk">/</code>가 있는지와 디렉터리 존재 여부를 확인한다.</p>
+<h3 data-cid="juX6qJ">7.2 sftp</h3>
+<pre data-cid="D18sUM"><code class="language-bash" data-cid="RBziYZ">sftp gpu-lab
+</code></pre>
+<p data-cid="0K71R9">대화형 내부 명령:</p>
+<pre data-cid="WUkTOb"><code class="language-text" data-cid="V4yBSa">pwd       원격 현재 위치
+lpwd      로컬 현재 위치
+ls        원격 목록
+lls       로컬 목록
+put FILE  업로드
+get FILE  다운로드
+exit      종료
+</code></pre>
+<h3 data-cid="VcJK6Q">7.3 rsync</h3>
+<p data-cid="tO7oDZ">반복 전송·중단 재개에는 rsync가 유용하다.</p>
+<pre data-cid="tD-lV7"><code class="language-bash" data-cid="xGnlNB"># 먼저 변경 예정만 확인
+rsync -avhn --progress \
+  --exclude '.git/' --exclude '__pycache__/' --exclude '*.pt' \
+  "&lt;LOCAL_DIR&gt;/" "gpu-lab:&lt;REMOTE_DIR&gt;/"
+
+# 확인 후 실제 실행: -n만 제거
+rsync -avh --progress --partial \
+  --exclude '.git/' --exclude '__pycache__/' --exclude '*.pt' \
+  "&lt;LOCAL_DIR&gt;/" "gpu-lab:&lt;REMOTE_DIR&gt;/"
+</code></pre>
+<blockquote data-cid="whL4t_">
+<p data-cid="cWmHxD"><strong data-cid="NhHHxz">매우 위험</strong>: <code data-cid="dmPQbl">--delete</code>는 목적지의 불필요한 파일을 삭제한다. 첫 실행에는 사용하지 말고 반드시 <code data-cid="Lyjjyb">-n/--dry-run</code> 결과를 검토한다. 체크포인트와 데이터셋 디렉터리를 별도 백업 없이 동기화 삭제하지 않는다.</p>
+</blockquote>
+<p data-cid="Tls9VJ">비표준 포트 또는 config를 쓰지 않을 때:</p>
+<pre data-cid="cQsa0s"><code class="language-bash" data-cid="HbV3JY">rsync -avhn -e 'ssh -p &lt;PORT&gt;' "&lt;LOCAL_DIR&gt;/" "&lt;USER&gt;@&lt;HOST&gt;:&lt;REMOTE_DIR&gt;/"
+</code></pre>
+</section><section aria-labelledby="chapter-09" class="chapter" data-cid="vOZhtd"><h2 id="chapter-09" data-cid="1IbSy1">8. SSH 포트 포워딩과 Jupyter</h2>
+<h3 data-cid="QRJskv">8.1 로컬 포워딩 개념</h3>
+<pre data-cid="oFIPMp"><code class="language-text" data-cid="Bgw8GO">Mac localhost:&lt;LOCAL_PORT&gt;
+  → 암호화된 SSH 연결
+  → 서버에서 본 localhost:&lt;REMOTE_PORT&gt;
+</code></pre>
+<pre data-cid="zlnlQD"><code class="language-bash" data-cid="suO72x">ssh -N -L &lt;LOCAL_PORT&gt;:127.0.0.1:&lt;REMOTE_PORT&gt; gpu-lab
+</code></pre>
+<ul data-cid="HEk25Q">
+<li data-cid="wIq-A4"><code data-cid="T7xzGe">-L</code>: local forwarding</li>
+<li data-cid="_9fOFr"><code data-cid="8DWqTH">-N</code>: 원격 shell 명령을 실행하지 않고 터널만 유지</li>
+<li data-cid="AJA6M3">포트가 이미 사용 중이면 다른 <code data-cid="rqJXks">&lt;LOCAL_PORT&gt;</code>를 고른다.</li>
+</ul>
+<h3 data-cid="ecph_R">8.2 Jupyter 안전 실행</h3>
+<p data-cid="PXlhWo">서버에서:</p>
+<pre data-cid="AHYs3z"><code class="language-bash" data-cid="QfCOHF">cd &lt;REMOTE_DIR&gt;
+source .venv/bin/activate
+jupyter lab --no-browser --ip=127.0.0.1 --port=&lt;JUPYTER_PORT&gt;
+</code></pre>
+<p data-cid="4b053b">Mac의 새 Ghostty 탭에서:</p>
+<pre data-cid="koRQpx"><code class="language-bash" data-cid="7XDFdh">ssh -N -L &lt;LOCAL_PORT&gt;:127.0.0.1:&lt;JUPYTER_PORT&gt; gpu-lab
+</code></pre>
+<p data-cid="XkoN6F">브라우저:</p>
+<pre data-cid="hjL3JK"><code class="language-text" data-cid="zvhxBE">http://127.0.0.1:&lt;LOCAL_PORT&gt;/
+</code></pre>
+<blockquote data-cid="O-R2ll">
+<p data-cid="YEr1Zh"><strong data-cid="dZWueT">보안 경고</strong>: Jupyter를 무심코 <code data-cid="Y5LSnn">--ip=0.0.0.0</code>로 외부에 노출하지 않는다. <code data-cid="rAGbo8">127.0.0.1</code>에 바인딩하고 SSH 터널로 접근한다. 토큰을 채팅이나 저장소에 올리지 않는다.</p>
+</blockquote>
+<h3 data-cid="hIilWc">8.3 포워딩을 config로 정의</h3>
+<pre data-cid="5-ehNz"><code class="language-sshconfig" data-cid="SE4_b5">Host gpu-jupyter
+    HostName &lt;HOST&gt;
+    User &lt;USER&gt;
+    Port &lt;PORT&gt;
+    IdentityFile ~/.ssh/id_ed25519_gpu_lab
+    LocalForward &lt;LOCAL_PORT&gt; 127.0.0.1:&lt;JUPYTER_PORT&gt;
+    ExitOnForwardFailure yes
+</code></pre>
+<pre data-cid="aZS3nB"><code class="language-bash" data-cid="qCPM6P">ssh -N gpu-jupyter
+</code></pre>
+<h3 data-cid="tgSm7Y">8.4 원격·동적 포워딩 주의</h3>
+<ul data-cid="CSwsuP">
+<li data-cid="XHlsF2"><code data-cid="F0x6Y0">-R</code>은 원격 측 포트를 연다. 조직 정책과 <code data-cid="nO62Su">GatewayPorts</code> 설정을 이해하지 못하면 사용하지 않는다.</li>
+<li data-cid="lk9iIn"><code data-cid="7Wbet8">-D</code>는 SOCKS 프록시를 만든다. 트래픽 정책을 우회하는 용도로 사용하지 않는다.</li>
+</ul>
+</section><section aria-labelledby="chapter-10" class="chapter" data-cid="AxXn64"><h2 id="chapter-10" data-cid="0uJD5H">9. Linux 파일과 텍스트 도구</h2>
+<pre data-cid="hPGP4Z"><code class="language-bash" data-cid="k_NxhA">mkdir -p projects/&lt;PROJECT&gt;/{src,configs,logs,checkpoints}
+touch README.md
+cp source.py backup.py
+mv old.py src/train.py
+</code></pre>
+<p data-cid="dLCAkI">조회:</p>
+<pre data-cid="t6YtVy"><code class="language-bash" data-cid="mTHndK">find . -maxdepth 2 -type f -print
+wc -l src/*.py
+head -n 20 logs/train.log
+tail -n 50 logs/train.log
+tail -F logs/train.log
+less logs/train.log
+grep -n 'ERROR' logs/train.log
+</code></pre>
+<blockquote data-cid="TfqWTb">
+<p data-cid="FpXegQ"><strong data-cid="hpNXvU">위험 명령</strong>: <code data-cid="ZLKtQe">rm</code>은 휴지통을 거치지 않는다.</p>
+</blockquote>
+<p data-cid="yb7VkN">안전한 순서:</p>
+<pre data-cid="8tRaLS"><code class="language-bash" data-cid="tKuyLX"># 1) 대상 조회
+printf 'target=%q\n' "&lt;TARGET&gt;"
+ls -ld -- "&lt;TARGET&gt;"
+
+# 2) 파일 하나를 대화형 삭제
+rm -i -- "&lt;TARGET_FILE&gt;"
+
+# 3) 디렉터리는 먼저 비었는지 확인
+find "&lt;TARGET_DIR&gt;" -maxdepth 2 -print
+</code></pre>
+<p data-cid="ZPlPeT"><code data-cid="PBqYJp">rm -rf</code>는 프로젝트 루트, 변수, glob과 결합할 때 특히 위험하다. 빈 변수 방어 없이 <code data-cid="PwkQv3">rm -rf "$DIR"/*</code> 같은 코드를 작성하지 않는다. 가능하면 버전 관리·백업·격리 디렉터리를 사용한다.</p>
+</section><section aria-labelledby="chapter-11" class="chapter" data-cid="qEkRFm"><h2 id="chapter-11" data-cid="bGvYlx">10. 권한과 소유권</h2>
+<pre data-cid="bvkxXX"><code class="language-bash" data-cid="SKXQuy">ls -l file
+stat file
+id
+groups
+umask
+</code></pre>
+<p data-cid="GSC_bF">권한은 소유자(user), 그룹(group), 기타(other)의 읽기(r), 쓰기(w), 실행(x)으로 구성된다.</p>
+<pre data-cid="m8S7Li"><code class="language-bash" data-cid="4d2VyI">chmod u+x script.sh
+chmod 600 secret.env
+chmod 700 ~/.ssh
+chmod 644 ~/.ssh/authorized_keys
+</code></pre>
+<ul data-cid="lABXa4">
+<li data-cid="oNqnf8">디렉터리의 <code data-cid="a8rTlE">x</code>는 진입·탐색 권한과 관련된다.</li>
+<li data-cid="L7QydV"><code data-cid="25Xtig">chmod 777</code>은 문제를 숨기는 위험한 임시방편이다.</li>
+<li data-cid="kdHmqS"><code data-cid="FrAdtc">chown</code>은 보통 root 권한이 필요하다.</li>
+</ul>
+<blockquote data-cid="jX4AXO">
+<p data-cid="rMDoCL"><strong data-cid="UrZ4UG">경고</strong>: <code data-cid="q7754n">sudo chmod -R 777 &lt;DIR&gt;</code> 또는 <code data-cid="so9dfD">sudo chown -R</code>을 원인 파악 없이 실행하지 않는다. 공유 GPU 서버에서는 다른 사용자 데이터와 서비스까지 손상할 수 있다. 먼저 <code data-cid="SpMKDu">namei -l &lt;PATH&gt;</code>, <code data-cid="veNg7C">ls -ld</code>, <code data-cid="Qp0ReK">id</code>, ACL 여부(<code data-cid="qtzGNA">getfacl</code>이 있다면)를 확인하고 관리자에게 문의한다.</p>
+</blockquote>
+<p data-cid="KXKGIB"><code data-cid="mYQ0Fp">sudo</code> 사용 전 체크:</p>
+<pre data-cid="fCJt4w"><code class="language-bash" data-cid="8FV-DT">whoami
+pwd
+printf '%q\n' "&lt;TARGET_PATH&gt;"
+</code></pre>
+<p data-cid="-X1DFb">서버에 sudo 권한이 없다는 것은 정상일 수 있다. Python 패키지를 설치하려고 <code data-cid="I7FKS1">sudo pip install</code>을 사용하지 말고 가상환경을 사용한다.</p>
+</section><section aria-labelledby="chapter-12" class="chapter" data-cid="6ghn8n"><h2 id="chapter-12" data-cid="OV7tq_">11. 프로세스, 신호, 로그, 디스크</h2>
+<h3 data-cid="hy50I_">11.1 프로세스 조회</h3>
+<pre data-cid="vRR-a-"><code class="language-bash" data-cid="2ujPGH">ps -u "$USER" -f
+pgrep -af python
+top
+</code></pre>
+<p data-cid="i10dbo">가능하다면 <code data-cid="rIQ1-u">htop</code>도 유용하지만 설치 여부는 서버마다 다르다.</p>
+<h3 data-cid="4BOaFw">11.2 종료 순서</h3>
+<ol data-cid="W7NSwg">
+<li data-cid="rY0P7Y">프로그램이 제공하는 정상 종료 사용</li>
+<li data-cid="be9nkd"><code data-cid="S0LBJy">Ctrl+C</code>로 SIGINT</li>
+<li data-cid="ChEAuN">PID를 확인하고 SIGTERM</li>
+<li data-cid="E7C5E2">최후에만 SIGKILL</li>
+</ol>
+<pre data-cid="ReAtHu"><code class="language-bash" data-cid="qkY2Z6">kill -TERM &lt;PID&gt;
+sleep 5
+ps -p &lt;PID&gt;
+kill -KILL &lt;PID&gt;  # 정말 종료되지 않을 때만
+</code></pre>
+<blockquote data-cid="hPt70x">
+<p data-cid="03SfmI"><strong data-cid="uNmTxF">위험</strong>: <code data-cid="apY27Z">pkill python</code>, <code data-cid="pnIXcK">killall python</code>은 자신의 다른 작업까지 종료할 수 있다. <code data-cid="EmCD0q">pgrep -af</code>로 정확한 PID를 확인한다. 공유 서버에서 다른 사용자 프로세스에 손대지 않는다.</p>
+</blockquote>
+<h3 data-cid="o6hXRo">11.3 로그 보기</h3>
+<pre data-cid="-md44E"><code class="language-bash" data-cid="R9oW9y">tail -F logs/train.log
+grep -nE 'ERROR|Traceback|CUDA out of memory' logs/train.log
+</code></pre>
+<p data-cid="8TVhsH">systemd 서비스 권한이 있다면:</p>
+<pre data-cid="yOKMBw"><code class="language-bash" data-cid="iOSrXt">systemctl status &lt;SERVICE&gt;
+journalctl -u &lt;SERVICE&gt; --since '1 hour ago'
+</code></pre>
+<p data-cid="CxDLuX">서비스 재시작은 영향 범위를 알고 관리자 승인 아래 수행한다.</p>
+<h3 data-cid="23BIC3">11.4 디스크와 quota</h3>
+<pre data-cid="8BTOEw"><code class="language-bash" data-cid="08qD0O">df -h
+du -sh .
+du -h --max-depth=1 "$HOME" 2&gt;/dev/null | sort -h
+quota -s 2&gt;/dev/null || true
+</code></pre>
+<p data-cid="4SfcQ3"><code data-cid="PsX5aC">df</code>는 파일시스템 전체, <code data-cid="UB6JN8">du</code>는 경로가 차지한 공간을 본다. inode 부족도 확인한다.</p>
+<pre data-cid="l2mCqv"><code class="language-bash" data-cid="e4U4jz">df -i
+</code></pre>
+<p data-cid="hI0_as">큰 파일 찾기:</p>
+<pre data-cid="Eb4sff"><code class="language-bash" data-cid="vr0ief">find "$HOME" -type f -size +1G -printf '%s %p\n' 2&gt;/dev/null | sort -n
+</code></pre>
+<p data-cid="9sGncg"><code data-cid="Fz5L_q">-printf</code>는 GNU <code data-cid="nvsGjF">find</code> 기능이므로 Linux 서버에서 사용한다. macOS BSD <code data-cid="9hXHWG">find</code>에서는 다르다.</p>
+</section><section aria-labelledby="chapter-13" class="chapter" data-cid="2-tM7r"><h2 id="chapter-13" data-cid="F8yCHK">12. tmux: 연결이 끊겨도 작업 유지하기</h2>
+<p data-cid="arPpLm">Ghostty 탭·분할은 <strong data-cid="y4kenV">Mac 앱의 UI</strong>다. tmux 세션은 <strong data-cid="VQRP0B">서버 프로세스</strong>다. Mac이 절전되거나 SSH가 끊겨도 서버와 tmux가 살아 있으면 작업을 다시 붙일 수 있다.</p>
+<h3 data-cid="inWGKk">12.1 기본 사용</h3>
+<pre data-cid="pn1JqB"><code class="language-bash" data-cid="REEkwp">tmux new -s &lt;PROJECT&gt;
+</code></pre>
+<p data-cid="C1V92e">기본 prefix는 <code data-cid="2SC27r">Ctrl+b</code>다. <code data-cid="p_EDdn">Ctrl+b</code>를 누르고 손을 뗀 뒤 다음 키를 누른다.</p>
+<pre data-cid="r-NXfK"><code class="language-text" data-cid="lZ6JY3">c       새 window
+n/p     다음/이전 window
+%       좌우 pane 분할
+"       상하 pane 분할
+방향키  pane 이동
+[       copy mode
+?       키 목록
+</code></pre>
+<p data-cid="nHmy_i">분리(detach): <code data-cid="RJhLrn">Ctrl+b</code>, 이어서 <code data-cid="ii4__n">d</code></p>
+<pre data-cid="YMt90u"><code class="language-bash" data-cid="hoon5h">tmux ls
+tmux attach -t &lt;PROJECT&gt;
+tmux new -A -s &lt;PROJECT&gt;  # 있으면 붙고 없으면 생성
+</code></pre>
+<p data-cid="EWqOjc">세션 종료:</p>
+<pre data-cid="6xnmhO"><code class="language-bash" data-cid="XyQGhn">tmux kill-session -t &lt;PROJECT&gt;
+</code></pre>
+<blockquote data-cid="htcvVQ">
+<p data-cid="hUJ4xH">학습 프로세스가 실행 중인 pane에서 <code data-cid="sTt6wv">exit</code>하거나 세션을 kill하면 작업도 종료될 수 있다. 먼저 체크포인트 저장 여부와 프로세스를 확인한다.</p>
+</blockquote>
+<h3 data-cid="cKnzXl">12.2 tmux 실전 배치</h3>
+<ul data-cid="-88kYB">
+<li data-cid="Tzip0v">window 1: 학습 명령</li>
+<li data-cid="kFdMs2">window 2: <code data-cid="G-WEn4">watch -n 2 nvidia-smi</code></li>
+<li data-cid="viUhCE">window 3: <code data-cid="CXoIj1">tail -F logs/train.log</code></li>
+<li data-cid="ZsF0Kg">window 4: Git·편집·검증</li>
+</ul>
+<h3 data-cid="yLrLeG">12.3 tmux가 없는 서버</h3>
+<p data-cid="r5a2iM">관리자에게 설치를 요청하거나 스케줄러를 사용한다. <code data-cid="vjLiEM">nohup</code>은 단순 대안이지만 상호작용·로그 관리가 불편하다.</p>
+<pre data-cid="_spvc_"><code class="language-bash" data-cid="dCnnv9">nohup python -u train.py &gt;logs/train.log 2&gt;&amp;1 &amp;
+printf '%s\n' "$!" &gt;run.pid
+</code></pre>
+<p data-cid="wDaPX1">종료 전:</p>
+<pre data-cid="4SfjGJ"><code class="language-bash" data-cid="ChYiap">pid="$(cat run.pid)"
+ps -p "$pid" -o pid,etime,command=
+kill -TERM "$pid"
+</code></pre>
+</section><section aria-labelledby="chapter-14" class="chapter" data-cid="TlXHPd"><h2 id="chapter-14" data-cid="DzU5u1">13. Python venv와 Conda</h2>
+<h3 data-cid="_6aO7B">13.1 기본 원칙</h3>
+<ul data-cid="8qK_F1">
+<li data-cid="cHzRtH">프로젝트마다 독립 환경을 만든다.</li>
+<li data-cid="qCztxa">시스템 Python에 <code data-cid="ng0rTP">sudo pip install</code>하지 않는다.</li>
+<li data-cid="RGdTEI"><code data-cid="KJKNvu">python</code>과 <code data-cid="JCyXTw">pip</code>가 같은 환경을 가리키는지 확인한다.</li>
+<li data-cid="zbjF83">재현 가능한 의존성 파일과 CUDA 호환 정보를 기록한다.</li>
+</ul>
+<h3 data-cid="4Wko2z">13.2 venv</h3>
+<pre data-cid="hEUK3e"><code class="language-bash" data-cid="dhEEyM">cd &lt;REMOTE_DIR&gt;
+python3 --version
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip --version
+which python
+python -c 'import sys; print(sys.executable)'
+</code></pre>
+<p data-cid="LTx5Oj">패키지 설치:</p>
+<pre data-cid="rnUkM9"><code class="language-bash" data-cid="_lhaYa">python -m pip install -r requirements.txt
+python -m pip freeze &gt;requirements.lock.txt
+</code></pre>
+<p data-cid="79QYx0">종료:</p>
+<pre data-cid="9MxwNL"><code class="language-bash" data-cid="PpO_4q">deactivate
+</code></pre>
+<h3 data-cid="LhzpaZ">13.3 Conda</h3>
+<p data-cid="FWIh2V">관리자가 Miniconda/Anaconda/모듈 환경을 제공하는지 먼저 확인한다.</p>
+<pre data-cid="1LMjFC"><code class="language-bash" data-cid="69s739">command -v conda
+conda --version
+conda env list
+</code></pre>
+<pre data-cid="AP8O96"><code class="language-bash" data-cid="gIMEPy">conda create -n &lt;PROJECT&gt; python=&lt;PYTHON_VERSION&gt;
+conda activate &lt;PROJECT&gt;
+python -c 'import sys; print(sys.executable)'
+conda env export --from-history &gt;environment.yml
+</code></pre>
+<p data-cid="FhYZMP">shell에서 <code data-cid="v3CYFQ">conda activate</code>가 안 되면 무조건 초기화 명령을 반복하지 말고 설치 방식과 shell 설정을 확인한다.</p>
+<pre data-cid="bV_n-Z"><code class="language-bash" data-cid="db8h3h">conda info --base
+</code></pre>
+<p data-cid="izdeE-">공유 서버에서는 base 환경을 수정하지 않는다.</p>
+<h3 data-cid="6Yy84j">13.4 venv와 Conda 선택</h3>
+<ul data-cid="sJfFW6">
+<li data-cid="MS4b3Z">일반 Python 패키지 중심: <code data-cid="AryebR">venv</code>가 단순하다.</li>
+<li data-cid="rDKsfc">Python 외 네이티브 라이브러리·복잡한 과학 패키지 관리: Conda가 편할 수 있다.</li>
+<li data-cid="-6Nfv6">조직이 컨테이너·module·Slurm 환경을 표준으로 제공: 조직 표준을 우선한다.</li>
+<li data-cid="Jcrqez">둘을 무분별하게 중첩하지 않는다.</li>
+</ul>
+</section><section aria-labelledby="chapter-15" class="chapter" data-cid="D3l-XD"><h2 id="chapter-15" data-cid="0_cKhM">14. CUDA와 GPU 모니터링</h2>
+<h3 data-cid="GlAOJS">14.1 층을 구분한다</h3>
+<pre data-cid="RHeO02"><code class="language-text" data-cid="GDOS_G">GPU 하드웨어
+→ NVIDIA driver(호스트)
+→ CUDA runtime/toolkit
+→ Python 패키지(PyTorch 등)
+→ 사용자 코드
+</code></pre>
+<p data-cid="35A4nN"><code data-cid="JevrTO">nvidia-smi</code>에 보이는 CUDA 표기와 로컬 <code data-cid="YrEYAI">nvcc</code> 버전, PyTorch가 빌드된 CUDA 버전은 서로 같은 의미가 아닐 수 있다. 숫자 하나만 보고 호환된다고 단정하지 않는다.</p>
+<h3 data-cid="gs6qa7">14.2 기본 점검</h3>
+<pre data-cid="jPBC-n"><code class="language-bash" data-cid="TQS_Gk">nvidia-smi
+nvidia-smi -L
+watch -n 2 nvidia-smi
+</code></pre>
+<p data-cid="c9jE8W">Python/PyTorch:</p>
+<pre data-cid="sp1sTA"><code class="language-bash" data-cid="dKMUmX">python - &lt;&lt;'PY'
+import torch
+print('torch:', torch.__version__)
+print('built CUDA:', torch.version.cuda)
+print('available:', torch.cuda.is_available())
+print('device count:', torch.cuda.device_count())
+if torch.cuda.is_available():
+    print('device 0:', torch.cuda.get_device_name(0))
+PY
+</code></pre>
+<p data-cid="7a1Aq7">TensorFlow를 쓴다면 해당 프레임워크 공식 점검 API를 사용한다.</p>
+<h3 data-cid="-Uoe4F">14.3 특정 GPU 선택</h3>
+<p data-cid="YXV4Kf">관리자나 스케줄러가 할당한 GPU만 사용한다.</p>
+<pre data-cid="qp1Q37"><code class="language-bash" data-cid="zh-As3">CUDA_VISIBLE_DEVICES=&lt;GPU_INDEX&gt; python train.py
+</code></pre>
+<p data-cid="-NaR_3"><code data-cid="JBbeCM">CUDA_VISIBLE_DEVICES=1</code>로 실행하면 프로그램 내부에서는 그 GPU가 <code data-cid="5P-gKJ">cuda:0</code>으로 보일 수 있다. Slurm 환경에서는 임의 지정 대신 할당 환경 변수를 따른다.</p>
+<h3 data-cid="booGug">14.4 메모리 부족(OOM)</h3>
+<ol data-cid="gjTUcR">
+<li data-cid="iHTlyS">다른 프로세스와 점유량 확인</li>
+<li data-cid="fz8BMW">자신의 유령 프로세스 확인</li>
+<li data-cid="gEVDBg">batch size 감소</li>
+<li data-cid="3LhoOd">gradient accumulation 검토</li>
+<li data-cid="7VXqDU">mixed precision 검토</li>
+<li data-cid="91i1gi">입력 크기·모델 크기·캐시 점검</li>
+<li data-cid="htO4jF">checkpoint로 재시작 가능하게 설계</li>
+</ol>
+<blockquote data-cid="ixwPi3">
+<p data-cid="LKoTf8">다른 사용자의 GPU 프로세스를 종료하지 않는다. PID와 사용자명을 확인하고, 정책 위반이나 고아 프로세스는 관리자에게 문의한다.</p>
+</blockquote>
+</section><section aria-labelledby="chapter-16" class="chapter" data-cid="SYrPuQ"><h2 id="chapter-16" data-cid="-jkZtX">15. 장시간 딥러닝 학습 운영</h2>
+<h3 data-cid="11ncbg">15.1 권장 디렉터리</h3>
+<pre data-cid="Hk5KoM"><code class="language-text" data-cid="wEIM5A">&lt;PROJECT&gt;/
+├── README.md
+├── pyproject.toml 또는 requirements.txt/environment.yml
+├── src/
+├── configs/
+├── data/          # 대용량 원본은 저장 정책에 맞게 별도 위치 가능
+├── logs/
+├── checkpoints/
+└── outputs/
+</code></pre>
+<h3 data-cid="bhrjjj">15.2 실행 전 기록</h3>
+<pre data-cid="j4vcml"><code class="language-bash" data-cid="u2NJgE">mkdir -p logs checkpoints
+{
+  date -Is
+  hostname
+  git rev-parse HEAD 2&gt;/dev/null || true
+  python --version
+  python -m pip freeze
+  nvidia-smi
+} &gt;"logs/environment_$(date +%Y%m%d_%H%M%S).txt" 2&gt;&amp;1
+</code></pre>
+<h3 data-cid="cDVGIX">15.3 tmux 안에서 실행</h3>
+<pre data-cid="6MZmK-"><code class="language-bash" data-cid="tCWfC1">tmux new -A -s &lt;PROJECT&gt;
+cd &lt;REMOTE_DIR&gt;
+source .venv/bin/activate
+log_file="logs/train_$(date +%Y%m%d_%H%M%S).log"
+python -u src/train.py --config configs/base.yaml 2&gt;&amp;1 | tee "$log_file"
+</code></pre>
+<p data-cid="Gbns30"><code data-cid="0JXj88">python -u</code>는 stdout/stderr 버퍼링을 줄여 로그 확인을 돕는다.</p>
+<h3 data-cid="-qcClE">15.4 체크포인트</h3>
+<p data-cid="WxlslU">코드에서 다음을 설계한다.</p>
+<ul data-cid="yLv9V2">
+<li data-cid="pxZtK8">일정 step/epoch마다 저장</li>
+<li data-cid="7HXakN">마지막과 최고 성능을 구분</li>
+<li data-cid="8PaEOT">모델뿐 아니라 optimizer, scheduler, scaler, epoch, random seed 상태 저장</li>
+<li data-cid="KXHf3-">임시 파일에 쓴 뒤 rename하는 원자적 저장 패턴 검토</li>
+<li data-cid="CZhV3n">저장 공간 회전 정책</li>
+<li data-cid="h_xXpi">재개 명령을 README에 기록</li>
+</ul>
+<h3 data-cid="Hz6_6k">15.5 스케줄러가 있는 서버</h3>
+<p data-cid="4E9oxV">Slurm 등 HPC 스케줄러가 있으면 로그인 노드에서 직접 대규모 학습을 돌리지 않는다. <code data-cid="t6FYk9">srun</code>, <code data-cid="X9d041">sbatch</code>, partition, GPU 요청 형식은 기관 정책을 따른다. 이 교재의 직접 실행 예를 스케줄러 규칙보다 우선하지 않는다.</p>
+</section><section aria-labelledby="chapter-17" class="chapter" data-cid="o1Z2i6"><h2 id="chapter-17" data-cid="3aByda">16. Git으로 코드 관리하기</h2>
+<h3 data-cid="BXQCRw">16.1 초기 설정</h3>
+<pre data-cid="f3goQT"><code class="language-bash" data-cid="5MA334">git --version
+git config --global user.name "&lt;YOUR_NAME&gt;"
+git config --global user.email "&lt;YOUR_EMAIL&gt;"
+git config --global init.defaultBranch main
+</code></pre>
+<h3 data-cid="rQPzU7">16.2 기본 흐름</h3>
+<pre data-cid="EzZ608"><code class="language-bash" data-cid="N5-pMZ">git status
+git switch -c feature/&lt;NAME&gt;
+git add src/train.py configs/base.yaml
+git diff --cached
+git commit -m "Add baseline training configuration"
+git log --oneline --decorate -n 10
+</code></pre>
+<p data-cid="Zuzx68"><code data-cid="VzhKCQ">git add .</code> 전에 <code data-cid="uQcvuN">git status</code>와 <code data-cid="SFgQ2n">.gitignore</code>를 확인한다.</p>
+<h3 data-cid="_CZwQQ">16.3 딥러닝용 <code data-cid="y_VxNn">.gitignore</code></h3>
+<pre data-cid="kCScc9"><code class="language-gitignore" data-cid="2m1Br5">.venv/
+__pycache__/
+*.py[cod]
+.env
+*.log
+logs/
+checkpoints/
+outputs/
+wandb/
+.ipynb_checkpoints/
+.DS_Store
+</code></pre>
+<p data-cid="K7Rju8">데이터셋, 모델 가중치, API 키, SSH 키를 일반 Git에 commit하지 않는다. 큰 모델은 조직이 허용하는 artifact storage 또는 Git LFS 정책을 따른다.</p>
+<h3 data-cid="s9x3uI">16.4 비밀이 commit된 경우</h3>
+<p data-cid="S51qwP">파일을 삭제한 commit만으로 과거 기록에서 비밀이 사라지지 않는다.</p>
+<ol data-cid="ct1Yeq">
+<li data-cid="2kjURG">키·토큰 즉시 폐기/회전</li>
+<li data-cid="u5itu0">저장소 관리자에게 알림</li>
+<li data-cid="BIOTat">허가된 절차로 기록 정리</li>
+<li data-cid="jE3AEO">협업자에게 영향 공지</li>
+</ol>
+<p data-cid="EL88O9"><code data-cid="JYeoUW">git reset --hard</code>, <code data-cid="sotZZX">git clean -fdx</code>는 작업을 잃게 할 수 있다. 실행 전 <code data-cid="4Wmiv6">git status</code>, 백업 branch, dry-run(<code data-cid="Mjyo_H">git clean -ndx</code>)을 사용한다.</p>
+</section><section aria-labelledby="chapter-18" class="chapter" data-cid="Q60M06"><h2 id="chapter-18" data-cid="KhLga6">17. 안전한 셸 스크립트</h2>
+<p data-cid="qeQ3IM">다음은 학습 명령을 기록 가능하게 실행하는 Bash 예제다.</p>
+<pre data-cid="uOwbnn"><code class="language-bash" data-cid="tGLEFh">#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+usage() {
+  cat &lt;&lt;'EOF'
+Usage: run_train.sh --config PATH [--name NAME]
+EOF
+}
+
+config=''
+name='experiment'
+
+while (($# &gt; 0)); do
+  case "$1" in
+    --config)
+      [[ $# -ge 2 ]] || { printf 'ERROR: --config needs a value\n' &gt;&amp;2; exit 2; }
+      config=$2
+      shift 2
+      ;;
+    --name)
+      [[ $# -ge 2 ]] || { printf 'ERROR: --name needs a value\n' &gt;&amp;2; exit 2; }
+      name=$2
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      printf 'ERROR: unknown argument: %s\n' "$1" &gt;&amp;2
+      usage &gt;&amp;2
+      exit 2
+      ;;
+  esac
+done
+
+[[ -n "$config" ]] || { printf 'ERROR: --config is required\n' &gt;&amp;2; exit 2; }
+[[ -f "$config" ]] || { printf 'ERROR: config not found: %s\n' "$config" &gt;&amp;2; exit 1; }
+command -v python &gt;/dev/null || { printf 'ERROR: python not found\n' &gt;&amp;2; exit 1; }
+
+mkdir -p logs checkpoints
+stamp=$(date +%Y%m%d_%H%M%S)
+log_file="logs/${name}_${stamp}.log"
+
+printf 'host=%s\nconfig=%s\nlog=%s\n' "$(hostname)" "$config" "$log_file"
+python -u src/train.py --config "$config" 2&gt;&amp;1 | tee "$log_file"
+</code></pre>
+<p data-cid="JKdEW-">실행:</p>
+<pre data-cid="hqavSW"><code class="language-bash" data-cid="7HyAS8">chmod u+x run_train.sh
+bash -n run_train.sh
+shellcheck run_train.sh  # 설치돼 있다면
+./run_train.sh --help
+./run_train.sh --config configs/base.yaml --name baseline
+</code></pre>
+<p data-cid="jUNYJW">핵심:</p>
+<ul data-cid="--SlIm">
+<li data-cid="ru3TNR"><code data-cid="yHs26g">set -euo pipefail</code>: 오류·미정의 변수·파이프 중간 실패를 놓치지 않음</li>
+<li data-cid="yg9PBA">변수 인용: <code data-cid="I8qDsm">"$config"</code></li>
+<li data-cid="D9SIJR">입력 검증</li>
+<li data-cid="kT9mek"><code data-cid="Fo0Ixh">eval</code> 사용 금지</li>
+<li data-cid="4-rBF9">비밀을 인자로 넘기면 프로세스 목록에 보일 수 있으므로 비밀 관리 체계를 사용</li>
+</ul>
+</section><section aria-labelledby="chapter-19" class="chapter" data-cid="WEr9No"><h2 id="chapter-19" data-cid="61qXVB">18. 보안 수칙</h2>
+<h3 data-cid="RxA4Ix">18.1 SSH</h3>
+<ul data-cid="1FAV6W">
+<li data-cid="ImlupQ">host key fingerprint를 검증한다.</li>
+<li data-cid="SjLC8g">개인키에 passphrase를 사용한다.</li>
+<li data-cid="C82eYH">서버별 키를 분리한다.</li>
+<li data-cid="GTzHm6"><code data-cid="rYVSTr">ForwardAgent yes</code>를 기본값으로 두지 않는다.</li>
+<li data-cid="1j8KvB">SSH config와 개인키 권한을 제한한다.</li>
+<li data-cid="zA81uv">퇴사·프로젝트 종료·노출 시 키를 폐기한다.</li>
+<li data-cid="vd2xzA"><code data-cid="qhIasr">StrictHostKeyChecking no</code>와 <code data-cid="2XsKi7">/dev/null</code> known_hosts를 습관적으로 쓰지 않는다.</li>
+</ul>
+<h3 data-cid="XR0kSs">18.2 Ghostty Secure Keyboard Entry</h3>
+<p data-cid="Z1fR1C">Ghostty macOS는 암호 프롬프트를 감지하거나 사용자가 수동으로 Secure Keyboard Entry를 켤 수 있고, 활성화 시 우측 상단 잠금 아이콘으로 표시한다.<a aria-label="참고문헌 4" class="inline_marker" href="#ref4" data-cid="X8ZM8E">4</a> 이는 다른 프로세스의 키 이벤트 접근을 줄이는 macOS 기능이지만, 피싱 프롬프트·악성 원격 서버·화면 공유·키 자체 유출을 모두 해결하는 만능 장치는 아니다.</p>
+<h3 data-cid="2wvJr1">18.3 OSC 52와 클립보드</h3>
+<p data-cid="AKXlcW">원격 애플리케이션이 OSC 52를 이용해 로컬 클립보드와 상호작용할 수 있다. 편리하지만 신뢰하지 않는 원격 호스트나 프로그램에 클립보드 접근을 허용할 때는 민감 정보가 복사·변경될 가능성을 고려한다. 현재 Ghostty의 클립보드 관련 설정과 승인 정책을 Option Reference에서 확인한다.</p>
+<h3 data-cid="F-blOj">18.4 환경 변수와 <code data-cid="sHMsLk">.env</code></h3>
+<pre data-cid="vp0sGk"><code class="language-bash" data-cid="8FI1TE">umask 077
+printf 'API_TOKEN=%s\n' '&lt;SECRET&gt;' &gt; .env
+chmod 600 .env
+</code></pre>
+<p data-cid="R4Ov77">하지만 shell history, 로그, notebook output, process arguments에 비밀이 남지 않도록 해야 한다. <code data-cid="YQ-Kwk">.env</code>를 <code data-cid="F1IO_P">.gitignore</code>에 추가하고 조직의 secret manager가 있다면 우선한다.</p>
+<h3 data-cid="cMekc7">18.5 공급망</h3>
+<ul data-cid="AZ05Nh">
+<li data-cid="KEXfsv"><code data-cid="Pw7Ru5">pip install</code> 전 패키지 이름과 공식 출처 확인</li>
+<li data-cid="_76EXA">잠금 파일과 hash 검증 체계 검토</li>
+<li data-cid="TkTUzL">출처 불명의 설치 스크립트를 pipe로 shell에 바로 넘기지 않기</li>
+<li data-cid="svNsiQ">모델 파일과 pickle은 임의 코드 실행 위험을 고려</li>
+<li data-cid="RdFDqw">서버 관리자가 제공한 module/container/image를 우선</li>
+</ul>
+</section><section aria-labelledby="chapter-20" class="chapter" data-cid="zJKR81"><h2 id="chapter-20" data-cid="X_bfc7">19. 장애 해결 플레이북</h2>
+<h3 data-cid="h4PZ4q">19.1 접속 시간 초과</h3>
+<pre data-cid="Jrcjjm"><code class="language-bash" data-cid="OR3lRk">ssh -vv gpu-lab
+nc -vz &lt;HOST&gt; &lt;PORT&gt;
+</code></pre>
+<p data-cid="pWW4qb">확인 순서:</p>
+<ol data-cid="n7dIy8">
+<li data-cid="JurNBj">인터넷·VPN</li>
+<li data-cid="Mm8ZHe"><code data-cid="ztGlUp">&lt;HOST&gt;</code>, <code data-cid="j8z7bF">&lt;PORT&gt;</code> 오타</li>
+<li data-cid="cyfpAC">DNS 해석</li>
+<li data-cid="cuOcj6">방화벽·접근 허용 IP</li>
+<li data-cid="g_6mfI">jump host</li>
+<li data-cid="UogFX9">서버 가동 여부</li>
+</ol>
+<p data-cid="2bzRlw"><code data-cid="Bb-5pu">nc</code> 설치 여부와 옵션은 환경에 따라 다르다.</p>
+<h3 data-cid="Tydf8R">19.2 <code data-cid="QTazmA">Permission denied (publickey)</code></h3>
+<pre data-cid="QOZJy8"><code class="language-bash" data-cid="HXyrwe">ssh -vv gpu-lab
+ssh-add -l
+ls -ld ~/.ssh
+ls -l ~/.ssh/id_ed25519_gpu_lab*
+ssh -G gpu-lab | grep -Ei 'hostname|user|port|identityfile|identitiesonly'
+</code></pre>
+<p data-cid="aFKg7H">서버 측:</p>
+<pre data-cid="aGv5Z3"><code class="language-bash" data-cid="lOdW0B">chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+</code></pre>
+<p data-cid="Rts1NO">계정명, 공개키 등록 여부, 사용 중인 개인키, 키 파일 권한을 확인한다.</p>
+<h3 data-cid="0ApYY3">19.3 host key가 바뀜</h3>
+<p data-cid="_EU1e9">경고를 무시하거나 known_hosts 전체를 삭제하지 않는다.</p>
+<ol data-cid="vGYZ4t">
+<li data-cid="ViPo19">관리자에게 서버 재설치·키 교체 여부 확인</li>
+<li data-cid="kUfeun">새 fingerprint를 신뢰 가능한 채널로 검증</li>
+<li data-cid="cjneZS">정확한 항목만 제거</li>
+</ol>
+<pre data-cid="yABFNr"><code class="language-bash" data-cid="GjN23V">ssh-keygen -F &lt;HOST&gt;
+ssh-keygen -R &lt;HOST&gt;  # 검증이 끝난 뒤에만
+</code></pre>
+<p data-cid="Jg2SUV">비표준 포트는 known_hosts 표기가 <code data-cid="dgYpiq">[host]:port</code>일 수 있다.</p>
+<h3 data-cid="lCzwMu">19.4 <code data-cid="luxtZi">Error opening terminal: xterm-ghostty</code></h3>
+<pre data-cid="J-8s0a"><code class="language-bash" data-cid="1nmUXp">printf '%s\n' "$TERM"
+infocmp "$TERM"
+ghostty +ssh --help
+</code></pre>
+<ul data-cid="gxN5SX">
+<li data-cid="EFH0_I">지원 버전이면 <code data-cid="aaYj4H">ghostty +ssh -- &lt;DEST&gt;</code></li>
+<li data-cid="XPrU3H">shell integration의 <code data-cid="1q6wsl">ssh-terminfo</code> 확인</li>
+<li data-cid="K43W_i">서버의 <code data-cid="4R5CvV">tic</code>, terminfo 설치 가능 여부 확인</li>
+<li data-cid="zRVB_j">불가하면 해당 호스트에만 <code data-cid="VmnbIk">xterm-256color</code> fallback 검토</li>
+</ul>
+<h3 data-cid="wrcRS-">19.5 키·Backspace·색상이 이상함</h3>
+<pre data-cid="nEnUmX"><code class="language-bash" data-cid="6btvCF">printf 'TERM=%s COLORTERM=%s\n' "$TERM" "${COLORTERM:-}"
+infocmp "$TERM" | head
+</code></pre>
+<p data-cid="_OXE8x">문제가 Ghostty, SSH, tmux, 원격 앱 중 어디서 시작되는지 층별 비교한다.</p>
+<ol data-cid="lLqAMB">
+<li data-cid="tF_lC4">Mac 로컬 shell</li>
+<li data-cid="Ta4Syl">SSH 직후</li>
+<li data-cid="PQlpAo">tmux 밖</li>
+<li data-cid="kUyqbk">tmux 안</li>
+<li data-cid="Y42ekB">특정 앱 안</li>
+</ol>
+<h3 data-cid="skHmmq">19.6 SSH가 자주 끊김</h3>
+<pre data-cid="ViHGuz"><code class="language-sshconfig" data-cid="5-ifLM">Host gpu-lab
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+</code></pre>
+<p data-cid="nCPDEV">이는 끊김을 감지하고 일부 idle 연결을 유지하는 데 도움을 주지만 네트워크 장애 자체를 없애지는 않는다. 장시간 작업은 tmux·체크포인트를 사용한다.</p>
+<h3 data-cid="4nGEdv">19.7 Jupyter 페이지가 안 열림</h3>
+<p data-cid="a9M5nW">서버:</p>
+<pre data-cid="s7arXU"><code class="language-bash" data-cid="0tJSMB">ss -ltnp 2&gt;/dev/null | grep ':&lt;JUPYTER_PORT&gt;'
+curl -I http://127.0.0.1:&lt;JUPYTER_PORT&gt;/
+</code></pre>
+<p data-cid="v-A7yA">Mac:</p>
+<pre data-cid="Nc4qeZ"><code class="language-bash" data-cid="SFK6pJ">lsof -nP -iTCP:&lt;LOCAL_PORT&gt; -sTCP:LISTEN
+ssh -vv -N -L &lt;LOCAL_PORT&gt;:127.0.0.1:&lt;JUPYTER_PORT&gt; gpu-lab
+</code></pre>
+<p data-cid="HOFDw2">서버에서 Jupyter가 살아 있는지, 포트가 맞는지, 로컬 포트가 충돌하는지 확인한다.</p>
+<h3 data-cid="V92xUW">19.8 디스크가 꽉 참</h3>
+<pre data-cid="J8czMw"><code class="language-bash" data-cid="HpV_oK">df -h
+df -i
+du -sh "$HOME"/* 2&gt;/dev/null | sort -h
+</code></pre>
+<p data-cid="MwoPrp">체크포인트·캐시·로그를 무조건 삭제하지 않는다. 보존 정책을 세우고 오래된 파일을 목록화한 뒤 백업·삭제한다.</p>
+<h3 data-cid="XzzeBU">19.9 Python 패키지가 다른 환경에 설치됨</h3>
+<pre data-cid="89rHP_"><code class="language-bash" data-cid="5pZGck">which python
+which pip
+python -m pip --version
+python -c 'import sys; print(sys.executable); print(sys.path)'
+</code></pre>
+<p data-cid="y5eqVk">항상 <code data-cid="KOQXlY">pip</code> 대신 <code data-cid="W-RvBn">python -m pip</code>를 사용하면 현재 Python과의 연결을 확인하기 쉽다.</p>
+<h3 data-cid="FiGz22">19.10 GPU가 안 보임</h3>
+<pre data-cid="PsqPJ0"><code class="language-bash" data-cid="bhOydy">nvidia-smi
+printf '%s\n' "${CUDA_VISIBLE_DEVICES:-not-set}"
+python -c 'import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())'
+</code></pre>
+<p data-cid="EiIil5">드라이버, 할당, 컨테이너, 환경, 프레임워크 설치 문제를 분리한다. 로그인 노드에 GPU가 없는 HPC도 흔하므로 스케줄러 할당 여부를 확인한다.</p>
+</section><section aria-labelledby="chapter-21" class="chapter" data-cid="5wH_bJ"><h2 id="chapter-21" data-cid="m6w-YC">20. 단계별 실습 과정</h2>
+<h3 data-cid="k1mOY7">실습 1: 로컬 위치 감각</h3>
+<pre data-cid="BrAwPE"><code class="language-bash" data-cid="hIOnFK">mkdir -p "$HOME/ghostty-lab/week1"
+cd "$HOME/ghostty-lab/week1"
+printf 'hello\n' &gt; hello.txt
+pwd
+ls -la
+cat hello.txt
+</code></pre>
+<p data-cid="eRWCbR"><strong data-cid="Vpx-nu">성공 기준</strong>: Mac 홈 아래에 파일을 만들고 절대 경로를 설명할 수 있다.</p>
+<h3 data-cid="L6brEc">실습 2: Ghostty 설정 한 줄 적용</h3>
+<ol data-cid="VCOC-A">
+<li data-cid="s1VuiX"><code data-cid="Wn3UrG">ghostty +list-fonts</code> 실행</li>
+<li data-cid="ZqsRTB">실제 폰트명 하나 선택</li>
+<li data-cid="9y6LM6">설정 파일에 <code data-cid="A_p9GN">font-family</code>, <code data-cid="UKlVZM">font-size</code> 추가</li>
+<li data-cid="s7H0yF">Ghostty 설정 재로딩 방법을 현재 메뉴에서 확인</li>
+<li data-cid="7PwSF9">오류 시 추가한 줄만 되돌리기</li>
+</ol>
+<p data-cid="STuCjk"><strong data-cid="muFZBe">성공 기준</strong>: 설정 파일 위치와 버전을 기록하고, 추측한 옵션을 사용하지 않는다.</p>
+<h3 data-cid="q4tB0y">실습 3: SSH host key 검증</h3>
+<ol data-cid="kNPYCa">
+<li data-cid="kAvpO6">관리자로부터 fingerprint 확보</li>
+<li data-cid="MM4Q85"><code data-cid="DJFajl">ssh -p &lt;PORT&gt; &lt;USER&gt;@&lt;HOST&gt;</code></li>
+<li data-cid="Df1FHx">표시된 값 비교</li>
+<li data-cid="sv6FUm">접속 후 <code data-cid="Z1GpfS">whoami</code>, <code data-cid="C2CsSj">hostname</code>, <code data-cid="1moI5t">pwd</code></li>
+<li data-cid="s0XI9y"><code data-cid="61jUak">exit</code></li>
+</ol>
+<p data-cid="LWKjTN"><strong data-cid="dhWXWa">성공 기준</strong>: 로컬과 원격 프롬프트를 구분한다.</p>
+<h3 data-cid="lkDIKI">실습 4: 전용 키와 config</h3>
+<ol data-cid="atmxa-">
+<li data-cid="5w6N20">서버 전용 ed25519 키 생성</li>
+<li data-cid="R8stVM">공개키 등록</li>
+<li data-cid="96erQ4"><code data-cid="NUmXYy">~/.ssh/config</code>에 <code data-cid="wwiEW3">gpu-lab</code> 작성</li>
+<li data-cid="5PAYxx"><code data-cid="8d3NlI">ssh -G gpu-lab</code>로 적용값 확인</li>
+<li data-cid="1aw8Yf"><code data-cid="SZKVs4">ssh gpu-lab</code></li>
+</ol>
+<p data-cid="pEfwSL"><strong data-cid="CZX5wk">성공 기준</strong>: 개인키와 공개키의 차이를 설명할 수 있다.</p>
+<h3 data-cid="2RtXq7">실습 5: 파일 왕복</h3>
+<pre data-cid="BYWVH7"><code class="language-bash" data-cid="P89SBU">printf 'round trip\n' &gt; "$HOME/ghostty-lab/week1/roundtrip.txt"
+scp "$HOME/ghostty-lab/week1/roundtrip.txt" gpu-lab:~/
+scp gpu-lab:~/roundtrip.txt "$HOME/ghostty-lab/week1/from-server.txt"
+diff "$HOME/ghostty-lab/week1/roundtrip.txt" "$HOME/ghostty-lab/week1/from-server.txt"
+</code></pre>
+<p data-cid="HpX6wh"><strong data-cid="13Ur7U">성공 기준</strong>: <code data-cid="jzImCr">diff</code>가 차이를 출력하지 않는다.</p>
+<h3 data-cid="_LO4kk">실습 6: tmux 생존 시험</h3>
+<ol data-cid="7kfXKB">
+<li data-cid="SW8k2l">서버에서 <code data-cid="Hw-3U7">tmux new -s survival</code></li>
+<li data-cid="2xF7Oj"><code data-cid="b7OOA_">date; sleep 120; date</code></li>
+<li data-cid="FcSJG-"><code data-cid="RLqBcB">Ctrl+b</code>, <code data-cid="BZp3qI">d</code></li>
+<li data-cid="aVlVag">SSH 종료 후 재접속</li>
+<li data-cid="t9Dp0L"><code data-cid="NrfDfQ">tmux attach -t survival</code></li>
+</ol>
+<p data-cid="Lxtx-N"><strong data-cid="p5wRnD">성공 기준</strong>: 세션과 출력이 남아 있다.</p>
+<h3 data-cid="IapbNn">실습 7: venv</h3>
+<pre data-cid="-mwHUN"><code class="language-bash" data-cid="vXYY29">mkdir -p ~/&lt;PROJECT&gt;
+cd ~/&lt;PROJECT&gt;
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip --version
+python -c 'import sys; print(sys.executable)'
+deactivate
+</code></pre>
+<h3 data-cid="drN65V">실습 8: GPU 진단 보고서</h3>
+<pre data-cid="RAkyjE"><code class="language-bash" data-cid="7kFCbz">{
+  date -Is
+  hostname
+  nvidia-smi
+  python - &lt;&lt;'PY'
+try:
+    import torch
+    print('torch', torch.__version__)
+    print('torch CUDA', torch.version.cuda)
+    print('available', torch.cuda.is_available())
+except Exception as exc:
+    print(type(exc).__name__, exc)
+PY
+} &gt; gpu_report.txt 2&gt;&amp;1
+</code></pre>
+<p data-cid="ez3u5u"><strong data-cid="-sQ5m4">성공 기준</strong>: “GPU가 된다/안 된다”가 아니라 어느 층의 결과인지 설명한다.</p>
+<h3 data-cid="4bxnsP">실습 9: Jupyter 터널</h3>
+<ol data-cid="Hf31dN">
+<li data-cid="IlLagz">서버의 tmux에서 Jupyter를 <code data-cid="vKjkCy">127.0.0.1:&lt;JUPYTER_PORT&gt;</code>에 실행</li>
+<li data-cid="s8bGsT">Mac에서 <code data-cid="qBBRXH">ssh -N -L ...</code></li>
+<li data-cid="eDgwv9">브라우저로 <code data-cid="JmeXDE">127.0.0.1:&lt;LOCAL_PORT&gt;</code> 접속</li>
+<li data-cid="qi_Tku">터널 종료 후 접속이 끊기는지 확인</li>
+</ol>
+<h3 data-cid="Mk4Yr0">실습 10: 모의 장기 학습</h3>
+<pre data-cid="aFwCKb"><code class="language-bash" data-cid="NNXUNU">cat &gt; mock_train.py &lt;&lt;'PY'
+import time
+for epoch in range(1, 6):
+    print(f"epoch={epoch}", flush=True)
+    time.sleep(10)
+PY
+
+mkdir -p logs
+python -u mock_train.py 2&gt;&amp;1 | tee "logs/mock_$(date +%Y%m%d_%H%M%S).log"
+</code></pre>
+<p data-cid="bHgyao">실제 GPU를 낭비하지 않고 tmux·로그·재접속을 연습한다.</p>
+</section><section aria-labelledby="chapter-22" class="chapter" data-cid="PP7Xkv"><h2 id="chapter-22" data-cid="ehzEbs">21. 체크리스트</h2>
+<h3 data-cid="wrsS13">최초 설치</h3>
+<ul data-cid="2ToQhX">
+<li class="task-list-item" data-cid="6IeXFG"><input class="task-list-item-checkbox" type="checkbox" data-cid="9I9eU4">공식 출처에서 Ghostty 설치</li>
+<li class="task-list-item" data-cid="Bm_K4E"><input class="task-list-item-checkbox" type="checkbox" data-cid="zVMjqA"><code data-cid="25Wkhk">ghostty --version</code> 기록</li>
+<li class="task-list-item" data-cid="E6-nBs"><input class="task-list-item-checkbox" type="checkbox" data-cid="MmDb-v">메뉴에서 실제 키 바인딩 확인</li>
+<li class="task-list-item" data-cid="Onhh6d"><input class="task-list-item-checkbox" type="checkbox" data-cid="JBsle7">설정 파일 경로 확인</li>
+<li class="task-list-item" data-cid="-_SB_S"><input class="task-list-item-checkbox" type="checkbox" data-cid="U1mOH_">폰트 목록을 CLI로 확인</li>
+<li class="task-list-item" data-cid="g93DW0"><input class="task-list-item-checkbox" type="checkbox" data-cid="cF25L5">설정을 한 줄씩 적용하고 되돌리는 방법 확인</li>
+</ul>
+<h3 data-cid="avdz3U">SSH 보안</h3>
+<ul data-cid="drSN9D">
+<li class="task-list-item" data-cid="votuEH"><input class="task-list-item-checkbox" type="checkbox" data-cid="WxRi0Y">서버 host key fingerprint 별도 검증</li>
+<li class="task-list-item" data-cid="V1h4HE"><input class="task-list-item-checkbox" type="checkbox" data-cid="5XZw-W">서버별 키 생성 및 passphrase 설정</li>
+<li class="task-list-item" data-cid="9fVKUD"><input class="task-list-item-checkbox" type="checkbox" data-cid="PjPUth">개인키 권한 600, <code data-cid="y5taeV">~/.ssh</code> 700 확인</li>
+<li class="task-list-item" data-cid="_naD6R"><input class="task-list-item-checkbox" type="checkbox" data-cid="MwHXBb">SSH config 별칭 사용</li>
+<li class="task-list-item" data-cid="zwE0aD"><input class="task-list-item-checkbox" type="checkbox" data-cid="BR-TUA"><code data-cid="YSACJm">ssh -G &lt;ALIAS&gt;</code>로 적용값 확인</li>
+<li class="task-list-item" data-cid="o1M6eY"><input class="task-list-item-checkbox" type="checkbox" data-cid="nlSEGI">agent forwarding 기본 비활성</li>
+<li class="task-list-item" data-cid="S90OL9"><input class="task-list-item-checkbox" type="checkbox" data-cid="ic_2lF">개인키·토큰을 Git에 넣지 않음</li>
+</ul>
+<h3 data-cid="3f-N4e">학습 실행 전</h3>
+<ul data-cid="HwgXrU">
+<li class="task-list-item" data-cid="Wp546v"><input class="task-list-item-checkbox" type="checkbox" data-cid="nFiqUx"><code data-cid="foi_sF">whoami</code>, <code data-cid="95Cxgz">hostname</code>, <code data-cid="M6vr0Z">pwd</code></li>
+<li class="task-list-item" data-cid="gwNpWR"><input class="task-list-item-checkbox" type="checkbox" data-cid="8JmrCa">Git commit hash 기록</li>
+<li class="task-list-item" data-cid="X9-Cae"><input class="task-list-item-checkbox" type="checkbox" data-cid="4BwSZk">가상환경 확인</li>
+<li class="task-list-item" data-cid="hgTBV5"><input class="task-list-item-checkbox" type="checkbox" data-cid="NC1e-E">Python·프레임워크·CUDA 정보 기록</li>
+<li class="task-list-item" data-cid="8S4lwk"><input class="task-list-item-checkbox" type="checkbox" data-cid="u_Ufo4">GPU 할당 정책 확인</li>
+<li class="task-list-item" data-cid="gC9K8c"><input class="task-list-item-checkbox" type="checkbox" data-cid="VYL5xQ">디스크·quota 확인</li>
+<li class="task-list-item" data-cid="iSvVLM"><input class="task-list-item-checkbox" type="checkbox" data-cid="YgdAWX">로그와 체크포인트 디렉터리 준비</li>
+<li class="task-list-item" data-cid="0acmMT"><input class="task-list-item-checkbox" type="checkbox" data-cid="a1IL6l">재개(resume) 방법 확인</li>
+<li class="task-list-item" data-cid="zu5jbj"><input class="task-list-item-checkbox" type="checkbox" data-cid="nfM4sq">tmux 또는 스케줄러 사용</li>
+</ul>
+<h3 data-cid="qra8qk">종료·정리</h3>
+<ul data-cid="sSFd0P">
+<li class="task-list-item" data-cid="sYuZ0d"><input class="task-list-item-checkbox" type="checkbox" data-cid="AMysVM">학습 성공/실패 상태와 마지막 로그 확인</li>
+<li class="task-list-item" data-cid="PWpKIP"><input class="task-list-item-checkbox" type="checkbox" data-cid="Ayx2uZ">필요한 체크포인트 백업</li>
+<li class="task-list-item" data-cid="HG-7N8"><input class="task-list-item-checkbox" type="checkbox" data-cid="uZp92Q">불필요한 GPU 프로세스가 남지 않았는지 확인</li>
+<li class="task-list-item" data-cid="Zz1YOc"><input class="task-list-item-checkbox" type="checkbox" data-cid="PSvi3M">Jupyter·터널 종료</li>
+<li class="task-list-item" data-cid="NLZNW_"><input class="task-list-item-checkbox" type="checkbox" data-cid="KKX-VR">민감 로그·토큰 제거</li>
+<li class="task-list-item" data-cid="MbO7W3"><input class="task-list-item-checkbox" type="checkbox" data-cid="DGNayn">결과·환경·commit을 실험 기록에 남김</li>
+</ul>
+</section><section aria-labelledby="chapter-23" class="chapter" data-cid="C9-FrM"><h2 id="chapter-23" data-cid="Q0IhZl">22. 연습문제</h2>
+<ol data-cid="dwiPaq">
+<li data-cid="ILKCjP">Ghostty와 zsh, SSH, Linux 서버의 역할을 각각 한 문장으로 설명하라.</li>
+<li data-cid="nB8k6I"><code data-cid="ZnD4xQ">~</code>가 Mac과 원격 서버에서 서로 다른 위치인 이유는 무엇인가?</li>
+<li data-cid="SxpEk8"><code data-cid="_EgyUz">Ctrl+C</code>와 <code data-cid="0MyAjE">Cmd+C</code>의 차이는 무엇인가?</li>
+<li data-cid="PqRSMI">첫 SSH 접속에서 fingerprint를 확인하지 않고 <code data-cid="NXzyMA">yes</code>를 누르면 어떤 위험이 있는가?</li>
+<li data-cid="Q1cCtd">개인키와 공개키 중 서버 관리자에게 전달해야 하는 것은 무엇인가?</li>
+<li data-cid="RuN4Ec"><code data-cid="ICzV8G">ssh -G gpu-lab</code>은 무엇을 돕는가?</li>
+<li data-cid="vhjRHM"><code data-cid="5lL3E2">scp</code>의 비표준 포트 옵션은 왜 <code data-cid="DqLW7b">-p</code>가 아니라 <code data-cid="poYeQy">-P</code>인가?</li>
+<li data-cid="YGntwL"><code data-cid="FakO6L">rsync --delete</code> 전에 무엇을 해야 하는가?</li>
+<li data-cid="akyVvR">Ghostty 탭과 tmux 세션의 가장 중요한 차이는 무엇인가?</li>
+<li data-cid="4qDBIA"><code data-cid="yH_obE">python -m pip</code>가 단순 <code data-cid="diWypN">pip</code>보다 진단에 유리한 이유는 무엇인가?</li>
+<li data-cid="Yn2BF8"><code data-cid="hQtvOc">nvidia-smi</code>의 CUDA 표기와 <code data-cid="spklSd">torch.version.cuda</code>가 의미상 같다고 단정할 수 있는가?</li>
+<li data-cid="VX6uME">Jupyter를 <code data-cid="3XA9hK">127.0.0.1</code>에 바인딩하는 이유는 무엇인가?</li>
+<li data-cid="ivsMnm"><code data-cid="AFUDms">kill -KILL</code>을 첫 선택으로 쓰면 안 되는 이유는 무엇인가?</li>
+<li data-cid="7bgf-T"><code data-cid="UxfgT5">xterm-ghostty</code> terminfo 오류가 났을 때 가능한 해결 순서를 쓰라.</li>
+<li data-cid="oVbnEd">장시간 학습의 재현성과 생존성을 위해 최소 다섯 가지를 나열하라.</li>
+<li data-cid="5WHLxV">다음 명령의 위험을 설명하고 안전한 절차를 제시하라: <code data-cid="J0jgN9">rm -rf "$DIR"/*</code></li>
+<li data-cid="EniZQX">shell integration의 SSH wrapper가 <code data-cid="WEPViu">rsync</code>나 Git에서 항상 적용되지 않는 이유는 무엇인가?</li>
+<li data-cid="5G-tUu">로그인 노드에서 <code data-cid="ddWZkq">torch.cuda.is_available()</code>가 false일 때 바로 설치 실패로 결론 내리면 안 되는 이유는 무엇인가?</li>
+</ol>
+</section><section aria-labelledby="chapter-24" class="chapter" data-cid="u0AW_2"><h2 id="chapter-24" data-cid="H1sS4e">23. 정답과 해설</h2>
+<ol data-cid="P_0GeM">
+<li data-cid="nhYo03"><strong data-cid="-t2qJe">Ghostty</strong>는 입력·출력을 표시하는 터미널 앱, <strong data-cid="0DWZry">zsh</strong>는 명령을 해석하는 shell, <strong data-cid="gkRZwx">SSH</strong>는 원격 연결 프로그램/프로토콜, <strong data-cid="VAXZve">Linux 서버</strong>는 실제 계산이 실행되는 원격 운영체제다.</li>
+<li data-cid="ib_DeW"><code data-cid="x5Z57x">~</code>는 현재 시스템에서 현재 사용자 <code data-cid="h-ZwQW">$HOME</code>의 축약이므로 시스템·계정마다 다르다.</li>
+<li data-cid="JACJGt"><code data-cid="fqT58w">Cmd+C</code>는 macOS GUI의 복사, <code data-cid="KbIM2H">Ctrl+C</code>는 터미널 전면 프로세스에 보통 SIGINT를 보낸다.</li>
+<li data-cid="0ZqPK2">중간자 공격 또는 잘못된 서버에 연결하면서도 신뢰 항목을 저장할 수 있다.</li>
+<li data-cid="iEGW4L"><code data-cid="E2Jx-a">.pub</code> 공개키만 전달한다. 개인키는 Mac 밖으로 내보내지 않는다.</li>
+<li data-cid="WefSPQ">SSH config 병합 후 실제 적용될 host, user, port, identity 등의 값을 확인한다.</li>
+<li data-cid="u778vz">OpenSSH <code data-cid="m4Xv-F">scp</code>에서 <code data-cid="sTJrGi">-p</code>는 시간·모드 보존에 쓰이고 포트는 <code data-cid="pK5YVY">-P</code>로 정의되어 있다.</li>
+<li data-cid="COZsUN"><code data-cid="nIZuYm">-n/--dry-run</code>으로 삭제 예정 목록을 검토하고 중요 데이터 백업과 경로 방향을 확인한다.</li>
+<li data-cid="Hv49xN">Ghostty 탭은 Mac 앱에 속하지만 tmux는 서버에 살아 있어 로컬 연결이 끊겨도 유지될 수 있다.</li>
+<li data-cid="14ZdIB">현재 선택한 <code data-cid="i8XfzL">python</code> 모듈로 pip를 실행하므로 설치 대상 interpreter를 더 명확히 확인할 수 있다.</li>
+<li data-cid="bJ4UIi">아니다. driver가 지원하는 범위, toolkit, 프레임워크 빌드 runtime은 서로 다른 층이다.</li>
+<li data-cid="Ec7L6m">Jupyter를 공용 네트워크 인터페이스에 직접 노출하지 않고 SSH 터널을 통해서만 접근하기 위해서다.</li>
+<li data-cid="EJlzYi">정리·체크포인트·파일 flush 기회를 주지 않아 데이터 손상이나 상태 불일치를 만들 수 있다. SIGINT/SIGTERM을 먼저 쓴다.</li>
+<li data-cid="uXxnFL"><code data-cid="kAooaf">$TERM</code>·<code data-cid="wihHqm">infocmp</code> 확인 → Ghostty 버전과 <code data-cid="unZY7Y">+ssh</code> 지원 확인 → <code data-cid="b2t3GY">ghostty +ssh</code> 또는 <code data-cid="XxE-dV">ssh-terminfo</code> 통합 → 원격 <code data-cid="6cm3iI">tic</code>/설치 권한 확인 → 해당 호스트만 <code data-cid="uHjv-g">xterm-256color</code> fallback 검토 순이다.</li>
+<li data-cid="21zllS">tmux/스케줄러, 로그, 체크포인트, Git commit 기록, 환경 기록, 디스크 확인, 재개 테스트, GPU 할당 준수 등이 있다.</li>
+<li data-cid="nsxpEf"><code data-cid="m-ERH1">DIR</code>이 비었거나 잘못 설정되면 의도치 않은 위치를 삭제할 수 있다. <code data-cid="kpYK5n">set -u</code>, 비어 있지 않음·허용된 prefix 검증, <code data-cid="D0Cr7H">realpath</code> 확인, <code data-cid="Kocj2g">find</code>로 대상 출력, 백업, 대화형 또는 격리 삭제를 사용한다.</li>
+<li data-cid="CcmEEs">wrapper는 대화형 shell의 함수이며 자식 프로세스가 실행 파일 <code data-cid="UPY5nj">ssh</code>를 직접 찾을 때 shell 함수 테이블을 사용하지 않기 때문이다.</li>
+<li data-cid="BEamZb">HPC 로그인 노드 자체에는 GPU가 없고 계산 노드 할당 후에만 보일 수 있으며, 컨테이너·환경 변수·드라이버 접근 문제일 수도 있다.</li>
+</ol>
+</section><section aria-labelledby="chapter-25" class="chapter" data-cid="ohMrqs"><h2 id="chapter-25" data-cid="2zyt7u">24. 치트시트</h2>
+<h3 data-cid="Wx_MK9">Ghostty</h3>
+<pre data-cid="KVqzWl"><code class="language-bash" data-cid="VDp2Ut">ghostty --version
+ghostty +list-fonts
+ghostty +ssh --help
+ghostty +ssh -- gpu-lab
+</code></pre>
+<pre data-cid="UXVqwC"><code class="language-text" data-cid="UvIdNy">설정: ~/.config/ghostty/config.ghostty
+새 탭/분할: 현재 Ghostty 메뉴에 표시된 키를 우선 확인
+복사: Cmd+C
+프로세스 중단: Ctrl+C
+</code></pre>
+<h3 data-cid="r5klHp">SSH</h3>
+<pre data-cid="fH-dxM"><code class="language-bash" data-cid="DVyrrN">ssh gpu-lab
+ssh -v gpu-lab
+ssh -G gpu-lab
+ssh-keygen -t ed25519 -a 100 -f ~/.ssh/&lt;KEY_NAME&gt;
+ssh-add --apple-use-keychain ~/.ssh/&lt;KEY_NAME&gt;
+ssh -N -L &lt;LOCAL_PORT&gt;:127.0.0.1:&lt;REMOTE_PORT&gt; gpu-lab
+</code></pre>
+<h3 data-cid="hN5WSo">전송</h3>
+<pre data-cid="RATRph"><code class="language-bash" data-cid="df9b6z">scp FILE gpu-lab:&lt;REMOTE_DIR&gt;/
+scp gpu-lab:&lt;REMOTE_FILE&gt; &lt;LOCAL_DIR&gt;/
+rsync -avhn {SOURCE}/ {DEST}/   # dry-run
+rsync -avh --partial {SOURCE}/ {DEST}/
+</code></pre>
+<h3 data-cid="mw_kFe">Linux</h3>
+<pre data-cid="U2C9i6"><code class="language-bash" data-cid="ciFVFx">pwd; whoami; hostname
+ls -lah
+find . -maxdepth 2 -type f -print
+df -h; df -i; du -sh .
+ps -u "$USER" -f
+pgrep -af python
+tail -F logs/train.log
+</code></pre>
+<h3 data-cid="tUg7DT">tmux</h3>
+<pre data-cid="BEV5CF"><code class="language-bash" data-cid="fBjYmj">tmux new -A -s &lt;PROJECT&gt;
+tmux ls
+tmux attach -t &lt;PROJECT&gt;
+# detach: Ctrl+b, d
+</code></pre>
+<h3 data-cid="CPbfS4">Python/GPU</h3>
+<pre data-cid="i__isA"><code class="language-bash" data-cid="-UO4Zd">python3 -m venv .venv
+source .venv/bin/activate
+python -m pip --version
+nvidia-smi
+watch -n 2 nvidia-smi
+python -c 'import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())'
+</code></pre>
+<h3 data-cid="vFeSGx">긴 학습</h3>
+<pre data-cid="O7pb0O"><code class="language-bash" data-cid="kN1_Sn">log_file="logs/train_$(date +%Y%m%d_%H%M%S).log"
+python -u src/train.py 2&gt;&amp;1 | tee "$log_file"
+</code></pre>
+</section><section aria-labelledby="chapter-26" class="chapter" data-cid="mNwQCE"><h2 id="chapter-26" data-cid="gPNSoC">25. 용어집</h2>
+<ul data-cid="0GWkVw">
+<li data-cid="lTZosq"><strong data-cid="XnCYtV">terminal emulator</strong>: 문자 기반 프로그램과 상호작용하는 화면·입력 앱. Ghostty가 이에 해당한다.</li>
+<li data-cid="n1FxfN"><strong data-cid="SwnIu2">shell</strong>: 명령을 해석하고 프로그램을 실행하는 환경. zsh, bash 등이 있다.</li>
+<li data-cid="suM3_2"><strong data-cid="DHwnfG">prompt</strong>: shell이 입력을 기다리며 표시하는 문자열.</li>
+<li data-cid="GyN_Wu"><strong data-cid="E19Eo2">local/remote</strong>: 각각 Mac과 SSH로 접속한 서버.</li>
+<li data-cid="UmVBfQ"><strong data-cid="HV0E6p">SSH client/sshd</strong>: 접속을 시작하는 프로그램과 서버에서 요청을 받는 daemon.</li>
+<li data-cid="5fNcRT"><strong data-cid="q6Yd-F">host key</strong>: 서버 신원을 증명하는 키.</li>
+<li data-cid="ZiKeL7"><strong data-cid="tApISA">user key</strong>: 사용자를 인증하는 공개키/개인키 쌍.</li>
+<li data-cid="meQE_m"><strong data-cid="_AP3J9">fingerprint</strong>: 키를 비교하기 쉬운 짧은 표현.</li>
+<li data-cid="cq49qh"><strong data-cid="c15itm">agent</strong>: 복호화된 개인키 사용을 중개하는 프로세스.</li>
+<li data-cid="X4e6YM"><strong data-cid="Qdsbfv">agent forwarding</strong>: 원격에서 로컬 agent를 사용할 수 있게 하는 기능. 신뢰 경계가 넓어진다.</li>
+<li data-cid="GT3KQU"><strong data-cid="ztV_RT">port forwarding</strong>: SSH 연결을 통해 TCP 연결을 전달하는 기능.</li>
+<li data-cid="Ba4ywy"><strong data-cid="VlvUs7">terminfo</strong>: 터미널 기능 정보를 응용 프로그램에 제공하는 데이터베이스.</li>
+<li data-cid="bLA13L"><strong data-cid="WmFM5D"><code data-cid="8bn-DC">TERM</code></strong>: 현재 터미널 유형을 나타내는 환경 변수.</li>
+<li data-cid="gQlaLo"><strong data-cid="VKMhBu">shell integration</strong>: 터미널과 shell이 프롬프트·작업 디렉터리·SSH 등을 더 잘 연동하는 코드.</li>
+<li data-cid="6D8MyP"><strong data-cid="2YAfgV">OSC 52</strong>: 터미널 제어 시퀀스를 이용한 클립보드 상호작용 방식.</li>
+<li data-cid="LENII_"><strong data-cid="95z-aK">tmux</strong>: 서버에서 세션·window·pane을 유지하는 터미널 멀티플렉서.</li>
+<li data-cid="H2Q5xe"><strong data-cid="JEBJa1">process/PID</strong>: 실행 중 프로그램과 그 식별 번호.</li>
+<li data-cid="KIP1un"><strong data-cid="9vU3t7">signal</strong>: 프로세스에 중단·종료 등을 요청하는 메커니즘.</li>
+<li data-cid="j9WVW9"><strong data-cid="kKV78Y">stdout/stderr</strong>: 일반 출력과 오류 출력 스트림.</li>
+<li data-cid="py7kn6"><strong data-cid="rtU_fb">pipe</strong>: 한 프로그램의 출력을 다른 프로그램의 입력으로 연결.</li>
+<li data-cid="x164Zf"><strong data-cid="jgUtOp">venv/Conda environment</strong>: 프로젝트별 Python·패키지 격리 환경.</li>
+<li data-cid="ZNmF1h"><strong data-cid="liU2z3">CUDA driver/runtime/toolkit</strong>: NVIDIA GPU 접근을 구성하는 서로 다른 소프트웨어 층.</li>
+<li data-cid="Ng69gg"><strong data-cid="xiqnes">checkpoint</strong>: 학습을 재개하거나 모델을 보존하기 위한 상태 파일.</li>
+<li data-cid="vCxauu"><strong data-cid="Rhe5yj">OOM</strong>: 메모리 부족(Out Of Memory).</li>
+<li data-cid="PNvzAW"><strong data-cid="o2rc0X">quota</strong>: 사용자·그룹이 사용할 수 있는 저장 공간 제한.</li>
+<li data-cid="rW5O57"><strong data-cid="SmKpB8">inode</strong>: 파일 메타데이터 객체. 작은 파일이 너무 많으면 용량이 남아도 고갈될 수 있다.</li>
+<li data-cid="8e6W71"><strong data-cid="XtYHgq">dry-run</strong>: 실제 변경 없이 예정 동작을 보여주는 실행.</li>
+<li data-cid="hqS1lH"><strong data-cid="bJSxEI">bastion/jump host</strong>: 내부 서버로 들어갈 때 거치는 중계 서버.</li>
+</ul>
+</section><section aria-labelledby="chapter-27" class="chapter" data-cid="qYiPCY"><h2 id="chapter-27" data-cid="U8XaIc">26. 다음 학습 경로</h2>
+<h3 data-cid="l7D6Cw">1주차: 로컬 터미널</h3>
+<ul data-cid="ipf-4c">
+<li data-cid="HLhTvB">경로, 파일, 인용, 파이프, 리다이렉션</li>
+<li data-cid="-g2T_D">Ghostty 설정 한 줄씩 적용</li>
+<li data-cid="67DNAA"><code data-cid="SZkAsL">man</code>, <code data-cid="2FA46s">--help</code>, <code data-cid="-Gtq-h">type</code>, <code data-cid="O23I6K">command -v</code></li>
+</ul>
+<h3 data-cid="ZNC41g">2주차: SSH와 전송</h3>
+<ul data-cid="cxheU9">
+<li data-cid="8OEkFt">host key 검증</li>
+<li data-cid="t5sevr">키와 config</li>
+<li data-cid="JUP39y">scp/sftp/rsync dry-run</li>
+<li data-cid="xdmLQi"><code data-cid="Gcd2aT">ssh -v</code>, <code data-cid="GSIv_x">ssh -G</code></li>
+</ul>
+<h3 data-cid="NtD7u3">3주차: 서버 운영</h3>
+<ul data-cid="adkSZG">
+<li data-cid="5Uqhtg">권한, 프로세스, 신호, 로그, 디스크</li>
+<li data-cid="XLbMqE">tmux</li>
+<li data-cid="BH7-Im">venv/Conda</li>
+</ul>
+<h3 data-cid="MPW56E">4주차: 딥러닝 실전</h3>
+<ul data-cid="KXsGhn">
+<li data-cid="eYrr4_">GPU 층별 진단</li>
+<li data-cid="6ra7Y9">Jupyter 터널</li>
+<li data-cid="r8OUVh">로그·체크포인트·Git commit·환경 기록</li>
+<li data-cid="4CcnZ6">모의 장애 복구와 재개 시험</li>
+</ul>
+<p data-cid="EEP9cx">최종 목표는 많은 명령을 외우는 것이 아니다. <strong data-cid="FE6DDw">현재 위치·사용자·대상·영향 범위를 확인하고, 도움말과 로그로 가설을 검증하며, 되돌릴 수 있는 작은 변경을 하는 습관</strong>을 만드는 것이다.</p>
+</section><section aria-labelledby="chapter-28" class="chapter" data-cid="u-aLbv"><h2 id="chapter-28" data-cid="T_wYNy">공식 출처 및 참고 자료</h2>
+
+
+
+
+
+
+
+
+
+<ol class="references" data-cid="UWbSUK"><li id="ref1" data-cid="RILbkw"><span class="reference-title" data-cid="tE5H3V">Ghostty 공식 문서 — Binaries and Packages</span> — <a href="https://ghostty.org/docs/install/binary" rel="noopener noreferrer" target="_blank" data-cid="ZOOgOd">https://ghostty.org/docs/install/binary</a></li><li id="ref2" data-cid="2gMKuB"><span class="reference-title" data-cid="hTtyDj">Ghostty 공식 문서 홈</span> — <a href="https://ghostty.org/docs" rel="noopener noreferrer" target="_blank" data-cid="Me_QNx">https://ghostty.org/docs</a></li><li id="ref3" data-cid="cSCwuM"><span class="reference-title" data-cid="bLoubQ">Ghostty 공식 문서 — SSH</span> — <a href="https://ghostty.org/docs/features/ssh" rel="noopener noreferrer" target="_blank" data-cid="hR4cvN">https://ghostty.org/docs/features/ssh</a></li><li id="ref4" data-cid="g431R9"><span class="reference-title" data-cid="1HNkFS">Ghostty 공식 문서 — Features</span> — <a href="https://ghostty.org/docs/features" rel="noopener noreferrer" target="_blank" data-cid="KE0iKJ">https://ghostty.org/docs/features</a></li><li id="ref5" data-cid="xgK5SD"><span class="reference-title" data-cid="-q2nzb">Ghostty 공식 문서 — Shell Integration</span> — <a href="https://ghostty.org/docs/features/shell-integration" rel="noopener noreferrer" target="_blank" data-cid="5XmNi-">https://ghostty.org/docs/features/shell-integration</a></li><li id="ref6" data-cid="JnQu3u"><span class="reference-title" data-cid="0P3K52">Ghostty 공식 문서 — Configuration</span> — <a href="https://ghostty.org/docs/config" rel="noopener noreferrer" target="_blank" data-cid="k2G_wx">https://ghostty.org/docs/config</a></li><li id="ref7" data-cid="QiByWq"><span class="reference-title" data-cid="h86-zg">Ghostty 공식 문서 — Option Reference</span> — <a href="https://ghostty.org/docs/config/reference" rel="noopener noreferrer" target="_blank" data-cid="8OQaBY">https://ghostty.org/docs/config/reference</a></li><li id="ref8" data-cid="_4Ghwk"><span class="reference-title" data-cid="6PEbyW">Ghostty 공식 문서 — Terminfo Help</span> — <a href="https://ghostty.org/docs/help/terminfo" rel="noopener noreferrer" target="_blank" data-cid="WN7-4j">https://ghostty.org/docs/help/terminfo</a></li><li id="ref9" data-cid="CG-npa"><span class="reference-title" data-cid="y9i_Yq">Ghostty 공식 GitHub 저장소</span> — <a href="https://github.com/ghostty-org/ghostty" rel="noopener noreferrer" target="_blank" data-cid="RIRoKX">https://github.com/ghostty-org/ghostty</a></li></ol></section></article>
+
+</body></html>
