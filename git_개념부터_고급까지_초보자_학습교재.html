@@ -1,0 +1,1880 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>git_개념부터_고급까지_초보자_학습교재</title><style data-sk-tag-style-id="gen_doc_md">
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-ExtraBold.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Bold.ttf")
+    format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Black.ttf")
+    format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-SemiBold.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Light.ttf")
+    format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Medium.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-ExtraLight.ttf")
+    format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Light.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("https://static-s3.skyworkcdn.com/fe/skywork-site-assets/fonts/Outfit/static/Outfit-Thin.ttf")
+    format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+.sk-source-tag {
+  display: inline-block;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 0 !important;
+  text-indent: 0px !important;
+  width: auto !important;
+  min-width: 20px;
+  max-width: 76px !important;
+  height: 16px !important;
+  box-sizing: border-box;
+  padding: 2.5px 8px;
+  margin: 2px 4px;
+  background: var(--fill-fill-3-hover, #f4f5f7);
+  border-radius: 100px;
+  background-clip: padding-box;
+  color: var(--text-icon-text-3, #485568);
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.sk-source-tag::before {
+  content: var(--sk-source-display-name, attr(data-sk-source-website-name));
+  cursor: pointer;
+  display: inline-block;
+  font-family: Outfit;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 9px;
+  line-height: 11px;
+  letter-spacing: 0px;
+  color: var(--text-icon-text-3, #485568);
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-word;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.sk-source-tag:hover {
+  background: var(---black, #000818);
+}
+.sk-source-tag:hover::before {
+  color: var(--text-icon-text-6, #ffffff);
+}
+.sk-source-tag.active {
+  background: var(---black, #000818);
+}
+.sk-source-tag.active::before {
+  color: var(--text-icon-text-6, #ffffff);
+}
+.sk-source-tag[data-sk-source-type="pro_data"] {
+  font-size: 0 !important;
+  width: auto !important;
+  text-indent: 0px !important;
+  min-width: 20px;
+  max-width: 76px !important;
+  height: 16px !important;
+  box-sizing: border-box;
+  padding: 2.5px 8px;
+  margin: 2px 4px;
+  background: var(--fill-fill-3-hover, #f4f5f7);
+  border-radius: 100px;
+  color: var(--text-icon-text-3, #485568);
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  user-select: none;
+  display: inline-block;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.sk-source-tag[data-sk-source-type="pro_data"]::before {
+  content: var(--sk-source-display-name, attr(data-sk-source-website-name));
+  cursor: pointer;
+  display: inline-block;
+  font-family: Outfit;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 9px;
+  line-height: 11px;
+  letter-spacing: 0px;
+  color: var(--text-icon-text-3, #485568);
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.sk-source-tag[data-sk-source-type="pro_data"]:hover {
+  background: var(---black, #000818);
+}
+.sk-source-tag[data-sk-source-type="pro_data"]:hover::before {
+  color: var(--text-icon-text-6, #ffffff);
+}
+.sk-source-text-check {
+  background: var(--other-doc-check, rgba(77, 94, 255, 0.2));
+}
+.sk-hide-tag .sk-source-tag {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar-track {
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.sk-edit-loading {
+  position: relative;
+  overflow: hidden;
+  filter: brightness(0.5);
+}
+body > .container {
+  width: 100%;
+  box-sizing: border-box;
+}
+*[contenteditable="true"] {
+  outline: none;
+}
+.doc-placeholder-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+.doc-placeholder__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 188px;
+  justify-content: center;
+  align-items: center;
+  color: #979fab;
+  border-radius: 16px;
+  border: 1.25px solid #f4f5f7;
+  background: #f9fafc;
+}
+.doc-placeholder__icon svg {
+  width: 28px;
+  height: 28px;
+}
+.doc-image-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.doc-image-loading__card {
+  width: 250px;
+  height: 188px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+}
+.doc-image-loading__card::before {
+  content: "";
+  position: absolute;
+  inset: -65%;
+  background: radial-gradient(
+      closest-side at 18% 22%,
+      rgba(75, 201, 255, 0.4),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at 82% 28%,
+      rgba(119, 77, 255, 0.3),
+      transparent 58%
+    ),
+    radial-gradient(
+      closest-side at 36% 84%,
+      rgba(255, 75, 195, 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      closest-side at 88% 78%,
+      rgba(75, 201, 255, 0.4),
+      transparent 64%
+    ),
+    radial-gradient(
+      closest-side at 55% 55%,
+      rgba(119, 77, 255, 0.3),
+      transparent 68%
+    );
+  filter: blur(16px) saturate(1.14);
+  transform-origin: 50% 50%;
+  will-change: transform, filter;
+  animation: doc-loading-spinA 18s linear infinite,
+    doc-loading-driftA 11.5s ease-in-out infinite,
+    doc-loading-breatheA 6.8s ease-in-out infinite;
+}
+.doc-image-loading__card::after {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  background: radial-gradient(
+      closest-side at 12% 72%,
+      rgba(119, 77, 255, 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at 70% 16%,
+      rgba(75, 201, 255, 0.4),
+      transparent 58%
+    ),
+    radial-gradient(
+      closest-side at 92% 55%,
+      rgba(255, 75, 195, 0.16),
+      transparent 64%
+    );
+  filter: blur(18px) saturate(1.1);
+  opacity: 0.98;
+  transform-origin: 50% 50%;
+  mix-blend-mode: normal;
+  will-change: transform, filter, opacity;
+  animation: doc-loading-spinB 25s linear infinite reverse,
+    doc-loading-driftB 15.8s ease-in-out infinite,
+    doc-loading-breatheB 8.4s ease-in-out infinite;
+}
+.doc-image-loading__flow3 {
+  position: absolute;
+  inset: -75%;
+  background: radial-gradient(
+      closest-side at 28% 48%,
+      rgba(255, 75, 195, 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      closest-side at 62% 70%,
+      rgba(75, 201, 255, 0.4),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at 78% 40%,
+      rgba(119, 77, 255, 0.3),
+      transparent 58%
+    );
+  filter: blur(14px) saturate(1.1);
+  opacity: 0.78;
+  transform-origin: 50% 50%;
+  will-change: transform, filter, opacity;
+  animation: doc-loading-driftC 9.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite,
+    doc-loading-spinC 31s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.doc-image-loading__glass {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      140% 120% at 20% 0%,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0) 55%
+    ),
+    radial-gradient(
+      120% 140% at 100% 35%,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0) 60%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.06)
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+.doc-image-loading__grain {
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  opacity: 0.13;
+  background-image: repeating-radial-gradient(
+      circle at 20% 30%,
+      rgba(0, 0, 0, 0.14) 0 1px,
+      transparent 1px 3px
+    ),
+    repeating-radial-gradient(
+      circle at 80% 70%,
+      rgba(0, 0, 0, 0.1) 0 1px,
+      transparent 1px 4px
+    );
+  filter: blur(0.15px);
+  transform: rotate(12deg);
+  animation: doc-loading-grainMove 8s steps(10) infinite;
+  mix-blend-mode: soft-light;
+  z-index: 3;
+}
+.doc-image-loading__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+  pointer-events: none;
+}
+.doc-image-loading__icon {
+  width: 28px;
+  height: 28px;
+  color: #4d5eff;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 4px rgba(77, 94, 255, 0.2));
+}
+.doc-image-loading__text {
+  color: #4d5eff;
+  font-family: Outfit;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: center;
+  text-shadow: 0 1px 2px hsla(0, 0%, 100%, 0.8);
+}
+@keyframes doc-loading-spinA {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes doc-loading-spinB {
+  from {
+    transform: rotate(0deg) scale(1.03);
+  }
+  to {
+    transform: rotate(360deg) scale(1.03);
+  }
+}
+@keyframes doc-loading-spinC {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes doc-loading-driftA {
+  0% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.02);
+  }
+  10% {
+    transform: translate(12%, -7%) rotate(10deg) scale(1.06);
+  }
+  24% {
+    transform: translate(-9%, 13%) rotate(3deg) scale(1.01);
+  }
+  38% {
+    transform: translate(15%, 4%) rotate(16deg) scale(1.07);
+  }
+  54% {
+    transform: translate(-14%, -2%) rotate(6deg) scale(0.99);
+  }
+  70% {
+    transform: translate(6%, -15%) rotate(20deg) scale(1.05);
+  }
+  86% {
+    transform: translate(-4%, 10%) rotate(12deg) scale(1.03);
+  }
+  100% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.02);
+  }
+}
+@keyframes doc-loading-driftB {
+  0% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.03);
+  }
+  9% {
+    transform: translate(-12%, 9%) rotate(-7deg) scale(1.06);
+  }
+  22% {
+    transform: translate(14%, 4%) rotate(-14deg) scale(1.01);
+  }
+  41% {
+    transform: translate(-6%, -14%) rotate(-4deg) scale(1.08);
+  }
+  58% {
+    transform: translate(13%, -7%) rotate(-16deg) scale(1.03);
+  }
+  74% {
+    transform: translate(-15%, 3%) rotate(-9deg) scale(1.06);
+  }
+  89% {
+    transform: translate(4%, 14%) rotate(-18deg) scale(1);
+  }
+  100% {
+    transform: translate(0%, 0%) rotate(0deg) scale(1.03);
+  }
+}
+@keyframes doc-loading-driftC {
+  0% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 0.74;
+  }
+  18% {
+    transform: translate(16%, 6%) scale(1.08);
+    opacity: 0.8;
+  }
+  36% {
+    transform: translate(3%, -16%) scale(0.98);
+    opacity: 0.72;
+  }
+  55% {
+    transform: translate(-17%, -4%) scale(1.07);
+    opacity: 0.78;
+  }
+  73% {
+    transform: translate(-6%, 15%) scale(1);
+    opacity: 0.76;
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 0.74;
+  }
+}
+@keyframes doc-loading-breatheA {
+  0%,
+  100% {
+    filter: blur(16px) saturate(1.14);
+  }
+  45% {
+    filter: blur(20px) saturate(1.2);
+  }
+  78% {
+    filter: blur(15px) saturate(1.1);
+  }
+}
+@keyframes doc-loading-breatheB {
+  0%,
+  100% {
+    filter: blur(18px) saturate(1.1);
+    opacity: 0.98;
+  }
+  40% {
+    filter: blur(22px) saturate(1.18);
+    opacity: 0.9;
+  }
+  72% {
+    filter: blur(17px) saturate(1.06);
+    opacity: 1;
+  }
+}
+@keyframes doc-loading-grainMove {
+  0% {
+    transform: translate(0, 0) rotate(12deg);
+  }
+  25% {
+    transform: translate(-2%, 1%) rotate(10deg);
+  }
+  50% {
+    transform: translate(1%, -2%) rotate(14deg);
+  }
+  75% {
+    transform: translate(2%, 2%) rotate(11deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(12deg);
+  }
+}
+@media (forced-colors: active) {
+  .doc-image-loading__card::before,
+  .doc-image-loading__card::after,
+  .doc-image-loading__flow3,
+  .doc-image-loading__grain {
+    display: none;
+  }
+  .doc-image-loading__glass {
+    background: linear-gradient(180deg, Canvas, Canvas);
+    outline: 1px solid CanvasText;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doc-image-loading__card::before,
+  .doc-image-loading__card::after,
+  .doc-image-loading__flow3,
+  .doc-image-loading__grain {
+    animation: none !important;
+  }
+}
+.doc-region-loading {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.doc-region-loading__bar {
+  height: 16px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgb(242, 246, 255) 0%,
+    rgb(232, 238, 255) 35%,
+    rgb(224, 234, 255) 50%,
+    rgb(232, 238, 255) 65%,
+    rgb(242, 246, 255) 100%
+  );
+  background-size: 220% 100%;
+  animation: doc-region-loading-flow 1.8s ease-in-out infinite;
+}
+.doc-region-loading__bar--long {
+  width: 100%;
+}
+.doc-region-loading__bar--short {
+  width: 62%;
+}
+@keyframes doc-region-loading-flow {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.95;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.95;
+  }
+}
+@keyframes doc-image-node-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doc-region-loading__bar {
+    animation: none;
+  }
+}
+.editor-image-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1em 0;
+  position: relative;
+  caret-color: rgba(0, 0, 0, 0);
+}
+.editor-image-node img {
+  margin: 0;
+  max-width: 500px;
+  cursor: pointer;
+}
+.editor-image-node.editor-image-node-is-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: hsla(0, 0%, 100%, 0.5);
+  z-index: 99;
+}
+.editor-image-node.editor-image-node-is-loading::after {
+  z-index: 100;
+  content: "";
+  position: absolute;
+  top: calc(50% - 14px);
+  right: calc(50% - 14px);
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: 3px solid #e8ecf2;
+  border-top: 3px solid #4d5eff;
+  border-radius: 50%;
+  animation: doc-image-node-loading-spin 1s linear infinite;
+}
+.editor-image-node-caption {
+  color: var(--text-icon-text-4, #7f8896);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Outfit;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  caret-color: auto;
+  margin-top: 8px;
+  min-height: 20px;
+  max-width: 100%;
+  min-width: 160px;
+  display: inline-block;
+  position: relative;
+}
+.editor-image-node-caption:focus {
+  outline: none;
+}
+.editor-image-node-caption:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-icon-text-4, #7f8896);
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+.editor-image-node-placeholder {
+  border-radius: 16px;
+  border: 1.25px solid var(--line-line-4, #f4f5f7);
+  background: var(--fill-fill-4, #f9fafc);
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 188px;
+  max-width: 500px;
+  max-height: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.editor-image-node-placeholder.placeholder-loading > svg {
+  animation: doc-image-node-loading-spin 1s linear infinite;
+}
+a {
+  cursor: pointer !important;
+}
+a[href] {
+  cursor: pointer !important;
+}
+[contenteditable] a,
+[contenteditable="true"] a,
+[contenteditable="false"] a {
+  cursor: pointer !important;
+}
+b {
+  font-weight: bold;
+}
+.container b,
+.container strong,
+.page b,
+.page strong {
+  font-weight: 900;
+}
+body > .page {
+  overflow-x: hidden;
+}
+body > .container {
+  overflow-x: hidden;
+}
+.timeline-item {
+  overflow-y: hidden;
+}
+.item-date {
+  white-space: normal;
+}
+body {
+  max-width: 800px;
+  padding-top: 32px;
+  margin: 0 auto;
+  background: #fff;
+}
+body img {
+  object-fit: contain;
+}
+body.use-template {
+  background: #f9fafc;
+  margin: 0 auto;
+}
+body.use-template .page {
+  box-shadow: 0 2px 10px 0 rgba(0, 8, 24, 0.08);
+}
+body > .container {
+  box-shadow: unset;
+}
+body > .page {
+  height: auto;
+}
+body > .page .right-column,
+body > .page .left-column {
+  overflow-y: auto;
+}
+body > .page img {
+  max-width: 100%;
+}
+body > .page .profile-pic-container img {
+  object-fit: contain;
+}
+:root {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --primary: rgba(0, 85, 212, 1);
+  --primary-foreground: rgba(255, 255, 255, 1);
+  --sidebar-primary: rgba(0, 85, 212, 1);
+  --sidebar-primary-foreground: rgba(255, 255, 255, 1);
+  --chart-1: rgba(0, 85, 212, 1);
+  --chart-2: rgba(82, 143, 235, 1);
+  --chart-3: rgba(139, 177, 242, 1);
+  --chart-4: rgba(185, 206, 247, 1);
+  --chart-5: rgba(223, 230, 250, 1);
+  --radius: 0rem;
+  --background: rgba(252, 252, 252, 1);
+  --foreground: rgba(38, 38, 38, 1);
+  --card: rgba(255, 255, 255, 1);
+  --card-foreground: rgba(38, 38, 38, 1);
+  --popover: rgba(255, 255, 255, 1);
+  --popover-foreground: rgba(38, 38, 38, 1);
+  --secondary: rgba(245, 245, 245, 1);
+  --secondary-foreground: rgba(38, 38, 38, 1);
+  --muted: rgba(245, 245, 245, 1);
+  --muted-foreground: rgba(34, 35, 37, 1);
+  --accent: rgba(239, 239, 239, 1);
+  --accent-foreground: rgba(38, 38, 38, 1);
+  --destructive: rgba(192, 57, 43, 1);
+  --destructive-foreground: rgba(255, 255, 255, 1);
+  --border: rgba(230, 230, 230, 1);
+  --input: rgba(230, 230, 230, 1);
+  --ring: rgba(0, 85, 212, 1);
+  --sidebar: rgba(250, 250, 250, 1);
+  --sidebar-foreground: rgba(38, 38, 38, 1);
+  --sidebar-accent: rgba(239, 239, 239, 1);
+  --sidebar-accent-foreground: rgba(38, 38, 38, 1);
+  --sidebar-border: rgba(230, 230, 230, 1);
+  --sidebar-ring: rgba(0, 85, 212, 1);
+}
+* {
+  border-color: var(--border);
+  outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+}
+body {
+  font-size: 16px;
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+}
+menu,
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+}
+h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+p {
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[type="button"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="reset"]:not(:disabled),
+a[href],
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 820px;
+}
+.flex {
+  min-height: 0;
+  min-width: 0;
+}
+.editor-container {
+  max-width: 800px;
+  padding: 24px 10%;
+  font-size: 16px;
+}
+.editor-container hr {
+  border: none;
+  height: 1px;
+  margin-top: 3em;
+  margin-bottom: 3em;
+  background-color: rgba(37, 39, 45, 0.1);
+}
+.editor-container li {
+  margin: 0.5rem 0;
+}
+.editor-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.editor-container h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.editor-container h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.editor-container h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.editor-container h5 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.editor-container h6 {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.editor-container a {
+  color: #3385ff;
+  text-decoration: none;
+}
+.editor-container a:hover {
+  text-decoration: underline;
+}
+.editor-container sup > a {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.editor-container [data-footnote-backref] {
+  color: #4c90ff;
+}
+.editor-container [data-footnote-backref]:hover {
+  color: #1f6fe5;
+}
+.editor-container .editor-image-node {
+  max-width: 100%;
+}
+.editor-container .editor-image-node .editor-image-node-placeholder {
+  max-width: 100%;
+}
+.editor-container .editor-image-node img {
+  max-width: 100%;
+}
+.editor-container h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.editor-container h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+}
+.editor-container p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.75rem;
+}
+.editor-container blockquote {
+  border-left: 4px solid #222325;
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted-foreground);
+  margin: 1rem 0;
+}
+.editor-container code {
+  background-color: #f4f5f7;
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+.editor-container pre {
+  background-color: var(--muted);
+  padding: 1rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container pre code {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+  color: var(--foreground);
+}
+.editor-container ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container blockquote ul,
+.editor-container blockquote ol {
+  margin-left: 1rem;
+  padding-left: 1rem;
+}
+.editor-container table {
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.editor-container th,
+.editor-container td {
+  border: 1px solid var(--border);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: left;
+}
+.editor-container th {
+  background-color: var(--muted);
+  font-weight: 700;
+}
+.editor-container img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.ai-processing {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-left: 2px solid var(--primary);
+  padding-left: 0.75rem;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.typing-cursor::after {
+  content: "|";
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  color: var(--primary);
+  font-weight: 700;
+  margin-left: 0.125rem;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+</style>
+</head><body class="editor-container"><h1>Git, 개념부터 고급 활용까지</h1>
+<h2>초보 개발자를 위한 실습 중심 장문 교재</h2>
+<blockquote>
+<p>이 문서에서 사용자의 “Git의 주소 기능”이라는 표현은 문맥상 <b>Git의 주요 기능</b>을 뜻하는 것으로 해석했습니다. 만약 저장소 URL, remote 주소, 커밋 해시 같은 “주소” 자체를 뜻했다면, 제9장과 제10장의 원격 저장소 부분을 먼저 읽어도 좋습니다.</p>
+</blockquote>
+<h2>이 교재의 목표</h2>
+<p>이 교재는 명령어를 많이 외우게 만드는 대신, Git이 무엇을 저장하고 각 명령이 <b>어떤 상태를 다른 상태로 옮기는지</b> 이해하도록 돕습니다. 끝까지 학습하면 다음을 할 수 있습니다.</p>
+<ul>
+<li>Git과 GitHub 같은 호스팅 서비스를 구분한다.</li>
+<li>작업 디렉터리, 스테이징 영역, 커밋의 관계를 설명한다.</li>
+<li>작은 단위로 변경을 선택해 커밋하고 과거 상태를 조사한다.</li>
+<li>브랜치를 안전하게 만들고 병합하며 충돌을 해결한다.</li>
+<li>원격 저장소와 로컬 저장소가 서로 독립적이라는 점을 이해한다.</li>
+<li>팀 상황에 맞는 협업 흐름을 선택한다.</li>
+<li><code>merge</code>, <code>rebase</code>, <code>cherry-pick</code>의 목적과 차이를 판단한다.</li>
+<li><code>stash</code>, <code>tag</code>, <code>worktree</code>, <code>submodule</code>, hooks, Git LFS를 적절히 사용한다.</li>
+<li>실수를 했을 때 먼저 멈추고, 상태를 확인하고, <code>reflog</code>를 이용해 복구한다.</li>
+<li><code>reset --hard</code>, 강제 푸시, 이력 재작성 같은 위험 작업을 백업 후 수행한다.</li>
+</ul>
+<h2>권장 학습 방법</h2>
+<ol>
+<li>처음에는 제1부와 제2부만 읽고 실습한다.</li>
+<li>모든 예제에서 명령 실행 전후에 <code>git status</code>를 실행한다.</li>
+<li>예상 결과를 말로 먼저 설명한 뒤 명령을 실행한다.</li>
+<li>실습 저장소에는 실제 비밀번호나 API 키를 넣지 않는다.</li>
+<li>고급 장의 위험 명령은 중요한 저장소가 아닌 별도 연습 저장소에서만 실행한다.</li>
+</ol>
+<h2>목차</h2>
+<h3>제1부: Git의 정신 모델</h3>
+<ol>
+<li>Git은 무엇인가</li>
+<li>Git과 GitHub는 어떻게 다른가</li>
+<li>스냅샷, 객체, 커밋 그래프</li>
+<li>작업 디렉터리·스테이징 영역·저장소</li>
+<li>HEAD, 브랜치, 태그라는 이름표</li>
+</ol>
+<h3>제2부: 첫 저장소와 일상 작업</h3>
+<ol start="6">
+<li>설치 확인과 최초 설정</li>
+<li>첫 저장소 만들기</li>
+<li>변경 관찰, 선택, 커밋</li>
+<li>이력 읽기와 비교하기</li>
+<li>무시 파일과 비밀정보</li>
+</ol>
+<h3>제3부: 브랜치와 원격 협업</h3>
+<ol start="11">
+<li>브랜치의 개념</li>
+<li>병합과 충돌</li>
+<li>원격 저장소의 정신 모델</li>
+<li>clone, fetch, pull, push</li>
+<li>GitHub Flow 중심 협업</li>
+<li>Fork와 Pull Request</li>
+</ol>
+<h3>제4부: 이력 통합과 정리</h3>
+<ol start="17">
+<li>merge, rebase, squash 비교</li>
+<li>interactive rebase</li>
+<li>cherry-pick</li>
+<li>revert와 reset</li>
+<li>stash와 임시 작업</li>
+<li>tag와 릴리스</li>
+</ol>
+<h3>제5부: 복구와 진단</h3>
+<ol start="23">
+<li>안전 원칙</li>
+<li>reflog와 잃어버린 커밋 복구</li>
+<li>detached HEAD와 삭제 브랜치</li>
+<li>bisect로 버그 도입 커밋 찾기</li>
+<li>위험 명령과 복구 계획</li>
+</ol>
+<h3>제6부: 고급 구조와 자동화</h3>
+<ol start="28">
+<li>worktree</li>
+<li>submodule</li>
+<li>hooks</li>
+<li>Git LFS와 큰 파일</li>
+<li>플랫폼별 유의점</li>
+<li>협업 전략 선택</li>
+<li>보안과 인증</li>
+</ol>
+<h3>제7부: 종합 실습·오해·문제</h3>
+<ol start="35">
+<li>종합 프로젝트 실습</li>
+<li>흔한 오해</li>
+<li>연습문제</li>
+<li>해설</li>
+<li>최종 핵심 요약</li>
+</ol>
+<h1>제1부: Git의 정신 모델</h1>
+<h2>1. Git은 무엇인가</h2>
+<p>Git은 파일을 클라우드에 올리는 프로그램이 아니라, <b>프로젝트의 변경 역사를 로컬에서 기록하고 연결해 관리하는 분산 버전 관리 시스템</b>입니다.</p>
+<p>“버전 관리”가 필요한 이유를 문서 편집에 비유해 봅시다.</p>
+<pre><code class="language-text">보고서_최종.docx
+보고서_진짜최종.docx
+보고서_진짜최종_수정.docx
+보고서_제출용_최종2.docx
+</code></pre>
+<p>이 방식은 어느 파일이 기준인지, 무엇이 달라졌는지, 누가 왜 바꿨는지 알기 어렵습니다. Git은 각 시점의 프로젝트 상태를 커밋으로 기록하고, 커밋에 설명과 작성자, 이전 커밋과의 관계를 붙입니다.</p>
+<p>Git의 핵심 가치는 다음과 같습니다.</p>
+<ul>
+<li><b>시간 여행</b>: 이전 상태를 조사하고 필요한 변경을 복원한다.</li>
+<li><b>실험의 격리</b>: 브랜치에서 안전하게 기능을 만든다.</li>
+<li><b>협업</b>: 여러 개발자의 변경을 비교하고 통합한다.</li>
+<li><b>책임 추적</b>: 누가, 언제, 왜 변경했는지 기록한다.</li>
+<li><b>자동화의 기준점</b>: 특정 커밋을 빌드·테스트·배포한다.</li>
+</ul>
+<p>Git은 “자동 저장”이 아닙니다. 사용자가 무엇을 하나의 의미 있는 단위로 기록할지 선택해야 합니다. 그래서 좋은 Git 사용은 명령어 기술보다 <b>변경을 의미 있는 단위로 나누는 사고방식</b>에 가깝습니다.</p>
+<h2>2. Git과 GitHub는 어떻게 다른가</h2>
+<p>Git과 GitHub를 혼동하면 원격 작업이 어렵게 느껴집니다.</p>
+<ul>
+<li><b>Git</b>: 내 컴퓨터에서 저장소와 커밋을 관리하는 도구이자 규칙</li>
+<li><b>GitHub</b>: Git 저장소를 인터넷에서 호스팅하고 Pull Request, 이슈, 코드 리뷰, 권한, Actions 등을 제공하는 서비스</li>
+<li><b>GitLab, Bitbucket, Azure DevOps</b>: GitHub와 비슷한 역할을 하는 다른 호스팅 서비스</li>
+</ul>
+<p>인터넷 연결 없이도 다음 작업은 가능합니다.</p>
+<pre><code class="language-bash">git init
+git add .
+git commit -m &quot;초기 버전&quot;
+git branch feature/login
+git log
+</code></pre>
+<p>반면 <code>push</code>, <code>fetch</code>, 호스팅 서비스의 Pull Request는 원격 서버와 관련됩니다.</p>
+<p>중요한 구분은 이것입니다.</p>
+<pre><code class="language-text">Git 저장소 = 커밋과 브랜치 역사를 저장하는 구조
+GitHub 저장소 = 그 Git 저장소를 서버에서 제공하는 사본 + 협업 기능
+Pull Request = Git 명령이 아니라 호스팅 서비스의 리뷰 절차
+</code></pre>
+<h2>3. 스냅샷, 객체, 커밋 그래프</h2>
+<h3>3.1 Git은 “차이만 저장하는 폴더”라고만 보면 부족하다</h3>
+<p>개념적으로 Git은 커밋할 때 프로젝트의 <b>스냅샷</b>을 기록합니다. 변경되지 않은 파일은 기존 객체를 재사용하므로 매번 모든 파일을 물리적으로 복제하는 것은 아닙니다.</p>
+<p>커밋에는 대략 다음 정보가 연결됩니다.</p>
+<ul>
+<li>프로젝트 파일 트리</li>
+<li>작성자와 커미터</li>
+<li>시각</li>
+<li>커밋 메시지</li>
+<li>부모 커밋</li>
+</ul>
+<p>따라서 커밋은 단순 번호가 아니라, 이전 커밋을 가리키는 노드입니다.</p>
+<pre><code class="language-text">A---B---C
+</code></pre>
+<p>여기서 C는 B를 부모로, B는 A를 부모로 가집니다. 브랜치가 갈라지면 그래프가 됩니다.</p>
+<pre><code class="language-text">A---B---C  main
+     \
+      D---E  feature
+</code></pre>
+<h3>3.2 커밋 해시는 내용 기반 식별자다</h3>
+<p>커밋은 <code>a1b2c3d...</code> 같은 해시로 식별됩니다. 보통 짧은 앞부분만 사용해도 저장소 안에서 구분됩니다.</p>
+<pre><code class="language-bash">git show a1b2c3d
+</code></pre>
+<p>해시는 “몇 번째 버전” 같은 순번이 아닙니다. 커밋 내용과 메타데이터, 부모 관계가 달라지면 해시도 달라집니다. 그래서 rebase나 amend로 커밋을 다시 만들면 겉보기 파일 내용이 비슷해도 새 해시가 생깁니다.</p>
+<h2>4. 작업 디렉터리·스테이징 영역·저장소</h2>
+<p>Git 초보자가 가장 먼저 이해해야 할 모델입니다.</p>
+<pre><code class="language-text">작업 디렉터리  -- git add --&gt;  스테이징 영역  -- git commit --&gt;  로컬 저장소
+   현재 편집본                   다음 커밋 후보                    기록된 역사
+</code></pre>
+<h3>4.1 작업 디렉터리</h3>
+<p>에디터로 실제 파일을 수정하는 공간입니다. 아직 커밋하지 않은 변경이 존재할 수 있습니다.</p>
+<h3>4.2 스테이징 영역</h3>
+<p>다음 커밋에 포함할 <b>정확한 변경 집합</b>을 준비하는 공간입니다. 흔히 index라고도 부릅니다.</p>
+<p>스테이징은 번거로운 중간 단계가 아니라, 변경을 편집하는 기능입니다. 한 파일에 버그 수정과 문구 변경이 함께 있어도 <code>git add -p</code>로 일부만 선택할 수 있습니다.</p>
+<h3>4.3 로컬 저장소</h3>
+<p><code>.git</code> 디렉터리에 커밋, 브랜치, 태그, 설정 등이 기록됩니다. 보통 <code>.git</code>을 직접 편집하지 않습니다.</p>
+<h3>4.4 세 가지 비교</h3>
+<pre><code class="language-bash">git diff            # 작업 디렉터리와 스테이징 영역의 차이
+git diff --staged   # 스테이징 영역과 HEAD 커밋의 차이
+git diff HEAD       # 작업 디렉터리 전체와 HEAD 커밋의 차이
+</code></pre>
+<h4>실습: 일부만 커밋하기</h4>
+<pre><code class="language-bash">mkdir git-lab
+cd git-lab
+git init --initial-branch=main
+printf &quot;# 할 일\n&quot; &gt; todo.md
+git add todo.md
+git commit -m &quot;docs: 할 일 문서 시작&quot;
+
+printf &quot;- 로그인 구현\n&quot; &gt;&gt; todo.md
+printf &quot;임시 메모\n&quot; &gt; scratch.txt
+
+git status
+git add todo.md
+git diff
+git diff --staged
+git commit -m &quot;docs: 로그인 작업 추가&quot;
+</code></pre>
+<p>여기서 <code>scratch.txt</code>는 작업 디렉터리에는 있지만 스테이징하지 않았으므로 커밋에 들어가지 않습니다.</p>
+<h2>5. HEAD, 브랜치, 태그라는 이름표</h2>
+<p>커밋 해시는 기억하기 어렵습니다. Git은 커밋에 의미 있는 이름을 붙이는 참조를 제공합니다.</p>
+<h3>5.1 브랜치는 움직이는 포인터</h3>
+<p>브랜치를 “프로젝트 폴더 복사본”이라고 생각하면 곧 한계가 옵니다. 브랜치는 특정 커밋을 가리키는 가벼운 이름표입니다. 그 브랜치에서 커밋하면 이름표가 새 커밋으로 이동합니다.</p>
+<pre><code class="language-text">A---B---C  main
+</code></pre>
+<p><code>main</code>에서 새 커밋 D를 만들면:</p>
+<pre><code class="language-text">A---B---C---D  main
+</code></pre>
+<h3>5.2 HEAD는 내가 현재 보고 있는 위치</h3>
+<p>보통 HEAD는 현재 브랜치를 가리킵니다.</p>
+<pre><code class="language-text">HEAD -&gt; main -&gt; D
+</code></pre>
+<p><code>git switch feature</code>를 하면 HEAD가 <code>feature</code>를 가리킵니다. 특정 커밋을 직접 checkout하면 HEAD가 브랜치가 아닌 커밋을 가리키며 detached HEAD 상태가 됩니다.</p>
+<h3>5.3 태그는 보통 움직이지 않는 이름표</h3>
+<p><code>v1.0.0</code>처럼 배포 지점을 표시할 때 태그를 사용합니다. 브랜치는 개발하면서 움직이고, 태그는 특정 릴리스를 고정해 가리키는 것이 일반적입니다.</p>
+<h1>제2부: 첫 저장소와 일상 작업</h1>
+<h2>6. 설치 확인과 최초 설정</h2>
+<pre><code class="language-bash">git --version
+git config --global user.name &quot;홍길동&quot;
+git config --global user.email &quot;hong@example.com&quot;
+git config --global init.defaultBranch main
+git config --global --list
+</code></pre>
+<p>이 이름과 이메일은 로그인 계정이 아니라 커밋 메타데이터입니다. 회사와 개인 프로젝트에서 다른 이메일이 필요하다면 저장소 안에서 로컬 설정을 덮어쓸 수 있습니다.</p>
+<pre><code class="language-bash">git config user.email &quot;hong@company.example&quot;
+</code></pre>
+<p>설정 범위는 대략 다음 순서로 이해하면 됩니다.</p>
+<pre><code class="language-text">system &lt; global &lt; local
+</code></pre>
+<p>더 가까운 범위의 설정이 우선합니다.</p>
+<h2>7. 첫 저장소 만들기</h2>
+<h3>7.1 새 프로젝트 시작</h3>
+<pre><code class="language-bash">mkdir hello-git
+cd hello-git
+git init --initial-branch=main
+printf &quot;console.log(&#39;Hello Git&#39;);\n&quot; &gt; app.js
+git status
+git add app.js
+git commit -m &quot;feat: 첫 인사 프로그램 추가&quot;
+</code></pre>
+<p><code>git init</code>은 현재 폴더를 Git 저장소로 바꿉니다. 파일을 서버에 올리지 않으며, 자동으로 커밋하지도 않습니다.</p>
+<h3>7.2 기존 저장소 복제</h3>
+<pre><code class="language-bash">git clone https://example.com/team/sample.git
+cd sample
+</code></pre>
+<p><code>clone</code>은 보통 다음을 함께 수행합니다.</p>
+<ul>
+<li>원격 저장소의 커밋과 참조를 내려받는다.</li>
+<li>작업 디렉터리를 만든다.</li>
+<li>원격 이름 <code>origin</code>을 설정한다.</li>
+<li>기본 브랜치를 checkout한다.</li>
+</ul>
+<h2>8. 변경 관찰, 선택, 커밋</h2>
+<p>일상 작업의 가장 안전한 리듬은 다음과 같습니다.</p>
+<pre><code class="language-bash">git status
+git diff
+git add -p
+git diff --staged
+git commit -m &quot;fix: 빈 사용자 이름 검증&quot;
+</code></pre>
+<h3>8.1 <code>git status</code>는 나침반이다</h3>
+<p>문제가 생기면 먼저 <code>git status</code>를 봅니다. 현재 브랜치, 변경 파일, 충돌 상태, rebase 진행 여부, 다음 행동 힌트를 보여줍니다.</p>
+<h3>8.2 <code>git add</code>는 저장이 아니라 선택이다</h3>
+<p><code>git add .</code>는 편하지만 무관한 파일이나 비밀정보까지 넣을 수 있습니다. 초보 단계에서는 파일별 또는 패치별 추가를 권합니다.</p>
+<pre><code class="language-bash">git add src/login.js
+git add -p
+</code></pre>
+<p>패치 모드에서 자주 보는 선택:</p>
+<ul>
+<li><code>y</code>: 이 조각을 스테이징</li>
+<li><code>n</code>: 이 조각은 제외</li>
+<li><code>s</code>: 더 작은 조각으로 나누기</li>
+<li><code>q</code>: 종료</li>
+</ul>
+<h3>8.3 좋은 커밋은 한 문장으로 설명 가능하다</h3>
+<p>좋은 커밋은 작고 논리적으로 완결되어야 합니다.</p>
+<p>나쁜 예:</p>
+<pre><code class="language-text">수정
+작업함
+여러 가지 변경
+</code></pre>
+<p>좋은 예:</p>
+<pre><code class="language-text">feat: 비밀번호 재설정 폼 추가
+fix: 만료된 토큰이 승인되는 오류 수정
+test: 로그인 실패 시나리오 추가
+refactor: 인증 검증 로직을 서비스로 분리
+</code></pre>
+<p>커밋 메시지는 “무엇을 타이핑했는가”보다 <b>왜 이 변경이 필요한가</b>를 후대의 독자에게 설명해야 합니다.</p>
+<h3>8.4 실습: 한 파일의 두 의도를 나누기</h3>
+<p><code>app.js</code>에 기능 변경과 디버그 로그 제거를 함께 만들었다고 가정합니다.</p>
+<pre><code class="language-bash">git diff
+git add -p app.js
+# 기능 변경 조각만 y
+git diff --staged
+git commit -m &quot;feat: 사용자 환영 메시지 추가&quot;
+
+git add -p app.js
+# 로그 제거 조각을 y
+git commit -m &quot;chore: 임시 디버그 로그 제거&quot;
+</code></pre>
+<p>이렇게 하면 리뷰와 되돌리기가 쉬워집니다.</p>
+<h2>9. 이력 읽기와 비교하기</h2>
+<p>Git을 잘 쓰는 사람은 기록만큼 <b>관찰</b>을 많이 합니다.</p>
+<pre><code class="language-bash">git log --oneline --graph --decorate --all
+git show HEAD
+git show HEAD~1
+git log -- app.js
+git log --follow -- old-name.js
+git diff main..feature/login
+git diff main...feature/login
+</code></pre>
+<p><code>HEAD~1</code>은 첫 번째 부모를 한 단계 거슬러 올라간 커밋입니다. <code>main...feature</code>의 세 점 비교는 두 브랜치의 공통 조상 이후 feature 쪽 변경을 보는 데 유용합니다.</p>
+<h3>실습 질문</h3>
+<p>다음 그래프에서 feature 브랜치가 추가한 변경만 보고 싶다면 무엇을 기준으로 비교해야 할까요?</p>
+<pre><code class="language-text">A---B---C---D  main
+     \
+      E---F  feature
+</code></pre>
+<p>핵심은 최신 커밋 C나 D가 아니라 <b>공통 조상 B</b>입니다. 세 점 비교는 이 의도를 표현합니다.</p>
+<pre><code class="language-bash">git diff main...feature
+</code></pre>
+<h2>10. 무시 파일과 비밀정보</h2>
+<p><code>.gitignore</code>는 Git이 아직 추적하지 않는 파일을 기본 후보에서 제외합니다.</p>
+<pre><code class="language-gitignore"># 의존성
+node_modules/
+venv/
+
+# 빌드 결과
+dist/
+build/
+
+# 환경·비밀정보
+.env
+.env.*
+!.env.example
+
+# 운영체제와 편집기
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+</code></pre>
+<p>이미 추적 중인 파일은 <code>.gitignore</code>에 넣어도 자동으로 사라지지 않습니다.</p>
+<pre><code class="language-bash">git rm --cached .env
+git commit -m &quot;chore: 환경 파일 추적 중지&quot;
+</code></pre>
+<blockquote>
+<p><b>보안 경고:</b> 비밀키를 커밋했다면 파일을 삭제하는 것만으로 충분하지 않습니다. 과거 커밋에 남아 있을 수 있으므로 먼저 해당 키를 즉시 폐기·재발급해야 합니다. 이력 제거는 팀 전체에 영향을 주는 별도의 고위험 작업입니다.</p>
+</blockquote>
+<h1>제3부: 브랜치와 원격 협업</h1>
+<h2>11. 브랜치의 개념</h2>
+<p>브랜치는 독립적인 실험 흐름을 만드는 이름표입니다.</p>
+<pre><code class="language-bash">git switch -c feature/profile
+# 파일 수정
+git add .
+git commit -m &quot;feat: 프로필 화면 골격 추가&quot;
+git switch main
+</code></pre>
+<p>이때 feature의 파일이 사라진 것이 아니라, HEAD가 main을 가리키며 작업 디렉터리가 main의 스냅샷으로 바뀐 것입니다.</p>
+<h3>브랜치 이름 예</h3>
+<pre><code class="language-text">feature/password-reset
+fix/login-timeout
+refactor/user-service
+hotfix/payment-duplicate
+</code></pre>
+<p>한 브랜치는 가능한 한 하나의 목적을 가져야 합니다. 오래 살아 있는 브랜치는 main과 차이가 커져 통합 비용이 증가합니다.</p>
+<h2>12. 병합과 충돌</h2>
+<h3>12.1 fast-forward 병합</h3>
+<p>main이 분기 후 움직이지 않았다면 포인터만 앞으로 이동할 수 있습니다.</p>
+<pre><code class="language-text">A---B  main
+     \
+      C---D  feature
+</code></pre>
+<p>병합 후:</p>
+<pre><code class="language-text">A---B---C---D  main, feature
+</code></pre>
+<pre><code class="language-bash">git switch main
+git merge feature
+</code></pre>
+<h3>12.2 merge commit</h3>
+<p>양쪽이 모두 진행되었다면 두 부모를 가진 병합 커밋이 생길 수 있습니다.</p>
+<pre><code class="language-text">A---B---C-------M  main
+     \         /
+      D---E---F    feature
+</code></pre>
+<p>병합은 “두 역사가 실제로 갈라졌다가 합쳐졌다”는 사실을 보존합니다.</p>
+<h3>12.3 충돌은 실패가 아니라 판단 요청이다</h3>
+<p>Git이 두 변경을 자동으로 합칠 근거가 없으면 사람에게 의도를 묻습니다.</p>
+<pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+const timeout = 3000;
+=======
+const timeout = 5000;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/network
+</code></pre>
+<ul>
+<li><code>HEAD</code> 쪽: 현재 브랜치의 내용</li>
+<li>구분선 아래: 가져오는 브랜치의 내용</li>
+<li>해결은 둘 중 하나를 고르는 것일 수도, 두 의도를 조합하는 것일 수도 있음</li>
+</ul>
+<p>안전한 절차:</p>
+<pre><code class="language-bash">git status
+# 파일을 열어 충돌 표식을 제거하고 올바른 최종 내용을 작성
+git diff
+git add src/config.js
+git status
+git merge --continue
+</code></pre>
+<p>판단이 어렵다면:</p>
+<pre><code class="language-bash">git merge --abort
+</code></pre>
+<h3>충돌 실습</h3>
+<pre><code class="language-bash">git init --initial-branch=main conflict-lab
+cd conflict-lab
+printf &quot;색상=파랑\n&quot; &gt; config.txt
+git add .
+git commit -m &quot;chore: 기본 색상 설정&quot;
+
+git switch -c feature/red
+printf &quot;색상=빨강\n&quot; &gt; config.txt
+git commit -am &quot;feat: 빨간 테마 적용&quot;
+
+git switch main
+printf &quot;색상=초록\n&quot; &gt; config.txt
+git commit -am &quot;feat: 초록 테마 적용&quot;
+
+git merge feature/red
+# 충돌 내용을 확인하고 팀의 의도에 맞게 수정
+git add config.txt
+git commit
+</code></pre>
+<p>중요한 질문은 “ours와 theirs 중 무엇이 최신인가?”가 아니라 “최종 제품에서 어떤 의미가 맞는가?”입니다.</p>
+<h2>13. 원격 저장소의 정신 모델</h2>
+<p>원격 저장소는 내 저장소의 실시간 거울이 아닙니다. 로컬 저장소와 원격 저장소는 독립된 커밋 그래프를 갖고 명시적으로 동기화합니다.</p>
+<pre><code class="language-text">로컬 브랜치 main
+원격 추적 브랜치 origin/main
+원격 서버의 실제 main
+</code></pre>
+<p><code>origin</code>은 관례적인 원격 이름일 뿐 특별한 예약어가 아닙니다. <code>origin/main</code>은 “마지막으로 fetch했을 때 알고 있던 origin의 main”을 나타내는 로컬 참조입니다.</p>
+<pre><code class="language-bash">git remote -v
+git remote add origin https://example.com/team/app.git
+git remote show origin
+</code></pre>
+<p>HTTPS URL과 SSH URL은 전송·인증 방식이 다르지만 같은 저장소를 가리킬 수 있습니다.</p>
+<pre><code class="language-text">https://host/team/app.git
+git@host:team/app.git
+</code></pre>
+<h2>14. clone, fetch, pull, push</h2>
+<h3>14.1 fetch: 소식을 가져오되 내 작업은 합치지 않는다</h3>
+<pre><code class="language-bash">git fetch origin
+git log --oneline main..origin/main
+git diff main...origin/main
+</code></pre>
+<p><code>fetch</code>는 원격 커밋을 내려받고 원격 추적 브랜치를 갱신하지만 현재 브랜치를 자동으로 병합하지 않습니다. 그래서 관찰하기 좋은 안전한 기본 동작입니다.</p>
+<h3>14.2 pull: 가져온 뒤 통합한다</h3>
+<p>개념적으로 보통 다음 조합입니다.</p>
+<pre><code class="language-text">git pull = git fetch + merge 또는 rebase
+</code></pre>
+<pre><code class="language-bash">git pull --ff-only
+git pull --rebase
+</code></pre>
+<p>초보자는 자동 통합이 당황스러울 수 있으므로 <code>fetch</code> 후 차이를 보고 직접 merge/rebase하는 흐름이 이해에 도움이 됩니다.</p>
+<h3>14.3 push: 로컬 참조를 원격에 제안한다</h3>
+<pre><code class="language-bash">git push -u origin feature/profile
+</code></pre>
+<p><code>-u</code>는 로컬 브랜치와 원격 브랜치의 upstream 관계를 설정합니다. 이후에는 <code>git push</code>, <code>git pull</code>을 간단히 쓸 수 있습니다.</p>
+<p>push가 거절되는 흔한 이유는 원격 브랜치에 내 로컬에 없는 커밋이 있기 때문입니다. 이것은 Git이 다른 사람의 역사를 실수로 덮어쓰지 않게 보호하는 동작입니다.</p>
+<h2>15. GitHub Flow 중심 협업</h2>
+<p>작은 팀에 이해하기 쉬운 흐름입니다.</p>
+<ol>
+<li>main을 최신으로 만든다.</li>
+<li>짧은 기능 브랜치를 만든다.</li>
+<li>작은 커밋으로 구현한다.</li>
+<li>원격에 push한다.</li>
+<li>Pull Request를 열어 리뷰와 자동 테스트를 받는다.</li>
+<li>승인 후 merge한다.</li>
+<li>로컬과 원격의 작업 브랜치를 정리한다.</li>
+</ol>
+<pre><code class="language-bash">git switch main
+git fetch origin
+git merge --ff-only origin/main
+git switch -c feature/avatar-upload
+
+# 구현과 테스트
+git add -p
+git commit -m &quot;feat: 아바타 업로드 검증 추가&quot;
+git push -u origin feature/avatar-upload
+</code></pre>
+<p>Pull Request는 단순히 “merge 버튼”이 아닙니다. 변경 의도, 범위, 테스트 방법, 위험요소를 공유하는 협업 문서입니다.</p>
+<p>좋은 PR 설명 예:</p>
+<pre><code class="language-text">목적: 프로필 사진 업로드 시 잘못된 파일 형식을 조기에 거부한다.
+변경: MIME 형식과 크기 검증을 추가했다.
+검증: jpg/png 정상 업로드, gif 거부, 용량 초과 거부를 테스트했다.
+주의: 실제 이미지 변환은 다음 PR 범위다.
+</code></pre>
+<h2>16. Fork와 Pull Request</h2>
+<p>원본 저장소에 직접 push 권한이 없을 때 자신의 계정으로 fork한 뒤 변경을 제안할 수 있습니다.</p>
+<p>관례:</p>
+<pre><code class="language-text">origin   = 내 fork
+upstream = 원본 저장소
+</code></pre>
+<pre><code class="language-bash">git clone git@host:me/project.git
+cd project
+git remote add upstream git@host:team/project.git
+git fetch upstream
+git switch main
+git merge --ff-only upstream/main
+git push origin main
+</code></pre>
+<p>Git 자체는 fork나 PR을 특별히 알지 못합니다. Git 관점에서는 여러 remote와 브랜치일 뿐이며, fork·PR은 호스팅 서비스가 제공하는 협업 개념입니다.</p>
+<h1>제4부: 이력 통합과 정리</h1>
+<h2>17. merge, rebase, squash 비교</h2>
+<h3>merge</h3>
+<ul>
+<li>분기와 통합 사실을 보존한다.</li>
+<li>기존 커밋을 다시 만들지 않는다.</li>
+<li>공유 이력에 안전하다.</li>
+<li>복잡한 프로젝트에서는 그래프가 풍부해질 수 있다.</li>
+</ul>
+<h3>rebase</h3>
+<ul>
+<li>내 커밋의 기반을 새 기준점으로 옮긴다.</li>
+<li>커밋을 새로 만들므로 해시가 바뀐다.</li>
+<li>개인 작업 브랜치를 최신 main 위에 정리할 때 유용하다.</li>
+<li>이미 공유된 커밋을 rebase하면 동료의 기준과 어긋난다.</li>
+</ul>
+<pre><code class="language-text">rebase 전
+A---B---C  main
+     \
+      D---E  feature
+
+rebase 후
+A---B---C---D&#39;---E&#39;  feature
+</code></pre>
+<p>D와 E가 이동한 것이 아니라, 같은 변경을 기반 C 위에 적용한 새 커밋 D&#39;, E&#39;가 만들어진 것입니다.</p>
+<pre><code class="language-bash">git switch feature
+git fetch origin
+git rebase origin/main
+</code></pre>
+<p>충돌 시:</p>
+<pre><code class="language-bash">git status
+# 해결
+git add &lt;파일&gt;
+git rebase --continue
+# 포기하고 원상복귀
+git rebase --abort
+</code></pre>
+<blockquote>
+<p><b>경고:</b> 공유 브랜치나 다른 사람이 기반으로 작업 중인 커밋은 합의 없이 rebase하지 마세요.</p>
+</blockquote>
+<h3>squash</h3>
+<p>여러 커밋을 하나의 커밋으로 합쳐 main에 넣습니다. 기능 브랜치의 세세한 시행착오보다 최종 변경 단위를 강조하고 싶을 때 적합합니다.</p>
+<pre><code class="language-bash">git switch main
+git merge --squash feature/profile
+git commit -m &quot;feat: 프로필 편집 기능 추가&quot;
+</code></pre>
+<p>선택 기준:</p>
+<ul>
+<li>실제 분기 기록과 개별 커밋을 보존: merge</li>
+<li>개인 브랜치의 선형 이력을 정리: rebase</li>
+<li>기능 전체를 main의 한 변경으로 표현: squash merge</li>
+</ul>
+<p>정답은 하나가 아닙니다. 팀이 이력을 어떻게 읽고 되돌릴지에 따라 선택합니다.</p>
+<h2>18. interactive rebase</h2>
+<p>interactive rebase는 최근 개인 커밋의 순서, 메시지, 결합 방식을 정리합니다.</p>
+<pre><code class="language-bash">git rebase -i HEAD~4
+</code></pre>
+<p>편집 화면 예:</p>
+<pre><code class="language-text">pick a111111 로그인 폼 추가
+pick b222222 오타 수정
+pick c333333 테스트 추가
+pick d444444 다시 오타 수정
+</code></pre>
+<p>다음처럼 바꿀 수 있습니다.</p>
+<pre><code class="language-text">pick a111111 로그인 폼 추가
+fixup b222222 오타 수정
+pick c333333 테스트 추가
+fixup d444444 다시 오타 수정
+</code></pre>
+<p>주요 지시어:</p>
+<ul>
+<li><code>pick</code>: 그대로 사용</li>
+<li><code>reword</code>: 내용은 유지하고 메시지 수정</li>
+<li><code>edit</code>: 해당 커밋에서 멈춰 수정</li>
+<li><code>squash</code>: 앞 커밋과 합치고 메시지 편집</li>
+<li><code>fixup</code>: 앞 커밋과 합치고 현재 메시지는 버림</li>
+<li><code>drop</code>: 커밋 제거</li>
+</ul>
+<p>안전 절차:</p>
+<pre><code class="language-bash">git status
+git log --oneline -10
+git branch backup-before-rebase
+git rebase -i HEAD~4
+</code></pre>
+<p>잘못되면 진행 중에는 <code>git rebase --abort</code>, 완료 후에는 <code>git reflog</code>에서 이전 위치를 찾아 백업 브랜치를 만들 수 있습니다.</p>
+<h2>19. cherry-pick</h2>
+<p>cherry-pick은 다른 줄기의 특정 커밋이 만든 변경을 현재 브랜치에 새 커밋으로 적용합니다.</p>
+<pre><code class="language-text">main:    A---B---C
+hotfix:      \---H
+release: A---B---R
+</code></pre>
+<p>H만 release에도 필요하다면:</p>
+<pre><code class="language-bash">git switch release
+git cherry-pick &lt;H의-해시&gt;
+</code></pre>
+<p>사용 사례:</p>
+<ul>
+<li>긴급 수정 한 건을 여러 유지보수 브랜치에 적용</li>
+<li>잘못된 브랜치에 만든 커밋을 올바른 브랜치로 옮김</li>
+<li>큰 브랜치 전체가 아닌 검증된 변경 하나만 선택</li>
+</ul>
+<p>주의점:</p>
+<ul>
+<li>같은 변경을 여러 번 cherry-pick하면 중복과 충돌 가능성이 커진다.</li>
+<li>브랜치 전체를 계속 동기화하는 도구로 쓰면 관계가 불명확해진다.</li>
+<li>충돌 시 해결 후 <code>git cherry-pick --continue</code>, 포기 시 <code>--abort</code>한다.</li>
+</ul>
+<h2>20. revert와 reset</h2>
+<p>둘은 목적이 완전히 다릅니다.</p>
+<h3>revert: 역사를 보존하며 취소 기록 추가</h3>
+<pre><code class="language-bash">git revert &lt;나쁜-커밋&gt;
+</code></pre>
+<p>공유된 main에서 안전한 기본 선택입니다. 기존 커밋을 지우지 않고 그 효과를 반대로 적용한 새 커밋을 만듭니다.</p>
+<h3>reset: 브랜치 포인터를 과거로 이동</h3>
+<pre><code class="language-bash">git reset --soft HEAD~1   # 커밋만 취소, 변경은 staged
+git reset HEAD~1          # 커밋 취소, 변경은 unstaged
+git reset --hard HEAD~1   # 커밋과 작업 변경을 버림
+</code></pre>
+<ul>
+<li><code>--soft</code>: 커밋을 다시 구성하려 할 때</li>
+<li>기본 <code>--mixed</code>: 변경을 작업 디렉터리에 두고 스테이징을 다시 할 때</li>
+<li><code>--hard</code>: 작업 디렉터리와 스테이징 영역까지 대상 커밋에 맞출 때</li>
+</ul>
+<blockquote>
+<p><b>위험:</b> <code>reset --hard</code>는 커밋되지 않은 변경을 잃게 할 수 있습니다. 중요한 저장소에서는 먼저 <code>git status</code>, <code>git diff</code>, <code>git log</code>를 확인하고 백업 브랜치 또는 별도 패치를 만드세요.</p>
+</blockquote>
+<pre><code class="language-bash">git status
+git diff
+git log --oneline -10
+git branch backup-before-reset
+git reset --hard &lt;대상&gt;
+</code></pre>
+<p>공유 브랜치의 공개 커밋을 취소하려면 대체로 <code>revert</code>를 우선합니다.</p>
+<h2>21. stash와 임시 작업</h2>
+<p>stash는 아직 커밋하기 싫은 변경을 잠시 치워 깨끗한 작업 디렉터리를 만드는 기능입니다.</p>
+<pre><code class="language-bash">git stash push -m &quot;로그인 폼 작업 중&quot;
+git stash list
+git switch main
+# 긴급 수정 후
+git switch feature/login
+git stash apply stash@{0}
+</code></pre>
+<p><code>apply</code>는 적용 후 stash를 남기고, <code>pop</code>은 적용에 성공하면 목록에서 제거합니다. 초보자에게는 복구 여지가 있는 <code>apply</code>가 더 안전합니다.</p>
+<p>추적하지 않는 파일까지 포함:</p>
+<pre><code class="language-bash">git stash push -u -m &quot;새 파일 포함 임시 저장&quot;
+</code></pre>
+<p>특정 stash를 독립 브랜치로 복구:</p>
+<pre><code class="language-bash">git stash branch recover-login stash@{0}
+</code></pre>
+<p>stash는 장기 보관소가 아닙니다. 공유되지 않고 맥락이 약하므로 오래 유지할 가치가 있는 작업은 명확한 WIP 커밋을 개인 브랜치에 남기는 편이 낫습니다.</p>
+<h2>22. tag와 릴리스</h2>
+<p>태그는 특정 커밋을 사람이 이해하기 쉬운 이름으로 고정합니다.</p>
+<pre><code class="language-bash">git tag -a v1.0.0 -m &quot;첫 안정 릴리스&quot;
+git show v1.0.0
+git push origin v1.0.0
+</code></pre>
+<p>annotated tag는 작성자, 시각, 메시지 등 메타데이터를 포함하므로 릴리스 표시에 적합합니다.</p>
+<pre><code class="language-bash">git tag -a v1.0.1 &lt;커밋-해시&gt; -m &quot;보안 수정 릴리스&quot;
+</code></pre>
+<p>태그를 옮기거나 삭제하면 이미 내려받은 사용자의 태그와 불일치할 수 있습니다. 릴리스 태그는 가능한 한 변경하지 말고, 잘못된 릴리스라면 새 버전을 만드는 정책이 이해하기 쉽습니다.</p>
+<h1>제5부: 복구와 진단</h1>
+<h2>23. 안전 원칙</h2>
+<p>Git에서 사고가 났다고 느끼면 다음 순서를 지킵니다.</p>
+<ol>
+<li>추가 명령을 연속해서 실행하지 않는다.</li>
+<li><code>git status</code>를 읽는다.</li>
+<li><code>git log --oneline --graph --decorate --all</code>을 본다.</li>
+<li>작업 변경이 있다면 파일을 별도 폴더에 복사하거나 패치를 만든다.</li>
+<li>현재 커밋에 안전 브랜치를 만든다.</li>
+<li><code>git reflog</code>를 확인한다.</li>
+<li>정확한 복구 목표를 정한 뒤 한 단계씩 실행한다.</li>
+</ol>
+<pre><code class="language-bash">git diff &gt; ../working-tree-backup.patch
+git diff --staged &gt; ../staged-backup.patch
+git branch backup-before-recovery
+git reflog
+</code></pre>
+<p>“당황해서 hard reset”은 가장 피해야 할 행동입니다. 먼저 무엇이 커밋되어 있고 무엇이 아직 작업 디렉터리에만 있는지 구분해야 합니다.</p>
+<h2>24. reflog와 잃어버린 커밋 복구</h2>
+<p>브랜치나 HEAD가 이동한 기록은 reflog에서 찾을 수 있습니다.</p>
+<pre><code class="language-bash">git reflog
+</code></pre>
+<p>예:</p>
+<pre><code class="language-text">9f9f9f9 HEAD@{0}: reset: moving to HEAD~2
+7e7e7e7 HEAD@{1}: commit: 결제 검증 추가
+6d6d6d6 HEAD@{2}: commit: 주문 테스트 추가
+</code></pre>
+<p>reset 전 커밋을 찾았다면 먼저 브랜치로 보호합니다.</p>
+<pre><code class="language-bash">git branch recovered-work 7e7e7e7
+git show recovered-work
+</code></pre>
+<p>이후 필요한 방식으로 통합합니다.</p>
+<pre><code class="language-bash">git cherry-pick 7e7e7e7
+# 또는 recovered-work 브랜치를 검토 후 merge
+</code></pre>
+<p>reflog는 영구 백업이 아니며 주로 로컬 기록입니다. 따라서 원격 백업과 의미 있는 브랜치·태그도 중요합니다.</p>
+<h2>25. detached HEAD와 삭제 브랜치</h2>
+<p>특정 커밋을 직접 확인하면 detached HEAD가 될 수 있습니다.</p>
+<pre><code class="language-bash">git switch --detach &lt;커밋&gt;
+</code></pre>
+<p>읽기만 하면 문제없습니다. 여기서 새 커밋을 만들었고 보존하고 싶다면 즉시 브랜치를 만듭니다.</p>
+<pre><code class="language-bash">git switch -c experiment-from-old-version
+</code></pre>
+<p>이미 다른 곳으로 이동했다면:</p>
+<pre><code class="language-bash">git reflog
+git branch recovered-experiment &lt;커밋-해시&gt;
+</code></pre>
+<p>삭제한 브랜치도 커밋 객체가 즉시 사라지는 것은 아니므로 reflog에서 끝 커밋을 찾아 복원할 수 있습니다.</p>
+<pre><code class="language-bash">git reflog --all
+git branch restored-feature &lt;커밋-해시&gt;
+</code></pre>
+<h2>26. bisect로 버그 도입 커밋 찾기</h2>
+<p>커밋이 많을 때 하나씩 확인하지 않고 이진 탐색으로 최초의 나쁜 커밋을 찾습니다.</p>
+<pre><code class="language-bash">git bisect start
+git bisect bad                 # 현재 버전은 버그 있음
+git bisect good v1.2.0         # 이 태그에서는 정상
+</code></pre>
+<p>Git이 중간 커밋으로 이동하면 테스트 후 표시합니다.</p>
+<pre><code class="language-bash">npm test
+git bisect good
+# 또는
+git bisect bad
+</code></pre>
+<p>찾기가 끝나면 반드시 원래 상태로 돌아갑니다.</p>
+<pre><code class="language-bash">git bisect reset
+</code></pre>
+<p>테스트 명령이 성공 시 0, 실패 시 비영(非零) 종료 코드를 반환한다면 자동화할 수 있습니다.</p>
+<pre><code class="language-bash">git bisect start HEAD v1.2.0
+git bisect run npm test -- --runInBand
+git bisect reset
+</code></pre>
+<p>bisect의 핵심은 “누가 잘못했는지 찾기”가 아니라 회귀 원인을 좁혀 수정 비용을 낮추는 것입니다.</p>
+<h2>27. 위험 명령과 복구 계획</h2>
+<h3>27.1 <code>git clean</code></h3>
+<p>추적되지 않은 파일을 삭제합니다. 이 파일은 Git 이력에 없으므로 복구가 특히 어렵습니다.</p>
+<pre><code class="language-bash">git clean -n     # 반드시 먼저 미리보기
+git clean -i     # 가능하면 대화형 삭제
+git clean -fd    # 파일·디렉터리 실제 삭제: 주의
+</code></pre>
+<h3>27.2 강제 push</h3>
+<p>일반 강제 push는 원격 이력을 덮어쓸 수 있습니다.</p>
+<pre><code class="language-bash">git push --force
+</code></pre>
+<p>가능하면 다음을 사용합니다.</p>
+<pre><code class="language-bash">git fetch origin
+git log --oneline --left-right origin/feature...feature
+git push --force-with-lease
+</code></pre>
+<p><code>--force-with-lease</code>는 내가 마지막으로 확인한 뒤 원격이 바뀌었다면 실패하여 타인의 새 커밋을 덮어쓸 위험을 낮춥니다. 그러나 위험이 0이 되는 것은 아닙니다.</p>
+<p>안전 체크리스트:</p>
+<ul>
+<li>보호 브랜치인지 확인</li>
+<li>팀원에게 이력 재작성 예고</li>
+<li>원격 최신 상태 fetch</li>
+<li>로컬 백업 브랜치 생성</li>
+<li>덮어써질 커밋 확인</li>
+<li>가능하면 <code>--force-with-lease</code></li>
+<li>사고 시 원격에 있던 커밋 해시나 동료 clone을 이용해 복구</li>
+</ul>
+<h3>27.3 전체 이력 재작성</h3>
+<p>비밀정보나 대용량 파일을 모든 과거 커밋에서 제거할 때 <code>git filter-repo</code> 같은 도구를 사용할 수 있습니다. 이는 모든 관련 커밋 해시를 바꾸고 기존 clone과의 관계를 깨뜨릴 수 있습니다.</p>
+<blockquote>
+<p><b>최고 위험 경고:</b> 실제 저장소에서는 저장소 관리자와 팀 전체의 명시적 합의, 자격증명 폐기, mirror 백업, 작업 중지 시간, 재복제 안내가 없으면 실행하지 마세요.</p>
+</blockquote>
+<p>개념적 백업:</p>
+<pre><code class="language-bash">git clone --mirror &lt;저장소-URL&gt; backup-repository.git
+</code></pre>
+<p>비밀정보 유출에서는 이력 정리보다 <b>키 폐기·재발급이 먼저</b>입니다. Git 이력에서 지워도 이미 복제되거나 캐시된 비밀은 안전해지지 않습니다.</p>
+<h1>제6부: 고급 구조와 자동화</h1>
+<h2>28. worktree</h2>
+<p>한 저장소의 여러 브랜치를 서로 다른 작업 디렉터리에서 동시에 열 수 있습니다.</p>
+<p>상황: feature 작업 중인데 main에서 긴급 수정이 필요합니다. stash하고 브랜치를 계속 바꾸는 대신 새 worktree를 만듭니다.</p>
+<pre><code class="language-bash">git worktree add -b h
