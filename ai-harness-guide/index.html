@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f9fc">
+  <title>AI 하네스 완전 해설: 테스트에서 에이전트 런타임까지</title>
+  <meta name="description" content="AI 하네스의 기초 개념, 결정론적 테스트와 LLM 평가, 도구 사용 에이전트 런타임, 최신 실제 사례, 보안·관찰성·비용·재현성을 깊이 있게 설명합니다.">
+  <meta property="og:title" content="AI 하네스 완전 해설: 테스트에서 에이전트 런타임까지">
+  <meta property="og:description" content="AI 하네스의 기초 개념부터 평가·에이전트 실행 계층, 최신 사례와 실무 설계 원칙까지 다루는 심층 기술 문서입니다.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI 하네스 완전 해설: 테스트에서 에이전트 런타임까지">
+  <meta name="twitter:description" content="AI 하네스의 기초 개념부터 평가·에이전트 실행 계층, 최신 사례와 실무 설계 원칙까지 다루는 심층 기술 문서입니다.">
+  <script id="structured-data-jsonld" type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AI 하네스 완전 해설",
+    "description": "AI 하네스의 기초 개념부터 평가·에이전트 실행 계층, 최신 사례와 실무 설계 원칙까지 다루는 심층 기술 문서입니다.",
+    "url": "__SITE_URL__"
+  }</script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <!-- @section: accessibility-skip-link -->
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
+  <!-- @section: site-header -->
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="AI 하네스 완전 해설 맨 위로">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span><strong>AI HARNESS</strong><small>FIELD GUIDE · 2026</small></span>
+      </a>
+      <div class="reading-status" aria-live="polite">
+        <span>현재 섹션</span><strong id="current-section">한 문장 정의와 핵심 직관</strong>
+      </div>
+    </div>
+  </header>
+
+  <!-- @section: hero-overview -->
+  <section class="hero" aria-labelledby="page-title">
+    <div class="hero-copy">
+      <p class="eyebrow">AI SYSTEMS · EVALUATION · AGENT RUNTIME</p>
+      <h1 id="page-title">AI 하네스<br><span>완전 해설</span></h1>
+      <p class="hero-lead">결정론적 테스트에서 LLM 평가, 도구 사용 에이전트의 실행·보안·관찰성·비용 제어까지</p>
+      <div class="hero-meta">
+        <span>기준일 <strong>2026. 07. 24.</strong></span>
+        <span>14개 장</span>
+        <span>27개 참고문헌</span>
+      </div>
+    </div>
+
+    <!-- @section: harness-concept-diagram -->
+    <figure class="concept-diagram" aria-labelledby="diagram-title">
+      <figcaption id="diagram-title">하네스는 모델과 외부 세계 사이의 통제 계층이다</figcaption>
+      <div class="diagram-flow">
+        <div class="diagram-node input-node"><span>01</span><strong>입력</strong><small>목표 · 데이터 · 정책</small></div>
+        <div class="diagram-arrow" aria-hidden="true">→</div>
+        <div class="diagram-harness">
+          <div class="harness-label">HARNESS</div>
+          <div class="harness-core"><strong>MODEL</strong><small>추론 · 제안</small></div>
+          <ul>
+            <li>실행 통제</li><li>도구 연결</li><li>권한·예산</li><li>기록·검증</li>
+          </ul>
+        </div>
+        <div class="diagram-arrow" aria-hidden="true">→</div>
+        <div class="diagram-node output-node"><span>03</span><strong>행동</strong><small>결과 · trace · artifact</small></div>
+      </div>
+      <p>“무엇을 할지” 제안하는 모델과 “무엇이 실제로 허용되는지” 집행하는 계층을 분리한다.</p>
+    </figure>
+  </section>
+
+  <!-- @section: mobile-navigation -->
+  <details class="mobile-toc">
+    <summary>문서 목차 열기 <span aria-hidden="true">+</span></summary>
+    <nav aria-label="모바일 문서 목차"><ol><li><a href="#s1" data-section="s1"><span>01</span>한 문장 정의와 핵심 직관</a></li>
+<li><a href="#s2" data-section="s2"><span>02</span>용어 계보</a></li>
+<li><a href="#s3" data-section="s3"><span>03</span>개념 경계</a></li>
+<li><a href="#s4" data-section="s4"><span>04</span>Toy 1 · 테스트 하네스</a></li>
+<li><a href="#s5" data-section="s5"><span>05</span>Toy 2 · LLM 평가</a></li>
+<li><a href="#s6" data-section="s6"><span>06</span>평가 설계 원리</a></li>
+<li><a href="#s7" data-section="s7"><span>07</span>대표 평가 하네스</a></li>
+<li><a href="#s8" data-section="s8"><span>08</span>Toy 3 · 에이전트 하네스</a></li>
+<li><a href="#s9" data-section="s9"><span>09</span>내부 구조</a></li>
+<li><a href="#s10" data-section="s10"><span>10</span>최신 실제 사례</a></li>
+<li><a href="#s11" data-section="s11"><span>11</span>운영 품질의 네 축</a></li>
+<li><a href="#s12" data-section="s12"><span>12</span>실무 설계 청사진</a></li>
+<li><a href="#s13" data-section="s13"><span>13</span>안티패턴</a></li>
+<li><a href="#s14" data-section="s14"><span>14</span>용어집과 참고문헌</a></li></ol></nav>
+  </details>
+
+  <!-- @section: documentation-layout -->
+  <div class="docs-layout">
+    <!-- @section: desktop-navigation -->
+    <aside class="sidebar" aria-label="문서 탐색">
+      <div class="sidebar-inner">
+        <div class="toc-heading"><span>CONTENTS</span><strong>문서 목차</strong></div>
+        <nav aria-label="문서 목차"><ol><li><a href="#s1" data-section="s1"><span>01</span>한 문장 정의와 핵심 직관</a></li>
+<li><a href="#s2" data-section="s2"><span>02</span>용어 계보</a></li>
+<li><a href="#s3" data-section="s3"><span>03</span>개념 경계</a></li>
+<li><a href="#s4" data-section="s4"><span>04</span>Toy 1 · 테스트 하네스</a></li>
+<li><a href="#s5" data-section="s5"><span>05</span>Toy 2 · LLM 평가</a></li>
+<li><a href="#s6" data-section="s6"><span>06</span>평가 설계 원리</a></li>
+<li><a href="#s7" data-section="s7"><span>07</span>대표 평가 하네스</a></li>
+<li><a href="#s8" data-section="s8"><span>08</span>Toy 3 · 에이전트 하네스</a></li>
+<li><a href="#s9" data-section="s9"><span>09</span>내부 구조</a></li>
+<li><a href="#s10" data-section="s10"><span>10</span>최신 실제 사례</a></li>
+<li><a href="#s11" data-section="s11"><span>11</span>운영 품질의 네 축</a></li>
+<li><a href="#s12" data-section="s12"><span>12</span>실무 설계 청사진</a></li>
+<li><a href="#s13" data-section="s13"><span>13</span>안티패턴</a></li>
+<li><a href="#s14" data-section="s14"><span>14</span>용어집과 참고문헌</a></li></ol></nav>
+        <a class="sidebar-ref" href="#s14">참고문헌 27개 보기 <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <!-- @section: main-article -->
+    <main id="main-content" tabindex="-1">
+      <!-- @section: article-search -->
+      <div class="search-panel" role="search">
+        <label for="doc-search">본문 검색</label>
+        <div class="search-row">
+          <input id="doc-search" type="search" placeholder="용어, 도구, 사례 검색…" autocomplete="off" aria-describedby="search-help search-count">
+          <button id="clear-search" type="button" aria-label="검색어 지우기">지우기</button>
+        </div>
+        <div class="search-feedback"><span id="search-help"><kbd>/</kbd> 키로 검색창 이동 · <kbd>Esc</kbd> 초기화</span><strong id="search-count" aria-live="polite">검색어를 입력하세요</strong></div>
+      </div>
+
+      <!-- @section: preserved-source-article -->
+      <article class="article-body">
+
+
+
+
+
+<!-- @section: article-s1 -->
+<section id="s1" class="doc-section">
+<h2>1. 한 문장 정의와 핵심 직관</h2>
+<p><strong>하네스(harness)는 대상 시스템을 직접 바꾸지 않고, 그 주위를 둘러싸 입력을 넣고, 실행을 통제하고, 외부 세계와 연결하고, 결과를 관찰·검증하는 장치의 묶음</strong>이다. 자동차의 안전벨트나 동물의 마구가 힘의 방향과 허용 범위를 정하듯, 소프트웨어 하네스는 어떤 코드나 모델이 <em>어떤 조건에서, 무엇을 할 수 있고, 언제 멈추며, 성공을 어떻게 판정할지</em> 정한다.</p>
+<p>전통적 소프트웨어 테스트에서 test harness는 테스트 스크립트, 데이터, 스텁, 드라이버, 검증기를 결합해 통제되고 반복 가능한 실행 환경을 만든다.<a class="inline_marker" href="#ref1">[1]</a> LLM 분야의 evaluation harness는 이 생각을 확장해 동일한 프롬프트 구성, 데이터셋, 디코딩 조건, 채점 규칙으로 여러 모델을 비교한다. EleutherAI는 구현 세부가 모델 점수에 큰 영향을 주기 때문에, 같은 입력과 코드베이스에서 평가하는 통합 계층이 재현성에 중요하다고 설명한다.<a class="inline_marker" href="#ref2">[2]</a></p>
+<p>에이전트 시대에는 하네스의 역할이 더 커진다. 모델은 텍스트로 도구 호출 의도를 표현할 수 있지만, 실제 API 호출·파일 수정·명령 실행은 스스로 수행하지 못한다. 실행 하네스가 모델을 반복 호출하고, 구조화된 도구 요청을 검사·실행하고, 결과를 다시 컨텍스트에 넣고, 예산·권한·중단 조건을 집행해야 한다. 최근 업계 용어 정리에서는 이를 “모델을 호출하고, 도구 호출을 처리하며, 언제 멈출지 결정하는 실행 계층”으로 요약한다.<a class="inline_marker" href="#ref3">[3]</a></p>
+<blockquote><strong>가장 실용적인 기억법:</strong> 평가 하네스는 “같은 시험을 공정하게 치르게 하는 장치”이고, 에이전트 하네스는 “모델의 의도를 통제된 행동으로 바꾸는 장치”다.</blockquote>
+</section>
+
+<!-- @section: article-s2 -->
+<section id="s2" class="doc-section">
+<h2>2. 용어 계보: 세 세대의 하네스</h2>
+<div class="table-scroll" role="region" aria-label="하네스 개념의 세 가지 주된 사용 맥락" tabindex="0"><table>
+<caption>하네스 개념의 세 가지 주된 사용 맥락</caption>
+<thead><tr><th style="width:18%">구분</th><th style="width:27%">무엇을 둘러싸는가</th><th style="width:31%">주요 책임</th><th style="width:24%">대표 산출물</th></tr></thead>
+<tbody>
+<tr><td>Test Harness</td><td>함수, 모듈, 서비스</td><td>입력 준비, 의존성 대역, 실행, 기대값 비교, 실패 보고</td><td>통과/실패, 예외, 커버리지</td></tr>
+<tr><td>Evaluation Harness</td><td>ML 모델, LLM, LLM 시스템</td><td>데이터·프롬프트·샘플링 조건 고정, 반복 실행, 정량·정성 채점</td><td>정확도, pass@k, 품질·안전 점수, 신뢰구간</td></tr>
+<tr><td>Agent Harness</td><td>도구를 쓰는 모델</td><td>모델-도구 루프, 상태·메모리, 권한, 샌드박스, 복구, 추적</td><td>완료 결과, 행동 궤적, 감사 로그, 아티팩트</td></tr>
+</tbody>
+</table></div>
+<h3>2.1 공통 DNA</h3>
+<p>세 범주는 대상과 복잡도는 다르지만 다섯 가지 공통 요소를 가진다.</p>
+<ol>
+<li><strong>대상 분리:</strong> 테스트·평가 대상 자체와 실행 통제 코드를 분리한다.</li>
+<li><strong>입력 규격:</strong> 무엇을 넣었는지 명시하고 버전으로 고정한다.</li>
+<li><strong>환경 통제:</strong> 외부 의존성과 권한, 시간, 계산 자원을 제한한다.</li>
+<li><strong>오라클 또는 채점기:</strong> 성공을 판정할 규칙을 둔다.</li>
+<li><strong>기록:</strong> 결과뿐 아니라 재현에 필요한 조건과 과정도 남긴다.</li>
+</ol>
+<h3>2.2 왜 LLM에서 더 어려워지는가</h3>
+<p>일반 함수는 같은 입력에 같은 출력이 나오는 경우가 많다. 반면 LLM은 샘플링 설정, 제공자 구현, 프롬프트 직렬화, 채팅 템플릿, 도구 설명, 모델 버전 같은 작은 차이에도 응답이 달라질 수 있다. 따라서 “정답 문자열 하나”만 비교하는 전통적 단위 테스트로는 부족하다. 평가 하네스는 분포를 다뤄야 하고, 에이전트 하네스는 시간에 따라 변하는 상태와 외부 부작용까지 다뤄야 한다.</p>
+</section>
+
+<!-- @section: article-s3 -->
+<section id="s3" class="doc-section">
+<h2>3. 개념 경계: 무엇이 하네스이고 무엇이 아닌가</h2>
+<p>“agent harness”는 아직 보편적으로 고정된 표준 용어가 아니다. 커뮤니티와 제품마다 runtime, framework, scaffold, orchestrator를 겹쳐 쓴다. 실제 업계 용어 해설도 보편적으로 합의된 정의가 없고 프레임워크마다 같은 단어를 다르게 사용한다고 명시한다.<a class="inline_marker" href="#ref3">[3]</a> 따라서 제품을 비교할 때는 이름보다 <strong>책임의 위치</strong>를 확인해야 한다.</p>
+<div class="table-scroll" role="region" aria-label="모델 주변 계층을 책임 기준으로 구분하기" tabindex="0"><table>
+<caption>모델 주변 계층을 책임 기준으로 구분하기</caption>
+<thead><tr><th>용어</th><th>실용적 정의</th><th>대표 질문</th><th>경계가 흐려지는 지점</th></tr></thead>
+<tbody>
+<tr><td>Model</td><td>관찰을 받아 다음 토큰·구조화 응답을 생성하는 통계적 정책</td><td>무엇을 추론하고 제안하는가?</td><td>도구 호출 형식이 모델 API에 내장됨</td></tr>
+<tr><td>Scaffolding</td><td>시스템 프롬프트, 도구 설명, 출력 형식처럼 행동을 형성하는 정적 구성</td><td>모델이 세계를 어떻게 보게 할 것인가?</td><td>컨텍스트 관리 규칙이 실행 중 동작함</td></tr>
+<tr><td>Harness</td><td>모델 호출, 도구 디스패치, 반복·중단·오류·검증을 다루는 실행 논리</td><td>의도를 어떻게 실제 행동으로 바꿀 것인가?</td><td>상태 저장·재개를 함께 제공하기도 함</td></tr>
+<tr><td>Runtime</td><td>프로세스, 샌드박스, 큐, 체크포인트, 재시도, 분산 실행의 기반</td><td>어디에서 얼마나 오래, 어떻게 복구하며 실행할 것인가?</td><td>SDK가 루프까지 포함할 수 있음</td></tr>
+<tr><td>Orchestrator</td><td>여러 에이전트·워크플로를 작업 단위로 배치하고 조정</td><td>누가 어떤 하위 작업을 맡는가?</td><td>단일 에이전트 루프도 orchestration이라 부름</td></tr>
+</tbody>
+</table></div>
+<p>한 가지 유용한 식은 다음과 같다.</p>
+<div class="formula">Agent ≈ Model + Scaffolding + Harness + Runtime Resources</div>
+<p>이 식은 표준 정의가 아니라 설계를 위한 분해법이다. 핵심은 “같은 모델인데 왜 제품마다 성능과 안전성이 다른가?”라는 질문을 하네스와 주변 계층의 차이로 설명할 수 있다는 점이다.</p>
+</section>
+
+<!-- @section: article-s4 -->
+<section id="s4" class="chapter doc-section">
+<h2>4. Toy Example 1: 결정론적 테스트 하네스</h2>
+<p>가장 작은 하네스부터 시작하자. 아래 코드는 외부 패키지 없이 실행된다. 테스트 대상 함수, 테스트 데이터, 실행기, 오라클, 결과 보고가 분리되어 있다.</p>
+<div class="code-block"><div class="code-toolbar"><span># toy_1_deterministic_harness.py</span><button class="copy-code" type="button" aria-label="코드 복사">복사</button></div><pre><code># toy_1_deterministic_harness.py
+from dataclasses import dataclass
+from typing import Callable, Any
+
+
+def normalize_username(text: str) -&gt; str:
+    """테스트 대상 시스템(SUT)."""
+    return " ".join(text.strip().lower().split())
+
+
+@dataclass(frozen=True)
+class Case:
+    name: str
+    raw: str
+    expected: str
+
+
+def run_harness(
+    sut: Callable[[str], Any],
+    cases: list[Case],
+) -&gt; int:
+    failures = 0
+    for case in cases:
+        try:
+            actual = sut(case.raw)
+            passed = actual == case.expected
+        except Exception as exc:
+            actual = f"EXCEPTION: {type(exc).__name__}: {exc}"
+            passed = False
+
+        status = "PASS" if passed else "FAIL"
+        print(f"[{status}] {case.name}: {actual!r}")
+        if not passed:
+            failures += 1
+            print(f"       expected={case.expected!r}")
+
+    print(f"summary: total={len(cases)}, failures={failures}")
+    return failures
+
+
+if __name__ == "__main__":
+    test_cases = [
+        Case("앞뒤 공백", "  Alice  ", "alice"),
+        Case("연속 공백", "BOB    SMITH", "bob smith"),
+        Case("빈 문자열", "   ", ""),
+    ]
+    raise SystemExit(run_harness(normalize_username, test_cases))
+</code></pre></div>
+<h3>4.1 이 작은 코드에서 이미 보이는 하네스 요소</h3>
+<ul>
+<li><code>normalize_username</code>은 대상 시스템이며 하네스와 분리된다.</li>
+<li><code>Case</code>는 입력과 기대 결과를 데이터화한다.</li>
+<li><code>run_harness</code>는 실행 순서와 예외 처리를 통제한다.</li>
+<li><code>actual == expected</code>는 결정론적 오라클이다.</li>
+<li>종료 코드는 CI가 성공·실패를 기계적으로 판단하게 한다.</li>
+</ul>
+<p>이 구조가 중요한 이유는 대상 함수가 바뀌어도 테스트 계약은 유지되고, 테스트 케이스가 늘어나도 실행기는 그대로이기 때문이다. 즉 하네스는 단순한 <code>assert</code> 모음이 아니라 <strong>실행 규약을 재사용 가능한 계층으로 끌어낸 것</strong>이다.</p>
+</section>
+
+<!-- @section: article-s5 -->
+<section id="s5" class="doc-section">
+<h2>5. Toy Example 2: 확률적 LLM 평가 하네스</h2>
+<p>LLM 평가에서는 같은 문제를 여러 번 생성해 성공 횟수를 기록하는 방식이 필요하다. 코드 생성 평가에서 널리 알려진 pass@k는 n개 샘플 중 c개가 정답일 때 k개를 고르면 적어도 하나가 성공할 확률의 불편 추정량을 사용한다. 이 지표는 Codex/HumanEval 연구에서 제시되었다.<a class="inline_marker" href="#ref4">[4]</a></p>
+<div class="formula">pass@k = 1 − C(n−c, k) / C(n, k)</div>
+<p>아래 예제는 실제 API 대신 seed가 고정된 모의 모델을 사용하므로 누구나 재현할 수 있다. 실제 적용에서는 <code>mock_model</code>만 API 호출 함수로 교체한다.</p>
+<div class="code-block"><div class="code-toolbar"><span># toy_2_probabilistic_eval.py</span><button class="copy-code" type="button" aria-label="코드 복사">복사</button></div><pre><code># toy_2_probabilistic_eval.py
+from dataclasses import dataclass
+from math import comb
+import random
+import statistics
+
+
+@dataclass(frozen=True)
+class Sample:
+    output: str
+    passed: bool
+
+
+def mock_model(prompt: str, rng: random.Random) -&gt; str:
+    """확률적으로 정답 또는 오답을 내는 모의 LLM."""
+    candidates = ["4", "4", "4", "four", "5"]
+    return rng.choice(candidates)
+
+
+def exact_match(output: str, expected: str) -&gt; bool:
+    return output.strip() == expected
+
+
+def pass_at_k(n: int, c: int, k: int) -&gt; float:
+    if not 1 &lt;= k &lt;= n:
+        raise ValueError("k는 1 이상 n 이하여야 합니다.")
+    if not 0 &lt;= c &lt;= n:
+        raise ValueError("c는 0 이상 n 이하여야 합니다.")
+    if n - c &lt; k:
+        return 1.0
+    return 1.0 - comb(n - c, k) / comb(n, k)
+
+
+def run_once(seed: int, n: int = 10, k: int = 3) -&gt; dict:
+    rng = random.Random(seed)
+    samples = []
+    for _ in range(n):
+        output = mock_model("2 + 2 = ?", rng)
+        samples.append(Sample(output, exact_match(output, "4")))
+
+    successes = sum(s.passed for s in samples)
+    return {
+        "seed": seed,
+        "successes": successes,
+        "n": n,
+        "pass_at_k": pass_at_k(n, successes, k),
+        "outputs": [s.output for s in samples],
+    }
+
+
+def run_repeated(seeds: list[int]) -&gt; None:
+    runs = [run_once(seed) for seed in seeds]
+    scores = [r["pass_at_k"] for r in runs]
+    for run in runs:
+        print(run)
+    print("mean_pass_at_k=", round(statistics.mean(scores), 4))
+    print("stdev=", round(statistics.stdev(scores), 4))
+
+
+if __name__ == "__main__":
+    run_repeated([11, 22, 33, 44, 55])
+</code></pre></div>
+<h3>5.1 실제 API로 바꿀 때 추가해야 할 기록</h3>
+<ul>
+<li>모델의 정확한 식별자와 제공자, 가능하면 revision 또는 snapshot</li>
+<li>시스템·사용자 프롬프트 원문과 chat template</li>
+<li><code>temperature</code>, <code>top_p</code>, <code>max_tokens</code>, seed 지원 여부</li>
+<li>재시도 횟수, rate limit, timeout, 실패 응답 처리</li>
+<li>입력·출력·캐시 토큰, 지연시간, 요청당 비용</li>
+<li>채점기 버전과 정규화 규칙</li>
+</ul>
+<div class="note"><strong>중요:</strong> 반복 횟수를 늘리는 것만으로 평가가 자동으로 타당해지지는 않는다. 나쁜 데이터셋, 모호한 채점 기준, 누출된 정답을 더 많이 반복하면 잘못된 결론을 더 정밀하게 얻을 뿐이다.</div>
+</section>
+
+<!-- @section: article-s6 -->
+<section id="s6" class="doc-section">
+<h2>6. 평가 하네스의 설계 원리</h2>
+<h3>6.1 평가 단위를 먼저 정한다</h3>
+<p>평가 대상이 “기초 모델”인지, “프롬프트를 포함한 애플리케이션”인지, “검색·도구·메모리를 포함한 에이전트”인지 명시해야 한다. 모델 교체 비교라면 프롬프트와 도구를 고정한다. 전체 제품 품질 비교라면 하네스 구성까지 포함해 시스템 단위로 평가한다. 두 질문을 한 점수로 섞으면 개선 원인을 추적할 수 없다.</p>
+<h3>6.2 데이터셋을 제품 계약으로 바꾼다</h3>
+<p>공개 벤치마크는 일반 능력 비교에 유용하지만, 실제 제품의 실패 비용을 반영하지 못한다. 운영 로그에서 개인정보를 제거한 실제 사례, 안전 경계 사례, 최근 회귀 버그, 긴 꼬리 입력을 평가 세트로 승격해야 한다. 또한 held-out 정확도만으로는 놓치는 행동을 체계적으로 찾기 위해 최소 기능 테스트(MFT), 불변성(INV), 방향성 기대(DIR)를 활용하는 CheckList 접근이 제안되었다.<a class="inline_marker" href="#ref5">[5]</a></p>
+<h3>6.3 채점기를 다층화한다</h3>
+<ol>
+<li><strong>결정론적 검사:</strong> JSON schema, 정규식, 숫자 범위, SQL 결과, 단위 테스트.</li>
+<li><strong>참조 기반 지표:</strong> exact match, F1, retrieval recall.</li>
+<li><strong>규칙 기반 루브릭:</strong> 필수 항목, 금지 항목, 인용 형식.</li>
+<li><strong>모델 기반 채점:</strong> 의미적 품질이나 문체처럼 규칙화가 어려운 항목.</li>
+<li><strong>인간 검토:</strong> 고위험·고모호성 사례의 최종 표본 감사.</li>
+</ol>
+<p>LLM-as-a-judge를 사용할 때에는 평가 모델, 프롬프트, 순서 편향 완화, 재시도, 비용을 모두 기록해야 한다. 같은 제공자의 모델로 자기 계열을 평가할 때 나타날 수 있는 편향도 별도 검증 대상이다.</p>
+<h3>6.4 평균 하나보다 분포와 실패 유형을 본다</h3>
+<p>정확도 82%라는 숫자만으로는 어느 고객이 위험한지 알 수 없다. 사례별 원시 결과, 카테고리별 점수, 최악군 성능, 변동성, 비용과 지연시간을 함께 본다. 샘플이 독립이라는 가정이 약하거나 문항이 카테고리별로 군집되어 있으면 단순한 이항 신뢰구간도 과신할 수 있으므로, 데이터 생성 구조에 맞는 bootstrap 또는 cluster-aware 분석을 고려한다.</p>
+<h3>6.5 데이터 오염을 별도 위험으로 관리한다</h3>
+<p>공개 평가 문제와 학습 데이터가 겹치면 일반화 능력이 과대평가될 수 있다. 데이터 오염 연구는 동적 평가, 문제 재작성, 예방적 데이터 관리와 함께 white-box·gray-box·black-box 탐지 접근을 구분한다.<a class="inline_marker" href="#ref6">[6]</a> 실무에서는 비공개 canary 세트, 시간 기준 분할, n-gram·유사도 검색, 출처 메타데이터를 조합한다.</p>
+<h3>6.6 적대적 평가를 정규 회귀 테스트로 편입한다</h3>
+<p>수동 레드팀은 창의적이지만 확장하기 어렵다. 다른 LLM으로 공격 프롬프트를 자동 생성해 대상 모델의 유해 행동을 찾는 자동 레드팀 접근이 연구되었다.<a class="inline_marker" href="#ref7">[7]</a> 발견된 공격을 일회성 보고서로 끝내지 말고, 최소 재현 입력과 기대 방어 행동을 회귀 테스트로 고정해야 한다.</p>
+</section>
+
+<!-- @section: article-s7 -->
+<section id="s7" class="chapter doc-section">
+<h2>7. 대표 평가 하네스 비교</h2>
+<div class="table-scroll" role="region" aria-label="2026년 7월 확인 가능한 공식 자료를 기준으로 한 용도별 비교" tabindex="0"><table>
+<caption>2026년 7월 확인 가능한 공식 자료를 기준으로 한 용도별 비교</caption>
+<thead><tr><th style="width:16%">도구</th><th style="width:22%">가장 잘 맞는 목적</th><th style="width:25%">구성·실행</th><th style="width:20%">강점</th><th style="width:17%">주의점</th></tr></thead>
+<tbody>
+<tr><td>EleutherAI lm-eval</td><td>다수 언어모델의 표준 벤치마크 비교<a class="inline_marker" href="#ref8">[8]</a></td><td>통합 모델 인터페이스, 태스크 정의, CLI·Python 실행</td><td>동일 코드와 입력, 태스크 버전화를 통한 비교·재현성<a class="inline_marker" href="#ref2">[2]</a></td><td>복잡한 상호작용형 에이전트보다 모델 응답 평가에 더 자연스러움</td></tr>
+<tr><td>Stanford HELM</td><td>정확도 외의 다양한 시나리오·지표를 포함한 총체적 평가</td><td>오픈소스 Python 프레임워크와 공개 벤치마크 결과<a class="inline_marker" href="#ref9">[9]</a></td><td>재현성·투명성을 핵심 목표로 명시<a class="inline_marker" href="#ref9">[9]</a></td><td>구버전 페이지가 deprecated일 수 있어 최신 benchmark 구성을 확인해야 함<a class="inline_marker" href="#ref10">[10]</a></td></tr>
+<tr><td>OpenAI Evals</td><td>LLM·LLM 시스템용 사용자 정의 평가와 benchmark registry</td><td>레지스트리, CLI, custom eval, 도구 사용 시스템용 protocol<a class="inline_marker" href="#ref11">[11]</a></td><td>애플리케이션별 private eval과 모델 변경 회귀 확인</td><td>OpenAI API 문서는 기존 Evals가 2026-10-31 read-only, 2026-11-30 종료 예정이라고 안내하므로 신규 설계는 전환 계획이 필요<a class="inline_marker" href="#ref12">[12]</a></td></tr>
+<tr><td>Inspect</td><td>프런티어 모델, 코딩·에이전트·안전 평가</td><td>Dataset + Solver/Agent + Scorer, CLI, Inspect View</td><td>도구 호출, 외부 에이전트, 다중 샌드박스, 200개 초과 사전 구축 평가를 공식 문서가 제공<a class="inline_marker" href="#ref13">[13]</a></td><td>강력한 만큼 환경·권한·로그 정책 설계가 필요</td></tr>
+<tr><td>Hugging Face Lighteval</td><td>여러 추론 백엔드와 HF 생태계에서 빠른 평가</td><td>CLI·Python API, 사용자 정의 태스크·메트릭, 샘플별 결과</td><td>공식 저장소는 1,000개 초과 태스크와 상세 샘플 결과를 명시<a class="inline_marker" href="#ref14">[14]</a></td><td>공식 저장소는 Windows가 테스트되지 않았다고 안내<a class="inline_marker" href="#ref14">[14]</a></td></tr>
+<tr><td>SWE-bench 계열</td><td>실제 저장소 이슈를 해결하는 코딩 에이전트 평가</td><td>저장소·이슈·테스트 환경과 패치 성공 여부</td><td>Verified는 사람이 필터링한 500개 사례이며, 결과는 해결 비율로 보고됨<a class="inline_marker" href="#ref15">[15]</a></td><td>에이전트 구성, 계산 예산, 샘플링 정책이 다르면 모델만의 비교가 아님</td></tr>
+<tr><td>AgentBench</td><td>상호작용 환경에서 LLM-as-Agent의 추론·의사결정 평가</td><td>서로 다른 8개 환경에서 행동 수행<a class="inline_marker" href="#ref16">[16]</a></td><td>최종 답변을 넘어 환경 상호작용을 평가 대상으로 확장</td><td>환경별 성공 정의와 궤적 품질을 함께 해석해야 함</td></tr>
+</tbody>
+</table></div>
+<h3>7.1 선택 기준</h3>
+<ul>
+<li>모델의 few-shot·언어·지식 능력을 폭넓게 비교하려면 lm-eval 또는 Lighteval 범주가 자연스럽다.</li>
+<li>다양한 시나리오와 사회적·행동적 지표를 함께 보고 싶다면 HELM 범주의 접근이 맞다.</li>
+<li>도구 호출과 다중 턴 안전 평가에는 Inspect 같은 에이전트 지향 평가 계층이 유리하다.</li>
+<li>코딩 에이전트라면 저장소·테스트·컨테이너가 결합된 SWE-bench 계열처럼 실제 작업 환경을 포함해야 한다.</li>
+<li>플랫폼 종속 서비스의 종료 계획이 공지된 경우, 평가 정의와 원시 데이터를 이식 가능한 형식으로 먼저 분리한다.</li>
+</ul>
+</section>
+
+<!-- @section: article-s8 -->
+<section id="s8" class="doc-section">
+<h2>8. Toy Example 3: 도구 사용 에이전트 하네스</h2>
+<p>이번에는 모델 역할을 하는 단순 정책이 두 개의 도구를 호출한다. 하네스는 허용 목록, 인자 검증, 단계 예산, 감사 로그, 성공 계약을 집행한다. 네트워크나 API가 없어도 그대로 실행된다.</p>
+<div class="code-block"><div class="code-toolbar"><span># toy_3_agent_harness.py</span><button class="copy-code" type="button" aria-label="코드 복사">복사</button></div><pre><code># toy_3_agent_harness.py
+from dataclasses import dataclass, field
+from typing import Any, Callable
+
+
+Tool = Callable[..., Any]
+
+
+@dataclass
+class RunState:
+    goal: str
+    observations: list[str] = field(default_factory=list)
+    trace: list[dict] = field(default_factory=list)
+    done: bool = False
+    answer: str | None = None
+
+
+def search_docs(query: str) -&gt; str:
+    corpus = {
+        "환불": "정책: 구매 후 7일 이내, 미사용 상품은 환불 검토 가능",
+        "배송": "정책: 발송 후 추적 번호를 제공",
+    }
+    return corpus.get(query, "관련 문서를 찾지 못함")
+
+
+def draft_answer(text: str) -&gt; str:
+    return f"고객 안내 초안: {text}"
+
+
+TOOLS: dict[str, Tool] = {
+    "search_docs": search_docs,
+    "draft_answer": draft_answer,
+}
+
+
+class ToyPolicy:
+    """실제 환경에서는 LLM 호출로 대체되는 부분."""
+    def next_action(self, state: RunState) -&gt; dict:
+        if not state.observations:
+            return {"tool": "search_docs", "args": {"query": "환불"}}
+        if len(state.observations) == 1:
+            return {
+                "tool": "draft_answer",
+                "args": {"text": state.observations[-1]},
+            }
+        return {"final": state.observations[-1]}
+
+
+def validate_action(action: dict) -&gt; None:
+    if "final" in action:
+        if not isinstance(action["final"], str):
+            raise ValueError("final은 문자열이어야 합니다.")
+        return
+    if action.get("tool") not in TOOLS:
+        raise PermissionError("허용되지 않은 도구입니다.")
+    if not isinstance(action.get("args"), dict):
+        raise ValueError("args는 객체여야 합니다.")
+
+
+def run_agent(goal: str, max_steps: int = 5) -&gt; RunState:
+    state = RunState(goal=goal)
+    policy = ToyPolicy()
+
+    for step in range(max_steps):
+        action = policy.next_action(state)
+        validate_action(action)
+
+        if "final" in action:
+            state.answer = action["final"]
+            state.done = True
+            state.trace.append({"step": step, "type": "final"})
+            break
+
+        tool_name = action["tool"]
+        result = TOOLS[tool_name](**action["args"])
+        state.observations.append(result)
+        state.trace.append({
+            "step": step,
+            "type": "tool",
+            "tool": tool_name,
+            "args": action["args"],
+            "result": result,
+        })
+
+    # 행동 계약: 검색 없이 고객 안내를 만들면 안 된다.
+    used_tools = [e.get("tool") for e in state.trace]
+    assert "search_docs" in used_tools, "정책 문서 검색이 필요합니다."
+    assert state.done, "단계 예산 안에 종료하지 못했습니다."
+    return state
+
+
+if __name__ == "__main__":
+    run = run_agent("환불 정책을 확인해 고객 답변 초안을 작성하라")
+    print(run.answer)
+    for event in run.trace:
+        print(event)
+</code></pre></div>
+<h3>8.1 이 예제가 평가 하네스이기도 한 이유</h3>
+<p>에이전트 실행과 평가는 더 이상 완전히 분리되지 않는다. 실행 하네스가 생성한 trace를 평가 하네스가 읽어 다음을 검사할 수 있다.</p>
+<ul>
+<li><strong>최종 상태:</strong> 답변이 생성되었는가.</li>
+<li><strong>행동 계약:</strong> 답변 전에 정책 문서를 검색했는가.</li>
+<li><strong>금지 행동:</strong> 허용되지 않은 도구나 인자를 시도했는가.</li>
+<li><strong>효율:</strong> 몇 단계·몇 토큰·얼마의 비용이 들었는가.</li>
+<li><strong>회복력:</strong> 도구 실패 후 안전하게 재시도하거나 중단했는가.</li>
+</ul>
+<p>운영 환경에서는 도구 결과 전체에 개인정보가 포함될 수 있으므로, trace 저장 전 비밀정보 필터링과 접근 통제를 추가해야 한다.</p>
+</section>
+
+<!-- @section: article-s9 -->
+<section id="s9" class="chapter doc-section">
+<h2>9. 에이전트 하네스의 내부 구조</h2>
+<h3>9.1 핵심 루프</h3>
+<ol>
+<li>목표, 정책, 이전 상태에서 이번 모델 입력을 조립한다.</li>
+<li>모델을 호출한다.</li>
+<li>응답을 최종 답변, 도구 호출, 위임, 오류로 파싱한다.</li>
+<li>정책 엔진이 도구와 인자를 승인·거부·보류한다.</li>
+<li>샌드박스나 외부 서비스에서 도구를 실행한다.</li>
+<li>관찰 결과를 정규화하고 민감 정보를 제거한다.</li>
+<li>상태와 trace를 체크포인트한다.</li>
+<li>성공·실패·예산·인간 승인 조건을 평가해 계속하거나 멈춘다.</li>
+</ol>
+<h3>9.2 상태는 메시지 목록보다 크다</h3>
+<p>실무 상태에는 대화, 작업 계획, 도구 결과, 생성 파일, 승인 대기, 비용 누계, 재시도 횟수, 정책 버전이 포함된다. 모든 것을 프롬프트에 넣으면 컨텍스트가 팽창한다. 따라서 <strong>실행 상태</strong>, <strong>모델에게 보일 작업 메모리</strong>, <strong>장기 기억</strong>, <strong>감사 로그</strong>를 분리한다.</p>
+<h3>9.3 컨텍스트 관리</h3>
+<p>장기 작업에서는 원시 도구 출력이 컨텍스트를 압도한다. 선택지는 요약, 오래된 관찰 압축, 파일·데이터베이스 외부화, 필요 시 검색, 도구 정의 지연 로딩이다. Anthropic의 장기 실행 하네스 글은 context compaction만으로는 충분하지 않으며, 초기 환경을 구성하는 에이전트와 매 세션 점진적 진전을 남기는 코딩 에이전트의 역할 분리를 설명한다.<a class="inline_marker" href="#ref17">[17]</a></p>
+<h3>9.4 중단은 기능이다</h3>
+<p>좋은 하네스는 답을 얻는 것만큼 멈추는 조건을 명확히 한다.</p>
+<ul>
+<li><strong>성공 중단:</strong> 산출물과 검증 계약이 충족됨.</li>
+<li><strong>예산 중단:</strong> 단계, 시간, 토큰, 비용 상한 도달.</li>
+<li><strong>안전 중단:</strong> 금지된 도구·데이터·행동 요청 감지.</li>
+<li><strong>불확실성 중단:</strong> 필수 입력 부족 또는 상충하는 증거.</li>
+<li><strong>인간 승인 중단:</strong> 결제, 배포, 삭제, 외부 전송 직전.</li>
+<li><strong>반복 중단:</strong> 같은 오류나 상태가 일정 횟수 반복됨.</li>
+</ul>
+<h3>9.5 복구와 멱등성</h3>
+<p>네트워크 재시도는 단순하지만 결제·이메일·삭제 같은 부작용 도구는 중복 실행이 위험하다. 각 tool call에 idempotency key를 부여하고, “요청 기록 → 실행 → 결과 확정” 상태를 원자적으로 관리해야 한다. 체크포인트에는 모델 대화뿐 아니라 이미 수행한 외부 행동의 영수증도 포함되어야 한다.</p>
+</section>
+
+<!-- @section: article-s10 -->
+<section id="s10" class="doc-section">
+<h2>10. 최신 실제 사례: 이름보다 책임을 읽는 법</h2>
+<h3>10.1 EleutherAI lm-evaluation-harness</h3>
+<p>생성형 언어모델을 다수 평가 태스크에서 통합 인터페이스로 실행한다. 공식 저장소는 Hugging Face Open LLM Leaderboard의 백엔드로 쓰였고 여러 조직과 논문에서 사용되었다고 설명한다.<a class="inline_marker" href="#ref8">[8]</a> 실무적 교훈은 “평가 코드의 단일 진실 공급원”을 두고 모델 어댑터와 태스크 정의를 분리하라는 것이다.</p>
+<h3>10.2 Stanford HELM</h3>
+<p>HELM은 foundation model을 총체적·재현 가능·투명하게 평가하기 위한 오픈소스 Python 프레임워크로 소개된다.<a class="inline_marker" href="#ref9">[9]</a> 교훈은 단일 정확도보다 시나리오와 지표의 조합을 명시하고, 공개 결과가 어느 버전의 benchmark에서 생성되었는지 표시하는 것이다.</p>
+<h3>10.3 OpenAI Evals</h3>
+<p>LLM 또는 LLM 시스템 평가 프레임워크와 공개 benchmark registry를 제공하고, 도구 사용 에이전트 같은 고급 시스템을 protocol로 연결할 수 있다.<a class="inline_marker" href="#ref11">[11]</a> 다만 공식 API 안내에는 2026년 종료 일정이 명시되어 있으므로, 신규 조직은 평가 정의·데이터·결과 스키마를 특정 실행 서비스에서 분리해야 한다.<a class="inline_marker" href="#ref12">[12]</a></p>
+<h3>10.4 Inspect</h3>
+<p>UK AI Security Institute와 Meridian Labs가 개발한 프런티어 AI 평가 프레임워크로, dataset·agent/tool·scorer의 조합, 평가 관찰 UI, 외부 에이전트 연결, 여러 샌드박스 선택을 제공한다.<a class="inline_marker" href="#ref13">[13]</a> 모델 응답 평가와 에이전트 행동 평가를 같은 실험 규약 안에서 연결하는 사례다.</p>
+<h3>10.5 Hugging Face Lighteval</h3>
+<p>제공 중이거나 메모리에 로드된 모델을 여러 백엔드에서 평가하고, 샘플별 결과 저장과 custom task·metric을 지원한다.<a class="inline_marker" href="#ref14">[14]</a> 교훈은 aggregate score만 저장하지 말고 샘플 수준 결과를 회귀 디버깅 자산으로 남기는 것이다.</p>
+<h3>10.6 SWE-agent, mini-SWE-agent, SWE-bench</h3>
+<p>SWE-agent는 언어모델이 도구를 사용해 실제 GitHub 저장소의 이슈를 수정하도록 하며, 공식 저장소는 현재 개발 노력이 더 단순한 mini-SWE-agent에 집중되고 있고 이를 권장한다고 안내한다.<a class="inline_marker" href="#ref18">[18]</a> SWE-bench는 실제 이슈·저장소·테스트 환경을 결합하고 해결 비율을 보고한다.<a class="inline_marker" href="#ref15">[15]</a> 이 사례는 코딩 능력이 모델만의 속성이 아니라 도구 인터페이스, 파일 편집 방식, 명령 예산, 환경 구성의 함수라는 점을 보여준다.</p>
+<h3>10.7 OpenAI Agents SDK</h3>
+<p>공식 문서는 SDK runner가 도구 루프를 수행하고, handoff 후 agent를 전환하며, 완료 또는 승인 대기에서 멈춘다고 설명한다. 세션, 추적, guardrail, 재개 가능한 승인 흐름도 선택 이유로 제시한다.<a class="inline_marker" href="#ref19">[19]</a> 제품명이 “harness”가 아니더라도 핵심 하네스 책임을 SDK가 담당하는 사례다.</p>
+<h3>10.8 Claude Agent SDK 범주의 장기 실행 하네스</h3>
+<p>Anthropic은 Claude Agent SDK를 컨텍스트 수집, 계획, 도구 실행을 수행하는 범용 agent harness로 설명하며, 장기 작업에서 compaction과 세션 간 명시적 아티팩트 전달을 함께 사용한다.<a class="inline_marker" href="#ref17">[17]</a> 실무 교훈은 메모리 요약만 믿지 말고 진행 상태와 다음 행동을 파일·체크리스트·테스트 결과로 외부화하라는 것이다.</p>
+<h3>10.9 LangChain Deep Agents와 LangGraph 범주</h3>
+<p>LangChain은 Deep Agents를 장기 연구·코딩 작업을 위한 오픈소스 agent harness로 소개하며, 계획·컨텍스트 관리·다중 에이전트 조정을 핵심으로 든다.<a class="inline_marker" href="#ref20">[20]</a> 2026년 Deep Agents v0.6 발표에는 효율적 체크포인트 저장을 위한 DeltaChannel, 버전 관리되는 skill·policy·memory 저장소, 설치 가능한 code interpreter가 포함된다.<a class="inline_marker" href="#ref21">[21]</a> 반면 동일 생태계 설명에서는 LangGraph를 stateful·cyclic workflow를 위한 더 낮은 수준의 runtime 범주로 구분한다.<a class="inline_marker" href="#ref22">[22]</a></p>
+<h3>10.10 Google ADK와 Agent Executor 범주</h3>
+<p>Google ADK 문서는 ADK를 에이전트를 구축·디버깅·배포하는 오픈소스 개발 프레임워크로 소개하고, 예측 가능한 workflow agent와 동적 routing을 모두 제공한다고 설명한다.<a class="inline_marker" href="#ref23">[23]</a> 별도의 Agent Executor 발표는 agent·harness·tool·sandbox를 실행·재개·분산 배포하는 오픈소스 runtime standard를 소개하며, event log와 snapshot 기반 durable execution 및 secure isolation을 명시한다.<a class="inline_marker" href="#ref24">[24]</a> framework, harness, runtime 책임을 분리해 읽을 수 있는 좋은 사례다.</p>
+<h3>10.11 OpenDev</h3>
+<p>2026년 공개된 OpenDev 기술 보고서는 scaffolding을 첫 요청 전에 system prompt·tool schema·subagent registry를 조립하는 단계로, harness를 런타임의 tool dispatch·context management·safety enforcement를 조정하는 계층으로 구분한다. 또한 planning과 execution의 분리, 도구 지연 탐색, 적응형 context compaction, 다층 안전 제어를 설명한다.<a class="inline_marker" href="#ref25">[25]</a> 다만 이는 하나의 공개 구현이 제시한 설계 어휘이며, 업계 전체의 표준 정의로 확대 해석해서는 안 된다.</p>
+</section>
+
+<!-- @section: article-s11 -->
+<section id="s11" class="chapter doc-section">
+<h2>11. 운영 품질의 네 축: 보안·관찰성·비용·재현성</h2>
+<h3>11.1 보안: 모델을 신뢰 경계 밖에 둔다</h3>
+<p>모델 출력은 사용자 입력과 마찬가지로 신뢰하지 않는 데이터로 취급한다. 특히 검색 문서나 웹 페이지 안의 prompt injection은 모델에게 “이전 지시를 무시하고 비밀을 전송하라”고 요구할 수 있다. 방어는 프롬프트 한 줄이 아니라 계층적으로 구성한다.</p>
+<ol>
+<li><strong>도구 최소 권한:</strong> 읽기와 쓰기, 조회와 결제를 분리한다.</li>
+<li><strong>명시적 allowlist:</strong> 호출 가능한 도구, 경로, 도메인, 명령을 제한한다.</li>
+<li><strong>스키마 검증:</strong> 타입뿐 아니라 값 범위·경로 traversal·쿼리 위험을 검사한다.</li>
+<li><strong>샌드박스:</strong> 코드·쉘·브라우저를 격리하고 네트워크 egress를 제한한다.</li>
+<li><strong>승인 게이트:</strong> 비가역 외부 행동은 인간 승인을 요구한다.</li>
+<li><strong>비밀 분리:</strong> API 키를 프롬프트에 넣지 않고 도구 실행 계층에서 주입한다.</li>
+<li><strong>출력 검증:</strong> 외부 전송 전 개인정보, 기밀, 유해 명령을 검사한다.</li>
+<li><strong>감사 가능성:</strong> 누가 어떤 정책 버전으로 어떤 행동을 승인했는지 남긴다.</li>
+</ol>
+<h3>11.2 관찰성: 답변이 아니라 실행을 추적한다</h3>
+<div class="table-scroll" role="region" aria-label="데이터 표" tabindex="0"><table>
+<thead><tr><th>관찰 단위</th><th>필수 필드</th><th>진단할 수 있는 문제</th></tr></thead>
+<tbody>
+<tr><td>Run</td><td>run_id, 목표, 사용자·테넌트, 시작·종료, 최종 상태</td><td>완료율, 중단 유형, 고객 영향</td></tr>
+<tr><td>Model call</td><td>모델, 프롬프트 버전, token, latency, retry, stop reason</td><td>비용 급증, 지연, 모델 회귀</td></tr>
+<tr><td>Tool call</td><td>도구, 정제된 인자, 결과 상태, duration, idempotency key</td><td>외부 API 오류, 권한 거부, 중복 부작용</td></tr>
+<tr><td>Policy decision</td><td>정책 버전, allow/deny/pause, 이유</td><td>과도 차단, 안전 우회, 승인 병목</td></tr>
+<tr><td>Checkpoint</td><td>상태 스키마 버전, offset, artifact URI</td><td>복구 실패, 상태 손상, 버전 비호환</td></tr>
+<tr><td>Evaluation</td><td>dataset·scorer 버전, seed, 사례 결과</td><td>점수 회귀, 특정 실패군</td></tr>
+</tbody>
+</table></div>
+<p>원시 chain-of-thought 저장을 기본값으로 두기보다, 행동·도구·정책 판단·검증 결과처럼 운영에 필요한 구조화 이벤트를 우선한다. 민감한 입력과 도구 결과는 redaction 후 저장하고, 원문 접근은 별도 권한과 보존 기간을 둔다.</p>
+<h3>11.3 비용: 모델 청구서보다 작업 경제성을 본다</h3>
+<p>관찰 도구는 생성과 embedding의 사용량·비용을 단위별로 추적하고 input, output, cached token 같은 사용 유형을 구분할 수 있다.<a class="inline_marker" href="#ref26">[26]</a> 하지만 에이전트 총비용에는 모델 외에도 검색 API, 브라우저, 샌드박스 시간, 벡터 저장소, human review, 실패 재시도가 포함된다.</p>
+<p>권장 지표는 다음과 같다.</p>
+<ul>
+<li><strong>Cost per attempted task:</strong> 시도한 작업 하나의 평균 비용.</li>
+<li><strong>Cost per successful task:</strong> 성공한 작업 하나를 얻는 데 든 총비용.</li>
+<li><strong>Marginal quality per dollar:</strong> 모델·반복 수 증가가 품질을 얼마나 올렸는가.</li>
+<li><strong>Waste ratio:</strong> 실패·중복·버려진 도구 호출에 쓴 비용 비율.</li>
+<li><strong>Budget exhaustion rate:</strong> 토큰·단계·시간 한도 때문에 중단된 비율.</li>
+</ul>
+<p>비용 제어는 작은 모델 routing, 결과 cache, 도구 정의 지연 로딩, 중간 결과 외부화, 조기 중단, 병렬성 제한으로 구현한다. 단, cache key에 모델·프롬프트·도구·데이터 버전을 포함하지 않으면 오래된 결과가 조용히 재사용된다.</p>
+<h3>11.4 재현성: “같은 모델”만으로는 부족하다</h3>
+<p>EleutherAI의 재현성 논의는 평가 설정의 미세한 차이와 불충분한 구현 공개가 모델 비교를 어렵게 한다고 지적한다.<a class="inline_marker" href="#ref27">[27]</a> 최소 재현 묶음에는 다음이 포함되어야 한다.</p>
+<ul>
+<li>모델 제공자·식별자·snapshot과 API 버전</li>
+<li>프롬프트, chat template, tool schema, policy의 immutable version</li>
+<li>평가 데이터의 해시, 출처, split, contamination 점검</li>
+<li>temperature·top_p·max tokens·seed와 반복 횟수</li>
+<li>컨테이너 이미지 digest, Python·패키지 lockfile, OS·하드웨어</li>
+<li>도구 모의 응답 또는 외부 API snapshot</li>
+<li>채점기와 정규화 코드, judge 모델과 judge prompt</li>
+<li>원시 샘플 결과, 집계 스크립트, 실패·재시도 로그</li>
+</ul>
+</section>
+
+<!-- @section: article-s12 -->
+<section id="s12" class="doc-section">
+<h2>12. 실무 설계 청사진</h2>
+<h3>12.1 1단계: 성공 계약부터 쓴다</h3>
+<p>“좋은 답변” 대신 기계적으로 관찰 가능한 계약을 작성한다. 예를 들어 고객지원 에이전트라면 “정책 출처를 조회하고, 고객 계정 쓰기 작업 전 승인을 받고, 개인정보를 출력하지 않으며, 30초·0.20달러 예산 안에서 응답”처럼 결과·과정·안전·비용을 함께 정의한다.</p>
+<h3>12.2 2단계: 가장 작은 폐루프를 만든다</h3>
+<p>한 모델, 읽기 전용 도구 하나, 단계 제한, 구조화 trace, 결정론적 scorer로 시작한다. 다중 에이전트, 장기 메모리, 동적 계획은 평가 세트와 실패 유형이 축적된 뒤 추가한다.</p>
+<h3>12.3 3단계: 정책과 도구를 모델에서 분리한다</h3>
+<p>모델이 “허용된다”고 말해도 실제 권한은 하네스가 결정한다. 도구 레지스트리는 이름, 설명, 입력 스키마, 권한, timeout, retry, idempotency, 비용 등급, 데이터 분류를 포함한다.</p>
+<h3>12.4 4단계: offline eval과 online observation을 잇는다</h3>
+<p>배포 전 고정 평가 세트로 회귀를 막고, 배포 후에는 성공률·비용·정책 거부·인간 개입을 관찰한다. 운영에서 발견한 실패를 익명화하고 최소화해 offline regression case로 되돌린다.</p>
+<h3>12.5 5단계: 변경 단위를 버전으로 고정한다</h3>
+<p>모델, 프롬프트, tool schema, 데이터, scorer, 정책을 각각 버전으로 기록한다. “agent-v17” 하나로 뭉치면 어느 변경이 회귀를 만들었는지 알 수 없다.</p>
+<h3>12.6 배포 전 체크리스트</h3>
+<ul class="checklist">
+<li>□ 평가 대상이 모델인지 전체 에이전트 시스템인지 명시했다.</li>
+<li>□ 성공·실패·보류 상태와 중단 조건이 문서화되었다.</li>
+<li>□ 정상, 경계, 적대, 장기 실행, 도구 실패 사례가 평가 세트에 있다.</li>
+<li>□ 공개 benchmark와 제품 고유 평가를 분리해 보고한다.</li>
+<li>□ 샘플링 설정과 반복 수, seed, 신뢰구간 방식이 고정되었다.</li>
+<li>□ judge 모델의 버전·프롬프트·비용과 인간 합치도를 점검했다.</li>
+<li>□ 도구별 최소 권한·스키마·timeout·retry·idempotency가 정의되었다.</li>
+<li>□ 쓰기·삭제·결제·외부 전송에는 승인 게이트가 있다.</li>
+<li>□ 코드·쉘·브라우저는 격리되고 네트워크 egress가 제한된다.</li>
+<li>□ prompt injection을 데이터와 지시의 혼동 문제로 테스트한다.</li>
+<li>□ 비밀은 모델 컨텍스트가 아닌 실행 계층에서 주입된다.</li>
+<li>□ trace에 run, model, tool, policy, checkpoint가 연결된다.</li>
+<li>□ 로그 redaction, 접근 권한, 보존·삭제 정책이 있다.</li>
+<li>□ 토큰뿐 아니라 도구·인프라·인간 검토 비용을 측정한다.</li>
+<li>□ 단계·시간·토큰·비용 예산과 초과 시 동작이 정의되었다.</li>
+<li>□ checkpoint에서 안전하게 재개하는 장애 주입 테스트를 했다.</li>
+<li>□ 중복 도구 호출이 실제 부작용을 두 번 만들지 않는다.</li>
+<li>□ 컨테이너·패키지·데이터·정책 버전이 재현 묶음에 들어간다.</li>
+<li>□ 운영 실패가 정기적으로 회귀 테스트로 승격된다.</li>
+<li>□ 공급자 서비스 종료·API 변경에 대비한 이식 경로가 있다.</li>
+</ul>
+</section>
+
+<!-- @section: article-s13 -->
+<section id="s13" class="chapter doc-section">
+<h2>13. 자주 보이는 안티패턴과 개선법</h2>
+<h3>13.1 “모델 벤치마크 점수 = 우리 제품 품질”</h3>
+<p><strong>문제:</strong> 공개 지식 문제의 점수가 실제 데이터, 도구, 안전 정책, 지연시간을 반영하지 않는다.<br><strong>개선:</strong> 공개 benchmark는 기본 능력 지표로 유지하고, 제품 계약 기반 eval을 별도로 운영한다.</p>
+<h3>13.2 한 번 실행하고 승자 선언</h3>
+<p><strong>문제:</strong> 확률적 변동과 API 오류가 모델 차이로 오인된다.<br><strong>개선:</strong> 반복 실행, 샘플 수준 결과, 불확실성 구간, paired comparison을 사용한다.</p>
+<h3>13.3 LLM judge 하나에 모든 판단 위임</h3>
+<p><strong>문제:</strong> judge 자체의 편향·변동·비용이 숨는다.<br><strong>개선:</strong> 가능한 항목은 결정론적 scorer로 먼저 검사하고, judge는 루브릭이 필요한 잔여 항목에 사용하며 인간 표본으로 교정한다.</p>
+<h3>13.4 trace 없이 최종 답변만 저장</h3>
+<p><strong>문제:</strong> 검색 실패, 잘못된 도구 선택, 정책 우회 중 무엇이 원인인지 알 수 없다.<br><strong>개선:</strong> 모델·도구·정책·체크포인트 이벤트를 공통 run_id로 연결한다.</p>
+<h3>13.5 모든 도구와 문서를 매번 프롬프트에 넣기</h3>
+<p><strong>문제:</strong> 비용과 지연이 늘고, 관련 없는 지시가 충돌한다.<br><strong>개선:</strong> 지연 발견, 단계별 retrieval, 도구 그룹화, 중간 결과 외부화를 사용한다.</p>
+<h3>13.6 프롬프트로만 보안하기</h3>
+<p><strong>문제:</strong> “절대 삭제하지 마”라는 문장은 실제 파일 권한을 제거하지 않는다.<br><strong>개선:</strong> OS·컨테이너·네트워크·도구 스키마·승인 계층에서 강제한다.</p>
+<h3>13.7 무제한 자율 루프</h3>
+<p><strong>문제:</strong> 반복 오류가 토큰·비용·부작용을 증폭한다.<br><strong>개선:</strong> 단계·시간·비용·동일 오류 반복 제한과 escalation을 둔다.</p>
+<h3>13.8 메모리를 메시지 무한 누적으로 구현</h3>
+<p><strong>문제:</strong> 오래된 관찰이 현재 목표를 가리고 민감 정보가 불필요하게 반복된다.<br><strong>개선:</strong> 작업 상태, 요약 메모리, 장기 지식, 감사 로그를 분리하고 각각 다른 보존 정책을 적용한다.</p>
+<h3>13.9 재시도하면 안전하다고 생각하기</h3>
+<p><strong>문제:</strong> 외부 서비스가 성공했지만 응답만 유실된 경우, 재시도가 중복 결제·전송을 만든다.<br><strong>개선:</strong> idempotency key, 외부 영수증 조회, 상태 머신을 사용한다.</p>
+<h3>13.10 공급자 SDK를 곧 아키텍처로 간주하기</h3>
+<p><strong>문제:</strong> 평가 정의, 상태, 정책, trace가 SDK 내부 표현에 잠긴다.<br><strong>개선:</strong> 내부 표준 event·tool·state·eval schema를 먼저 정하고, SDK는 adapter로 연결한다.</p>
+</section>
+
+<!-- @section: article-s14 -->
+<section id="s14" class="doc-section">
+<h2>14. 용어집</h2>
+<dl>
+<dt><strong>Agent</strong></dt><dd>관찰을 받아 행동을 선택하고 환경의 새 관찰을 받아 반복하는 시스템. LLM 환경에서는 모델과 도구·상태·루프를 포함하는 경우가 많다.</dd>
+<dt><strong>Harness</strong></dt><dd>대상 주위를 둘러싸 입력, 실행, 권한, 관찰, 검증을 통제하는 소프트웨어 계층.</dd>
+<dt><strong>Scaffolding</strong></dt><dd>시스템 프롬프트, 도구 설명, 출력 형식 등 모델 행동의 맥락을 형성하는 구성.</dd>
+<dt><strong>Runtime</strong></dt><dd>프로세스·샌드박스·상태·재개·분산 실행을 제공하는 기반 계층.</dd>
+<dt><strong>Orchestrator</strong></dt><dd>여러 에이전트나 작업을 배치·위임·동기화하는 상위 조정자.</dd>
+<dt><strong>Evaluation Harness</strong></dt><dd>데이터, 모델 호출, 프롬프트 구성, 채점, 집계를 규격화한 평가 실행 계층.</dd>
+<dt><strong>Oracle / Scorer</strong></dt><dd>실행 결과가 기대에 맞는지 판정하는 규칙 또는 모델.</dd>
+<dt><strong>Trajectory / Trace</strong></dt><dd>에이전트가 수행한 모델 호출, 도구 호출, 관찰, 정책 판단의 시간 순서 기록.</dd>
+<dt><strong>Behavioral Contract</strong></dt><dd>최종 결과뿐 아니라 반드시 수행하거나 피해야 할 행동을 명시한 계약.</dd>
+<dt><strong>pass@k</strong></dt><dd>여러 후보 중 k개를 선택했을 때 적어도 하나가 정답일 확률을 추정하는 지표.</dd>
+<dt><strong>Contamination</strong></dt><dd>학습·튜닝 데이터에 평가 문제나 실질적으로 동일한 내용이 포함되어 평가가 부풀려지는 현상.</dd>
+<dt><strong>Sandbox</strong></dt><dd>코드·명령·브라우저 실행의 파일, 프로세스, 네트워크, 자원 접근을 격리하는 환경.</dd>
+<dt><strong>Guardrail</strong></dt><dd>입력·출력·도구 호출에 정책을 적용해 허용, 거부, 수정, 승인 대기를 결정하는 통제.</dd>
+<dt><strong>Checkpoint</strong></dt><dd>실행을 중단 후 재개할 수 있도록 저장한 상태 스냅샷과 이벤트 위치.</dd>
+<dt><strong>Durable Execution</strong></dt><dd>프로세스 장애나 인간 승인 대기 뒤에도 기록된 상태에서 작업을 안전하게 계속하는 실행 방식.</dd>
+<dt><strong>Idempotency</strong></dt><dd>같은 요청을 여러 번 적용해도 결과가 한 번 적용한 것과 같도록 하는 성질.</dd>
+<dt><strong>LLM-as-a-Judge</strong></dt><dd>다른 모델의 출력 품질을 루브릭에 따라 LLM이 채점하는 방식.</dd>
+<dt><strong>Human-in-the-loop</strong></dt><dd>특정 단계에서 사람이 검토, 승인, 수정 또는 중단 결정에 참여하는 설계.</dd>
+</dl>
+
+<h2>참고문헌</h2>
+<ol class="references">
+<li id="ref1">Tricentis, “What is a test harness in software testing?” <a href="https://www.tricentis.com/learn/test-harness">https://www.tricentis.com/learn/test-harness</a></li>
+<li id="ref2">EleutherAI, “Evaluating LLMs.” <a href="https://www.eleuther.ai/projects/large-language-model-evaluation">https://www.eleuther.ai/projects/large-language-model-evaluation</a></li>
+<li id="ref3">Hugging Face Blog, “Harness, Scaffold, and the AI Agent Terms Worth Getting Right.” <a href="https://huggingface.co/blog/agent-glossary">https://huggingface.co/blog/agent-glossary</a></li>
+<li id="ref4">Chen et al., “Evaluating Large Language Models Trained on Code,” 2021. <a href="https://arxiv.org/abs/2107.03374">https://arxiv.org/abs/2107.03374</a></li>
+<li id="ref5">Ribeiro et al., “Beyond Accuracy: Behavioral Testing of NLP Models with CheckList,” ACL 2020. <a href="https://aclanthology.org/2020.acl-main.442/">https://aclanthology.org/2020.acl-main.442/</a></li>
+<li id="ref6">“A Survey on Data Contamination for Large Language Models.” <a href="https://arxiv.org/html/2502.14425v2">https://arxiv.org/html/2502.14425v2</a></li>
+<li id="ref7">Perez et al., “Red Teaming Language Models with Language Models.” <a href="https://arxiv.org/abs/2202.03286">https://arxiv.org/abs/2202.03286</a></li>
+<li id="ref8">EleutherAI, “Language Model Evaluation Harness.” <a href="https://github.com/EleutherAI/lm-evaluation-harness">https://github.com/EleutherAI/lm-evaluation-harness</a></li>
+<li id="ref9">Stanford CRFM, “Holistic Evaluation of Language Models.” <a href="https://github.com/stanford-crfm/helm">https://github.com/stanford-crfm/helm</a></li>
+<li id="ref10">Stanford CRFM, HELM v1.0 notice. <a href="https://crfm.stanford.edu/helm/v1.0/">https://crfm.stanford.edu/helm/v1.0/</a></li>
+<li id="ref11">OpenAI, “Evals.” <a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
+<li id="ref12">OpenAI API Documentation, “Working with evals.” <a href="https://developers.openai.com/api/docs/guides/evals">https://developers.openai.com/api/docs/guides/evals</a></li>
+<li id="ref13">UK AI Security Institute and Meridian Labs, “Inspect.” <a href="https://inspect.aisi.org.uk/">https://inspect.aisi.org.uk/</a></li>
+<li id="ref14">Hugging Face, “Lighteval.” <a href="https://github.com/huggingface/lighteval">https://github.com/huggingface/lighteval</a></li>
+<li id="ref15">SWE-bench, Official Leaderboards. <a href="https://www.swebench.com/">https://www.swebench.com/</a></li>
+<li id="ref16">Liu et al., “AgentBench: Evaluating LLMs as Agents.” <a href="https://arxiv.org/abs/2308.03688">https://arxiv.org/abs/2308.03688</a></li>
+<li id="ref17">Anthropic, “Effective harnesses for long-running agents.” <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></li>
+<li id="ref18">SWE-agent GitHub repository. <a href="https://github.com/princeton-nlp/SWE-agent">https://github.com/princeton-nlp/SWE-agent</a></li>
+<li id="ref19">OpenAI Platform Documentation, “Agents SDK.” <a href="https://platform.openai.com/docs/guides/agents-sdk">https://platform.openai.com/docs/guides/agents-sdk</a></li>
+<li id="ref20">LangChain, “Deep Agents.” <a href="https://www.langchain.com/deep-agents">https://www.langchain.com/deep-agents</a></li>
+<li id="ref21">LangChain, “New in Deep Agents v0.6.” <a href="https://www.langchain.com/blog/deep-agents-0-6">https://www.langchain.com/blog/deep-agents-0-6</a></li>
+<li id="ref22">LangChain, “The best AI agent frameworks.” <a href="https://www.langchain.com/resources/ai-agent-frameworks">https://www.langchain.com/resources/ai-agent-frameworks</a></li>
+<li id="ref23">Google Cloud Documentation, “Agent Development Kit.” <a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/adk">https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/adk</a></li>
+<li id="ref24">Google Cloud Blog, “Agent Executor, Google’s distributed Agent Runtime.” <a href="https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime">https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime</a></li>
+<li id="ref25">“Building AI Coding Agents for the Terminal: Scaffolding, Harness, Context Engineering, and Lessons Learned.” <a href="https://arxiv.org/html/2603.05344v1">https://arxiv.org/html/2603.05344v1</a></li>
+<li id="ref26">Langfuse Documentation, “Model Usage &amp; Cost Tracking.” <a href="https://langfuse.com/docs/observability/features/token-and-cost-tracking">https://langfuse.com/docs/observability/features/token-and-cost-tracking</a></li>
+<li id="ref27">Biderman et al., “Lessons from the Trenches on Reproducible Evaluation of Language Models,” 2024. <a href="https://arxiv.org/abs/2405.14782">https://arxiv.org/abs/2405.14782</a></li>
+</ol>
+<p class="small">편집 원칙: 2026년 제품명·기능·일정은 조사 자료의 공식 문서 또는 직접 확인된 원시 결과가 있는 경우에만 구체적으로 서술했다. “하네스”는 아직 문맥에 따라 runtime·framework·scaffolding과 겹쳐 쓰이므로, 이 글의 분류는 책임 분리를 위한 실무적 모델이다.</p>
+</section>
+
+      </article>
+    </main>
+  </div>
+
+  <!-- @section: back-to-top -->
+  <a class="back-to-top" href="#top" aria-label="맨 위로 이동"><span aria-hidden="true">↑</span><span>TOP</span></a>
+
+  <!-- @section: live-region -->
+  <div id="copy-status" class="sr-only" aria-live="polite"></div>
+  <script type="module" src="assets/main.js"></script>
+</body>
+</html>
